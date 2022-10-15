@@ -1,6 +1,7 @@
 # stocknikalo
 
-
+#Workflow
+https://docs.google.com/document/d/1LZEW6x27TvTd5cNK4Kzyg-1Cu6jlmVrhMfkHicNnyK0/edit
 
 ## Getting started
 
