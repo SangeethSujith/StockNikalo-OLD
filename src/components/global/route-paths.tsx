@@ -10,6 +10,9 @@
 const RoutePath = {
   home: "/",
   login: "/login",
+  register: "/register",
+  cart: "/cart",
+  shop: "/shop",
 };
 
 export default RoutePath;
