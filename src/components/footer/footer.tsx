@@ -128,7 +128,7 @@ class Footer extends Component {
             </div>
             {/* End .footer-bottom */}
           </footer>
-          <div className="loading-overlay">
+          <div hidden={true} className="loading-overlay">
             <div className="bounce-loader">
               <div className="bounce1" />
               <div className="bounce2" />
