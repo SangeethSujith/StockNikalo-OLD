@@ -11,6 +11,13 @@ import { message } from "antd";
 import Constant from "../global/constants";
 import authService from "../services/auth-service";
 
+if (!JSON.parse(localStorage.getItem("userId")!)) {
+  localStorage.setItem("userId", JSON.stringify(null));
+}
+if (!localStorage.getItem("userToken")!) {
+  localStorage.setItem("userToken", JSON.stringify(null));
+}
+
 type userDetails = {
   userId: string;
   userName: string;
@@ -21,6 +28,8 @@ type userDetails = {
 };
 
 class AuthStore {
+  currentuserId: number | null = JSON.parse(localStorage.getItem("userId")!);
+  currentuserToken: string | null = localStorage.getItem("userToken")!;
   isUserLoggedIn: boolean | null = null;
   currentUser: userDetails | null = null;
 
@@ -41,6 +50,8 @@ class AuthStore {
             isRegistrationCompletedEqualToZero:
               res.data?.data?.isRegistrationCompletedEqualToZero,
           };
+          localStorage.setItem("userId", res.data?.data?.userId);
+          localStorage.setItem("userToken", res.data?.data?.token);
           this.isUserLoggedIn = true;
           callback(res);
         }

@@ -13,6 +13,7 @@ const RoutePath = {
   register: "/register",
   cart: "/cart",
   shop: "/shop",
+  complete_profile: "/complete-profile",
 };
 
 export default RoutePath;

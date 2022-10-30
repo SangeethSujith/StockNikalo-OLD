@@ -17,7 +17,8 @@ const Constant = {
 
   // API urls
   registration: "api/register",
-  login: "api/login"
+  login: "api/login",
+  products: "api/products",
 };
 
 export default Constant;

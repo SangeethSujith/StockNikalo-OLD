@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Button, Input, message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import authStore from "../../store/auth-store";
@@ -9,6 +9,7 @@ const LoginComponent: React.FC<any> = (props: LoginProps) => {
   const { useForm } = Form;
   const [form] = useForm();
   const navigate = useNavigate();
+  const [loginError, setloginError] = useState(true);
   const LoginSession = () => {
     form
       .validateFields()
@@ -21,7 +22,14 @@ const LoginComponent: React.FC<any> = (props: LoginProps) => {
         authStore.login(data.email, data.password, (res: any) => {
           if (res) {
             form.resetFields();
-            navigate(RoutePath.home);
+            if (res.data?.data?.userId) {
+              if (res.data?.data?.isRegistrationCompleted == 0) {
+                navigate(RoutePath.home);
+              } else {
+              }
+            } else {
+              setloginError(false);
+            }
           }
         });
       })
@@ -81,6 +89,10 @@ const LoginComponent: React.FC<any> = (props: LoginProps) => {
                     >
                       <Input maxLength={70} className="form-input form-wide" />
                     </Form.Item>
+                    <br />
+                    <p hidden={loginError} style={{ color: "red" }}>
+                      Invalid Username or Password
+                    </p>
                     <div className="form-footer mb-3">
                       <div className="custom-control custom-checkbox ">
                         <input

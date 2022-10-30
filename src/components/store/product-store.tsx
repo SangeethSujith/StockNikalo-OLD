@@ -1,5 +1,5 @@
 /**
- * Manages authorisation data
+ * Manages product data
  *
  * Developed By : Akhil Soman
  * Author: Akhil Soman
@@ -8,13 +8,13 @@
  */
 import { message } from "antd";
 import Constant from "../global/constants";
-import userService from "../services/user-service";
+import productService from "../services/product-service";
 
-class userStore {
-  addRegistration = async (data: any, callback: any) => {
-    let url = Constant.registration;
-    userService
-      .addEvent(url, data)
+class productStore {
+  getProducts = async (callback: any) => {
+    let url = Constant.products;
+    productService
+      .getProducts(url)
       .then((res: any) => {
         res && callback(res?.data);
       })
@@ -27,4 +27,4 @@ class userStore {
       });
   };
 }
-export default new userStore();
+export default new productStore();

@@ -1,11 +1,20 @@
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect, useState } from "react";
+import productStore from "../../store/product-store";
 const Home: React.FC<any> = () => {
+  const [products, setProducts] = useState(null);
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "assets/js/main.min.js";
     document.body.append(script);
+    getProductsData();
   }, []);
 
+  const getProductsData = () => {
+    productStore.getProducts((values: any) => {
+      console.log(values);
+      setProducts(values);
+    });
+  };
   return (
     <>
       <main className="main home">

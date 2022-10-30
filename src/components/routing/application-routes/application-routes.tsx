@@ -5,6 +5,7 @@ import LoginComponent from "../../pages/login/login";
 import RegistrationComponent from "../../pages/register/register";
 import CartComponent from "../../pages/cart/cart";
 import ProductsComponent from "../../pages/products/products";
+import CompleteRegistrationComponent from "../../pages/complete-register/complete-register";
 import { Route, Routes } from "react-router-dom";
 const AppRouter = (props: any) => {
   return (
@@ -14,6 +15,10 @@ const AppRouter = (props: any) => {
       <Route path={RoutePath.register} element={<RegistrationComponent />} />
       <Route path={RoutePath.cart} element={<CartComponent />} />
       <Route path={RoutePath.shop} element={<ProductsComponent />} />
+      <Route
+        path={RoutePath.complete_profile}
+        element={<CompleteRegistrationComponent />}
+      />
     </Routes>
   );
 };
