@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Button, Input, message, Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import userStore from "../../store/user-store";
@@ -8,6 +8,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
 ) => {
   const { useForm } = Form;
   const [form1] = useForm();
+  const [status, setStatus] = useState(true);
   const [form2] = useForm();
   const [form3] = useForm();
   const navigate = useNavigate();
@@ -38,26 +39,37 @@ const CompleteRegistrationComponent: React.FC<any> = (
             userId: localStorage.getItem("userId"),
             telephone: form1.getFieldValue("telephone"),
             mobile_number: form1.getFieldValue("mobile_number"),
-            company_name: "sanu",
-            company_address: "sanu",
-            company_district: "sanu",
-            company_state: "sanu",
-            company_pincode: "sanu",
-            company_name2: "sanu",
-            company_address2: "sanu",
-            company_district2: "sanu",
-            company_state2: "sanu",
-            company_pincode2: "sanu",
-            company_incorporation: "sanu",
-            company_domain: "sanu",
-            bank: "iob",
-            company_gst: "sanu",
-            company_type: "sanu",
-            company_short_desc: "sanu",
-            company_business_segment: "sanu",
-            bank_account_number: "sanu",
-            ifsc_code: "sanu",
+            company_name: form1.getFieldValue("company_name"),
+            company_address: form2.getFieldValue("address_1"),
+            company_district: form2.getFieldValue("address_2"),
+            company_state: form2.getFieldValue("state"),
+            company_pincode: form2.getFieldValue("pincode"),
+            company_name2: form1.getFieldValue("company_name"),
+            company_address2: form2.getFieldValue("address_1"),
+            company_district2: form2.getFieldValue("address_2"),
+            company_state2: form2.getFieldValue("state"),
+            company_pincode2: form2.getFieldValue("pincode"),
+            company_incorporation: form2.getFieldValue("partnership"),
+            company_domain: form2.getFieldValue("website"),
+            bank: form3.getFieldValue("bank"),
+            company_gst: form2.getFieldValue("gst"),
+            company_type: form2.getFieldValue("company_type"),
+            company_short_desc: form2.getFieldValue("company_short_decp"),
+            company_business_segment: form2.getFieldValue("company_short_decp"),
+            bank_account_number: form3.getFieldValue("account_number"),
+            ifsc_code: form3.getFieldValue("ifsc"),
           };
+          console.log(data);
+          userStore.addCompleteRegistration(data, (res: any) => {
+            if (res?.statusCode == 200) {
+              //message.success("User profile completed successfully");
+
+              setStatus(false);
+              form1.resetFields();
+              form2.resetFields();
+              form3.resetFields();
+            }
+          });
         })
         .catch((errorinfo) => {
           console.log(errorinfo);
@@ -335,7 +347,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                   </label>
                                   <Form.Item name="district">
                                     <select className="form-control">
-                                      <option value="" selected>
+                                      <option value={6} selected>
                                         Chennai
                                       </option>
                                       <option value={1}>Madurai</option>
@@ -355,7 +367,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                   </label>
                                   <Form.Item name="state">
                                     <select className="form-control">
-                                      <option value="" selected>
+                                      <option value={6} selected>
                                         Tamil Nadu
                                       </option>
 
@@ -445,7 +457,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                   </label>
                                   <Form.Item name="partnership">
                                     <select className="form-control">
-                                      <option value="" selected>
+                                      <option value={6} selected>
                                         Partnership
                                       </option>
                                       <option value={1}>Proprietorship</option>
@@ -489,7 +501,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                   </label>
                                   <Form.Item name="company_type">
                                     <select className="form-control">
-                                      <option value="" selected>
+                                      <option value={4} selected>
                                         Manufacturer
                                       </option>
                                       <option value={1}>
@@ -509,7 +521,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                   </label>
                                   <Form.Item name="company_short_decp">
                                     <select className="form-control">
-                                      <option value="" selected>
+                                      <option value={3} selected>
                                         Product Manufacture
                                       </option>
                                       <option value={1}>
@@ -528,7 +540,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                   </label>
                                   <Form.Item name="business_segment">
                                     <select className="form-control">
-                                      <option value="" selected>
+                                      <option value={6} selected>
                                         Automotive
                                       </option>
                                       <option value={1}>Pharma</option>
@@ -619,7 +631,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                   </label>
                                   <Form.Item name="bank">
                                     <select className="form-control">
-                                      <option value="" selected>
+                                      <option value={6} selected>
                                         SBI
                                       </option>
                                       <option value={1}>KVB</option>
@@ -681,6 +693,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                           </Button>
                         </div>
                       </div>
+                      <p hidden={status}>User profile completed successfully</p>
                     </div>
                   </div>
                 </div>

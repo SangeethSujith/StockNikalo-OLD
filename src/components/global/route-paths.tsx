@@ -13,6 +13,7 @@ const RoutePath = {
   register: "/register",
   cart: "/cart",
   shop: "/shop",
+  product: "/product",
   complete_profile: "/complete-profile",
 };
 

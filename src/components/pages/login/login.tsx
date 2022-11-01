@@ -24,8 +24,9 @@ const LoginComponent: React.FC<any> = (props: LoginProps) => {
             form.resetFields();
             if (res.data?.data?.userId) {
               if (res.data?.data?.isRegistrationCompleted == 0) {
-                navigate(RoutePath.home);
+                navigate(RoutePath.complete_profile);
               } else {
+                navigate(RoutePath.home);
               }
             } else {
               setloginError(false);
@@ -112,6 +113,13 @@ const LoginComponent: React.FC<any> = (props: LoginProps) => {
                         className="forget-password text-dark form-footer-right"
                       >
                         Forgot Password?
+                      </a>
+                      <a
+                        onClick={() => navigate(RoutePath.register)}
+                        style={{ cursor: "pointer" }}
+                        className="forget-password text-dark form-footer-right"
+                      >
+                        New User
                       </a>
                     </div>
 

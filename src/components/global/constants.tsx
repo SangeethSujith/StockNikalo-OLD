@@ -17,8 +17,11 @@ const Constant = {
 
   // API urls
   registration: "api/register",
+  comp_registration: "api/completeRegistration",
   login: "api/login",
   products: "api/products",
+  addtocart: "api/add-cart",
+  get_user_cart: "api/get-user-cart",
 };
 
 export default Constant;

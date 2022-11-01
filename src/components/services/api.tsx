@@ -81,6 +81,54 @@ class API {
     return this.api.post(url, config);
   }
 
+  async tokenpost(
+    requestUrl: string,
+    data = {},
+    // params = {},
+    // header = {},
+    headers = {
+      Authorization: "Bearer " + localStorage.getItem("userToken"),
+    }
+  ) {
+    const config = {
+      // params: params,
+      ...data,
+      // header: header,
+    };
+    const config1 = {
+      // params: params,
+
+      // header: header,
+      headers: headers,
+    };
+    const url: string = Constant.SNBaseUrl + requestUrl;
+    return this.api.post(url, config, config1);
+  }
+
+  async tokenget(
+    requestUrl: string,
+    data = {},
+    // params = {},
+    // header = {},
+    headers = {
+      Authorization: "Bearer " + localStorage.getItem("userToken"),
+    }
+  ) {
+    const config = {
+      // params: params,
+      ...data,
+      // header: header,
+    };
+    const config1 = {
+      // params: params,
+
+      // header: header,
+      headers: headers,
+    };
+    const url: string = Constant.SNBaseUrl + requestUrl;
+    return this.api.get(url, config, config1);
+  }
+
   async authPost(
     requestUrl: string,
     data = {},

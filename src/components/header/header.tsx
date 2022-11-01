@@ -3,6 +3,12 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import RoutePath from "../global/route-paths";
 const Header: React.FC<any> = () => {
   const navigate = useNavigate();
+  const logOut = () => {
+    localStorage.setItem("userId", JSON.stringify(null));
+    localStorage.setItem("userToken", JSON.stringify(null));
+    navigate(RoutePath.home);
+    console.log(localStorage.getItem("userId"));
+  };
   return (
     <>
       <header className="header home">
@@ -72,17 +78,38 @@ const Header: React.FC<any> = () => {
                   </div>
                 </form>
               </div>
-              <div
-                onClick={() => navigate(RoutePath.login)}
-                style={{ cursor: "pointer" }}
-                className="header-contact d-none d-lg-flex align-items-center pr-xl-5 mr-5 mr-xl-3 ml-5"
-              >
-                <i className="icon-user-2"></i>
-                <h6 className="pt-1 line-height-1">
-                  Login
-                  <a className="d-block text-dark ls-10 pt-1">Register</a>
-                </h6>
-              </div>
+              {localStorage.getItem("userId") == "null" ? (
+                <div
+                  onClick={() => navigate(RoutePath.login)}
+                  style={{ cursor: "pointer" }}
+                  className="header-contact d-none d-lg-flex align-items-center pr-xl-5 mr-5 mr-xl-3 ml-5"
+                >
+                  <i className="icon-user-2"></i>
+                  <h6 className="pt-1 line-height-1">
+                    Login
+                    <a className="d-block text-dark ls-10 pt-1">Register</a>
+                  </h6>
+                </div>
+              ) : (
+                <div
+                  onClick={() => navigate(RoutePath.home)}
+                  style={{ cursor: "pointer" }}
+                  className="header-contact d-none d-lg-flex align-items-center pr-xl-5 mr-5 mr-xl-3 ml-5"
+                >
+                  <i className="icon-user-2"></i>
+                  <h6 className="pt-1 line-height-1">
+                    My Account
+                    <a
+                      onClick={() => logOut()}
+                      style={{ cursor: "pointer" }}
+                      className="d-block text-dark ls-10 pt-1"
+                    >
+                      Logout
+                    </a>
+                  </h6>
+                </div>
+              )}
+
               <a href="# " className="header-icon header-icon-user">
                 <i className="fa fa-print"></i>
               </a>

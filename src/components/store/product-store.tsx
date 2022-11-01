@@ -26,5 +26,38 @@ class productStore {
         }
       });
   };
+
+  getProductsDetails = async (data: any, callback: any) => {
+    let url = Constant.products + "/" + data;
+    productService
+      .getProducts(url)
+      .then((res: any) => {
+        res && callback(res?.data);
+      })
+      .catch((err) => {
+        if (err?.response?.data?.ResponseMessage) {
+          message.info(err?.response?.data?.ResponseMessage);
+        } else {
+          message.info("Oops! Some error occurred");
+        }
+      });
+  };
+
+  addtocart = async (data: any, callback: any) => {
+    let url = Constant.addtocart;
+    console.log(url);
+    productService
+      .addtocart(url, data)
+      .then((res: any) => {
+        res && callback(res?.data);
+      })
+      .catch((err) => {
+        if (err?.response?.data?.ResponseMessage) {
+          message.info(err?.response?.data?.ResponseMessage);
+        } else {
+          message.info("Oops! Some error occurred");
+        }
+      });
+  };
 }
 export default new productStore();

@@ -26,5 +26,37 @@ class userStore {
         }
       });
   };
+  addCompleteRegistration = async (data: any, callback: any) => {
+    let url = Constant.comp_registration;
+    userService
+      .completeReg(url, data)
+      .then((res: any) => {
+        res && callback(res?.data);
+      })
+      .catch((err) => {
+        if (err?.response?.data?.ResponseMessage) {
+          message.info(err?.response?.data?.ResponseMessage);
+        } else {
+          message.info("Oops! Some error occurred");
+        }
+      });
+  };
+
+  getUserCart = async (callback: any) => {
+    let userId = localStorage.getItem("userId");
+    let url = Constant.get_user_cart + "/" + userId;
+    userService
+      .getUserCart(url)
+      .then((res: any) => {
+        res && callback(res?.data);
+      })
+      .catch((err) => {
+        if (err?.response?.data?.ResponseMessage) {
+          message.info(err?.response?.data?.ResponseMessage);
+        } else {
+          message.info("Oops! Some error occurred");
+        }
+      });
+  };
 }
 export default new userStore();
