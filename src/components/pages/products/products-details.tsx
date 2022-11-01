@@ -249,7 +249,13 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                       {/* End .product-single-qty */}
                       <a
                         href="# "
-                        onClick={addtoCart}
+                        onClick={() => {
+                          if (localStorage.getItem("userId") == "null") {
+                            navigate(RoutePath.login);
+                          } else {
+                            addtoCart();
+                          }
+                        }}
                         className="btn btn-dark disabled add-cart icon-shopping-cart mr-2"
                         title="Add to Cart"
                       >
