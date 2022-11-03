@@ -42,6 +42,22 @@ class userStore {
       });
   };
 
+  createOrder = async (data: any, callback: any) => {
+    let url = Constant.create_order;
+    userService
+      .completeReg(url, data)
+      .then((res: any) => {
+        res && callback(res?.data);
+      })
+      .catch((err) => {
+        if (err?.response?.data?.ResponseMessage) {
+          message.info(err?.response?.data?.ResponseMessage);
+        } else {
+          message.info("Oops! Some error occurred");
+        }
+      });
+  };
+
   getUserCart = async (callback: any) => {
     let userId = localStorage.getItem("userId");
     let url = Constant.get_user_cart + "/" + userId;

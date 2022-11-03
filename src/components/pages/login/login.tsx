@@ -23,6 +23,10 @@ const LoginComponent: React.FC<any> = (props: LoginProps) => {
           if (res) {
             form.resetFields();
             if (res.data?.data?.userId) {
+              localStorage.setItem(
+                "userCmpReg",
+                res.data?.data?.isRegistrationCompleted
+              );
               if (res.data?.data?.isRegistrationCompleted == 0) {
                 navigate(RoutePath.complete_profile);
               } else {

@@ -22,6 +22,7 @@ const Constant = {
   products: "api/products",
   addtocart: "api/add-cart",
   get_user_cart: "api/get-user-cart",
+  create_order: "api/create-order",
 };
 
 export default Constant;

@@ -252,6 +252,10 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                         onClick={() => {
                           if (localStorage.getItem("userId") == "null") {
                             navigate(RoutePath.login);
+                          } else if (
+                            localStorage.getItem("userCmpReg") == "0"
+                          ) {
+                            navigate(RoutePath.complete_profile);
                           } else {
                             addtoCart();
                           }

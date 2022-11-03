@@ -7,6 +7,7 @@ import CartComponent from "../../pages/cart/cart";
 import ProductsComponent from "../../pages/products/products";
 import CompleteRegistrationComponent from "../../pages/complete-register/complete-register";
 import ProductsDetailComponent from "../../pages/products/products-details";
+import CheckoutComponent from "../../pages/checkout/checkout";
 import { Route, Routes } from "react-router-dom";
 const AppRouter = (props: any) => {
   return (
@@ -19,11 +20,13 @@ const AppRouter = (props: any) => {
             path={RoutePath.register}
             element={<RegistrationComponent />}
           />
+          <Route path={RoutePath.checkout} element={<Home />} />
         </>
       ) : (
         <>
           <Route path={RoutePath.login} element={<Home />} />
           <Route path={RoutePath.register} element={<Home />} />
+          <Route path={RoutePath.checkout} element={<CheckoutComponent />} />
         </>
       )}
 

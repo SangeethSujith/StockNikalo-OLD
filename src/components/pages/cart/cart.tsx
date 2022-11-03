@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import userStore from "../../store/user-store";
-
+import { Routes, Route, useNavigate } from "react-router-dom";
+import RoutePath from "../../global/route-paths";
 type CartProps = {};
 
 const CartComponent: React.FC<any> = (props: CartProps) => {
+  const navigate = useNavigate();
   const [CartData, setCartData] = useState([]);
   const [subTotal, setsubTotal] = useState(Number);
   useEffect(() => {
@@ -45,15 +47,25 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
             <ul className="checkout-progress-bar d-flex justify-content-center flex-wrap">
               <li className="active">
                 {" "}
-                <a href="cart.html">Shopping Cart</a>{" "}
+                <a
+                  onClick={() => navigate(RoutePath.cart)}
+                  style={{ cursor: "pointer" }}
+                >
+                  Shopping Cart
+                </a>{" "}
               </li>
               <li>
                 {" "}
-                <a href="checkout.html">Checkout</a>{" "}
+                <a
+                  onClick={() => navigate(RoutePath.checkout)}
+                  style={{ cursor: "pointer" }}
+                >
+                  Checkout
+                </a>{" "}
               </li>
               <li className="disabled">
                 {" "}
-                <a href="cart.html">Order Complete</a>{" "}
+                <a href="#">Order Complete</a>{" "}
               </li>
             </ul>
             <div className="row">

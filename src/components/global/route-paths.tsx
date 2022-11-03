@@ -15,6 +15,7 @@ const RoutePath = {
   shop: "/shop",
   product: "/product",
   complete_profile: "/complete-profile",
+  checkout: "/checkout",
 };
 
 export default RoutePath;
