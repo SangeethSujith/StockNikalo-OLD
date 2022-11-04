@@ -4,7 +4,7 @@ import { Form, Button, Input, message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
 import userStore from "../../store/user-store";
-import "./style.css";
+import "./style.scss";
 type RegistrationProps = {};
 const RegistrationComponent: React.FC<any> = (props: RegistrationProps) => {
   const { useForm } = Form;
