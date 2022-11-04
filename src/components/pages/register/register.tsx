@@ -1,8 +1,10 @@
 import React from "react";
+import swal from "sweetalert";
 import { Form, Button, Input, message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
 import userStore from "../../store/user-store";
+import "./style.css";
 type RegistrationProps = {};
 const RegistrationComponent: React.FC<any> = (props: RegistrationProps) => {
   const { useForm } = Form;
@@ -25,8 +27,16 @@ const RegistrationComponent: React.FC<any> = (props: RegistrationProps) => {
           if (res) {
             message.success("User registration completed successfully");
             form.resetFields();
-
-            navigate(RoutePath.login);
+            swal({
+              //title: "Are you sure?",
+              text: "User registration completed successfully",
+              icon: "success",
+              dangerMode: true,
+            }).then((willDelete) => {
+              if (willDelete) {
+                navigate(RoutePath.login);
+              }
+            });
           }
         });
       })
