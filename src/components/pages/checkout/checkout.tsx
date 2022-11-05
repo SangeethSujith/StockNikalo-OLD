@@ -4,6 +4,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
 import userStore from "../../store/user-store";
 import swal from "sweetalert";
+import "./style.css";
 type CartProps = {};
 
 const CheckoutComponent: React.FC<any> = (props: CartProps) => {
@@ -11,16 +12,46 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
   const { useForm } = Form;
   const [form] = useForm();
   const [CartData, setCartData] = useState([]);
+  const [BillingAddress, setBillingAddress] = useState([]);
+  const [BillingAddressId, setBillingAddressId] = useState(0);
   const [subTotal, setsubTotal] = useState(Number);
   const [TotalQty, setTotalQty] = useState(Number);
   const [CartId, setCartId] = useState([]);
 
   useEffect(() => {
     getUserCart();
+    getUserAddress();
   }, []);
+  const getUserAddress = () => {
+    userStore.getUserAddress((res: any) => {
+      if (res.status) {
+        setBillingAddress(res.data);
+      }
+    });
+  };
+  const handleClick = (e: any, index: any) => {
+    let element = document.getElementsByClassName("billing-col");
+    for (var i = 0; i < element.length; i++) {
+      element[i].classList.remove("active");
+    }
+    e.currentTarget.classList.toggle("active");
+    setBillingAddressId(BillingAddress[index]?.["id"]);
+
+    form.setFieldsValue({
+      first_name: BillingAddress[index]?.["first_name"],
+      last_name: BillingAddress[index]?.["last_name"],
+      appartment: BillingAddress[index]?.["appartment"],
+      street: BillingAddress[index]?.["street"],
+      email: BillingAddress[index]?.["email"],
+      town: BillingAddress[index]?.["town"],
+      country: BillingAddress[index]?.["country"],
+      state: BillingAddress[index]?.["state"],
+      zip: BillingAddress[index]?.["zip"],
+      phone: BillingAddress[index]?.["phone"],
+    });
+  };
 
   const getUserCart = () => {
-    console.log(2);
     userStore.getUserCart((res: any) => {
       if (res.status) {
         setCartData(res.data);
@@ -53,7 +84,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
           paid_amount: subTotal,
           total_items: CartData.length,
           total_quantity: TotalQty,
-          is_new_billing_address: 0,
+          is_new_billing_address: BillingAddressId,
           billing_address: {
             ...values,
           },
@@ -69,7 +100,8 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
               dangerMode: true,
             }).then((success) => {
               if (success) {
-                navigate(RoutePath.home);
+                //  navigate(window.location.origin);
+                window.location.href = window.location.origin;
               }
             });
           }
@@ -210,6 +242,31 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
               </div>
             </div>
           </div>
+          {BillingAddress?.length > 0 &&
+            BillingAddress?.map((item: any, index: any) => (
+              <div className="row">
+                <div className="col-lg-5">
+                  <div
+                    className="order-summary billing-col"
+                    onClick={(e) => handleClick(e, index)}
+                  >
+                    <h3>Address {index + 1}</h3>
+                    <div className="paymsents-methods">
+                      <p className="">
+                        Name : {item.first_name} {item.last_name}
+                      </p>
+                      <p className="">Street : {item.street}</p>
+                      <p className="">Town : {item.town}</p>
+                      <p className="">Apartment : {item.appartment}</p>
+                      <p className="">Country : {item.country}</p>
+                      <p className="">Zip : {item.zip}</p>
+                      <p className="">Contact Number : {item.phone}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+
           <div className="row">
             <div className="col-lg-7">
               <ul className="checkout-steps">

@@ -47,6 +47,18 @@ class UserService {
         });
     });
   };
+  getUserAddrss = (url: string) => {
+    return new Promise(function (resolve, reject) {
+      api
+        .get(url)
+        .then((response: any) => {
+          response && resolve(response);
+        })
+        .catch((err: any) => {
+          reject(err);
+        });
+    });
+  };
 }
 
 export default new UserService();

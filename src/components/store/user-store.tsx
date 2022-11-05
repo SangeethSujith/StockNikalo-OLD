@@ -90,5 +90,21 @@ class userStore {
         }
       });
   };
+  getUserAddress = async (callback: any) => {
+    let userId = localStorage.getItem("userId");
+    let url = Constant.user_address + "/" + userId;
+    userService
+      .getUserAddrss(url)
+      .then((res: any) => {
+        res && callback(res?.data);
+      })
+      .catch((err) => {
+        if (err?.response?.data?.ResponseMessage) {
+          message.info(err?.response?.data?.ResponseMessage);
+        } else {
+          message.info("Oops! Some error occurred");
+        }
+      });
+  };
 }
 export default new userStore();
