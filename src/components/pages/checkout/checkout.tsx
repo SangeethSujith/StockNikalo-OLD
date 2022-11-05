@@ -100,8 +100,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
               dangerMode: true,
             }).then((success) => {
               if (success) {
-                //  navigate(window.location.origin);
-                window.location.href = window.location.origin;
+                navigate(RoutePath.home);
               }
             });
           }
