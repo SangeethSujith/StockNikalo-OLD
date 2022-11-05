@@ -4,7 +4,7 @@ import { Form, Button, Input, message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
 import userStore from "../../store/user-store";
-import "./style.scss";
+import "./style.css";
 type RegistrationProps = {};
 const RegistrationComponent: React.FC<any> = (props: RegistrationProps) => {
   const { useForm } = Form;
@@ -123,6 +123,7 @@ const RegistrationComponent: React.FC<any> = (props: RegistrationProps) => {
                         <Input
                           maxLength={70}
                           className="form-input form-wide"
+                          type="password"
                         />
                       </Form.Item>
                     </div>
@@ -154,6 +155,7 @@ const RegistrationComponent: React.FC<any> = (props: RegistrationProps) => {
                         <Input
                           maxLength={70}
                           className="form-input form-wide"
+                          type="password"
                         />
                       </Form.Item>
                     </div>

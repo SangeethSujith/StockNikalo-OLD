@@ -7,7 +7,6 @@ const Header: React.FC<any> = () => {
     localStorage.setItem("userId", JSON.stringify(null));
     localStorage.setItem("userToken", JSON.stringify(null));
     navigate(RoutePath.home);
-    console.log(localStorage.getItem("userId"));
   };
   return (
     <>

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Form, Button, Input, message, Select } from "antd";
+import swal from "sweetalert";
 import { useNavigate, useParams } from "react-router-dom";
 import userStore from "../../store/user-store";
+import RoutePath from "../../global/route-paths";
+import "./style.css";
 type CompleteRegistrationProps = {};
 const CompleteRegistrationComponent: React.FC<any> = (
   props: CompleteRegistrationProps
@@ -41,12 +44,12 @@ const CompleteRegistrationComponent: React.FC<any> = (
             mobile_number: form1.getFieldValue("mobile_number"),
             company_name: form1.getFieldValue("company_name"),
             company_address: form2.getFieldValue("address_1"),
-            company_district: form2.getFieldValue("address_2"),
+            company_district: form2.getFieldValue("district"),
             company_state: form2.getFieldValue("state"),
             company_pincode: form2.getFieldValue("pincode"),
             company_name2: form1.getFieldValue("company_name"),
             company_address2: form2.getFieldValue("address_1"),
-            company_district2: form2.getFieldValue("address_2"),
+            company_district2: form2.getFieldValue("district"),
             company_state2: form2.getFieldValue("state"),
             company_pincode2: form2.getFieldValue("pincode"),
             company_incorporation: form2.getFieldValue("partnership"),
@@ -64,10 +67,21 @@ const CompleteRegistrationComponent: React.FC<any> = (
             if (res?.statusCode == 200) {
               //message.success("User profile completed successfully");
               localStorage.setItem("userCmpReg", "1");
-              setStatus(false);
+
               form1.resetFields();
               form2.resetFields();
               form3.resetFields();
+
+              swal({
+                //title: "Are you sure?",
+                text: "User profile updated successfully",
+                icon: "success",
+                dangerMode: true,
+              }).then((willDelete) => {
+                if (willDelete) {
+                  navigate(RoutePath.home);
+                }
+              });
             }
           });
         })
@@ -226,7 +240,13 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                   </Form.Item>
                                 </div>
                                 <div className="form-group col-md-6">
-                                  <label>Company Name</label>
+                                  <label>
+                                    Company Name
+                                    <abbr className="required" title="required">
+                                      *
+                                    </abbr>
+                                  </label>
+
                                   <Form.Item
                                     name="company_name"
                                     rules={[
@@ -251,6 +271,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                       maxLength={70}
                                       placeholder="Enter Login Password"
                                       className="form-control"
+                                      type="password"
                                     />
                                   </Form.Item>
                                 </div>
@@ -261,11 +282,17 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                       maxLength={70}
                                       placeholder="Enter Confirm Password"
                                       className="form-control"
+                                      type="password"
                                     />
                                   </Form.Item>
                                 </div>
                                 <div className="form-group col-md-6">
-                                  <label>Telephone (landline)</label>
+                                  <label>
+                                    Telephone (landline)
+                                    <abbr className="required" title="required">
+                                      *
+                                    </abbr>
+                                  </label>
                                   <Form.Item
                                     name="telephone"
                                     rules={[
@@ -284,7 +311,12 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                   </Form.Item>
                                 </div>
                                 <div className="form-group col-md-6">
-                                  <label>Mobile number</label>
+                                  <label>
+                                    Mobile number
+                                    <abbr className="required" title="required">
+                                      *
+                                    </abbr>
+                                  </label>
                                   <Form.Item
                                     name="mobile_number"
                                     rules={[
@@ -372,10 +404,18 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                       *
                                     </abbr>
                                   </label>
-                                  <Form.Item name="district">
+                                  <Form.Item
+                                    name="district"
+                                    rules={[
+                                      {
+                                        required: true,
+                                        message: "Please select your district",
+                                      },
+                                    ]}
+                                  >
                                     <select className="form-control">
                                       <option value={6} selected>
-                                        Chennai
+                                        Select
                                       </option>
                                       <option value={1}>Madurai</option>
                                       <option value={2}>Selam</option>
@@ -403,7 +443,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                   >
                                     <select className="form-control">
                                       <option value={6} selected>
-                                        Tamil Nadu
+                                        Select
                                       </option>
 
                                       <option value={1}>Kerala</option>
@@ -496,13 +536,13 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                       {
                                         required: true,
                                         message:
-                                          "Please select your partnership",
+                                          "Please select Incorporation Type",
                                       },
                                     ]}
                                   >
                                     <select className="form-control">
                                       <option value={6} selected>
-                                        Partnership
+                                        Select
                                       </option>
                                       <option value={1}>Proprietorship</option>
                                       <option value={2}>LLP</option>
@@ -548,14 +588,13 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                     rules={[
                                       {
                                         required: true,
-                                        message:
-                                          "Please enter your Manufacturer Service Provider",
+                                        message: "Please select Company Type",
                                       },
                                     ]}
                                   >
                                     <select className="form-control">
                                       <option value={4} selected>
-                                        Manufacturer
+                                        Select
                                       </option>
                                       <option value={1}>
                                         Service Provider
@@ -578,12 +617,15 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                       {
                                         required: true,
                                         message:
-                                          "Please enter your short description",
+                                          "Please select short description",
                                       },
                                     ]}
                                   >
                                     <select className="form-control">
                                       <option value={3} selected>
+                                        Select
+                                      </option>
+                                      <option value={3}>
                                         Product Manufacture
                                       </option>
                                       <option value={1}>
@@ -600,10 +642,19 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                       *
                                     </abbr>
                                   </label>
-                                  <Form.Item name="business_segment">
+                                  <Form.Item
+                                    name="business_segment"
+                                    rules={[
+                                      {
+                                        required: true,
+                                        message:
+                                          "Please select business segment",
+                                      },
+                                    ]}
+                                  >
                                     <select className="form-control">
                                       <option value={6} selected>
-                                        Automotive
+                                        Select
                                       </option>
                                       <option value={1}>Pharma</option>
                                       <option value={2}>Food</option>
@@ -702,9 +753,9 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                   >
                                     <select className="form-control">
                                       <option value={6} selected>
-                                        SBI
+                                        Select
                                       </option>
-                                      <option value={1}>KVB</option>
+                                      <option value={1}>SBI</option>
                                       <option value={2}>CUB</option>
                                       <option value={3}>TMB</option>
                                       <option value={4}>ICICI</option>

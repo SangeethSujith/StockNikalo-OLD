@@ -3,6 +3,8 @@ import { Form, Button, Input, message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import authStore from "../../store/auth-store";
 import RoutePath from "../../global/route-paths";
+import swal from "sweetalert";
+import "./style.css";
 type LoginProps = {};
 
 const LoginComponent: React.FC<any> = (props: LoginProps) => {
@@ -21,7 +23,6 @@ const LoginComponent: React.FC<any> = (props: LoginProps) => {
 
         authStore.login(data.email, data.password, (res: any) => {
           if (res) {
-            form.resetFields();
             if (res.data?.data?.userId) {
               localStorage.setItem(
                 "userCmpReg",
@@ -33,7 +34,16 @@ const LoginComponent: React.FC<any> = (props: LoginProps) => {
                 navigate(RoutePath.home);
               }
             } else {
-              setloginError(false);
+              swal({
+                //title: "Are you sure?",
+                text: "Invalid Username or Password",
+                icon: "error",
+                dangerMode: true,
+              }).then((error) => {
+                if (error) {
+                  form.setFieldValue(["password"], null);
+                }
+              });
             }
           }
         });
@@ -92,7 +102,11 @@ const LoginComponent: React.FC<any> = (props: LoginProps) => {
                         { required: true, message: "Enter your Password" },
                       ]}
                     >
-                      <Input maxLength={70} className="form-input form-wide" />
+                      <Input
+                        maxLength={70}
+                        className="form-input form-wide"
+                        type="password"
+                      />
                     </Form.Item>
                     <br />
                     <p hidden={loginError} style={{ color: "red" }}>
@@ -123,7 +137,7 @@ const LoginComponent: React.FC<any> = (props: LoginProps) => {
                         style={{ cursor: "pointer" }}
                         className="forget-password text-dark form-footer-right"
                       >
-                        New User
+                        New User?
                       </a>
                     </div>
 

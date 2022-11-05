@@ -10,6 +10,7 @@
 import { message } from "antd";
 import Constant from "../global/constants";
 import authService from "../services/auth-service";
+import swal from "sweetalert";
 
 if (!JSON.parse(localStorage.getItem("userId")!)) {
   localStorage.setItem("userId", JSON.stringify(null));
@@ -62,7 +63,12 @@ class AuthStore {
         } else if (err?.response?.data?.ResponseMessage) {
           message.info(err?.response?.data?.ResponseMessage);
         } else {
-          message.info("Oops! Some error occurred");
+          swal({
+            //title: "Are you sure?",
+            text: "Invalid Username or Password",
+            icon: "error",
+            dangerMode: true,
+          });
         }
         callback(err);
       });

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { Form, Button, Input, message, Select } from "antd";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
 import userStore from "../../store/user-store";
+import swal from "sweetalert";
 type CartProps = {};
 
 const CheckoutComponent: React.FC<any> = (props: CartProps) => {
   const navigate = useNavigate();
-
+  const { useForm } = Form;
+  const [form] = useForm();
   const [CartData, setCartData] = useState([]);
   const [subTotal, setsubTotal] = useState(Number);
   const [TotalQty, setTotalQty] = useState(Number);
@@ -41,20 +44,40 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
     });
   };
   const placeOrder = () => {
-    const data = {
-      user_id: parseInt(localStorage.getItem("userId")!),
-      total: subTotal,
-      paid_amount: subTotal,
-      total_items: CartData.length,
-      total_quantity: TotalQty,
-      cart_id: CartId,
-    };
+    form
+      .validateFields()
+      .then((values) => {
+        const data = {
+          user_id: parseInt(localStorage.getItem("userId")!),
+          total: subTotal,
+          paid_amount: subTotal,
+          total_items: CartData.length,
+          total_quantity: TotalQty,
+          is_new_billing_address: 0,
+          billing_address: {
+            ...values,
+          },
+          cart_id: CartId,
+        };
 
-    userStore.createOrder(data, (res: any) => {
-      if (res.status) {
-        navigate(RoutePath.checkout);
-      }
-    });
+        userStore.createOrder(data, (res: any) => {
+          if (res.status) {
+            swal({
+              //title: "Are you sure?",
+              text: "Order Created successfully",
+              icon: "success",
+              dangerMode: true,
+            }).then((success) => {
+              if (success) {
+                navigate(RoutePath.home);
+              }
+            });
+          }
+        });
+      })
+      .catch((errorinfo) => {
+        console.log(errorinfo);
+      });
   };
   return (
     <>
@@ -192,7 +215,12 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
               <ul className="checkout-steps">
                 <li>
                   <h2 className="step-title">Billing details</h2>
-                  <form action="#" id="checkout-form">
+                  <Form
+                    id="checkout-form"
+                    form={form}
+                    key="checkout-form"
+                    preserve={false}
+                  >
                     <div className="row">
                       <div className="col-md-6">
                         <div className="form-group">
@@ -202,7 +230,17 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                               *
                             </abbr>
                           </label>
-                          <input type="text" className="form-control" />
+                          <Form.Item
+                            name="first_name"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please enter your first name",
+                              },
+                            ]}
+                          >
+                            <Input maxLength={70} className="form-control" />
+                          </Form.Item>
                         </div>
                       </div>
                       <div className="col-md-6">
@@ -213,13 +251,25 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                               *
                             </abbr>
                           </label>
-                          <input type="text" className="form-control" />
+                          <Form.Item
+                            name="last_name"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please enter your last name",
+                              },
+                            ]}
+                          >
+                            <Input maxLength={70} className="form-control" />
+                          </Form.Item>
                         </div>
                       </div>
                     </div>
                     <div className="form-group">
                       <label>Company name (optional)</label>
-                      <input type="text" className="form-control" />
+                      <Form.Item name="company_name">
+                        <Input maxLength={70} className="form-control" />
+                      </Form.Item>
                     </div>
                     <div className="select-custom">
                       <label>
@@ -228,16 +278,26 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                           *
                         </abbr>
                       </label>
-                      <select name="orderby" className="form-control">
-                        <option value="" selected>
-                          Vanuatu
-                        </option>
-                        <option value={1}>Brunei</option>
-                        <option value={2}>Bulgaria</option>
-                        <option value={3}>Burkina Faso</option>
-                        <option value={4}>Burundi</option>
-                        <option value={5}>Cameroon</option>
-                      </select>
+                      <Form.Item
+                        name="country"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your country",
+                          },
+                        ]}
+                      >
+                        <select name="orderby" className="form-control">
+                          <option value="0" selected>
+                            Select
+                          </option>
+                          <option value={1}>Brunei</option>
+                          <option value={2}>Bulgaria</option>
+                          <option value={3}>Burkina Faso</option>
+                          <option value={4}>Burundi</option>
+                          <option value={5}>Cameroon</option>
+                        </select>
+                      </Form.Item>
                     </div>
                     <div className="form-group mb-1 pb-2">
                       <label>
@@ -246,18 +306,38 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                           *
                         </abbr>
                       </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="House number and street name"
-                      />
+                      <Form.Item
+                        name="street"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your street name",
+                          },
+                        ]}
+                      >
+                        <Input
+                          maxLength={70}
+                          placeholder="House number and street name"
+                          className="form-control"
+                        />
+                      </Form.Item>
                     </div>
                     <div className="form-group">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Apartment, suite, unite, etc. (optional)"
-                      />
+                      <Form.Item
+                        name="appartment"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your apartment name",
+                          },
+                        ]}
+                      >
+                        <Input
+                          maxLength={70}
+                          placeholder="Apartment, suite, unite, etc. (optional)"
+                          className="form-control"
+                        />
+                      </Form.Item>
                     </div>
                     <div className="form-group">
                       <label>
@@ -266,7 +346,17 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                           *
                         </abbr>
                       </label>
-                      <input type="text" className="form-control" />
+                      <Form.Item
+                        name="town"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your town name",
+                          },
+                        ]}
+                      >
+                        <Input maxLength={70} className="form-control" />
+                      </Form.Item>
                     </div>
                     <div className="select-custom">
                       <label>
@@ -275,16 +365,26 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                           *
                         </abbr>
                       </label>
-                      <select name="orderby" className="form-control">
-                        <option value="" selected>
-                          NY
-                        </option>
-                        <option value={1}>Brunei</option>
-                        <option value={2}>Bulgaria</option>
-                        <option value={3}>Burkina Faso</option>
-                        <option value={4}>Burundi</option>
-                        <option value={5}>Cameroon</option>
-                      </select>
+                      <Form.Item
+                        name="state"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please select state",
+                          },
+                        ]}
+                      >
+                        <select name="orderby" className="form-control">
+                          <option value="0" selected>
+                            Select
+                          </option>
+                          <option value={1}>Brunei</option>
+                          <option value={2}>Bulgaria</option>
+                          <option value={3}>Burkina Faso</option>
+                          <option value={4}>Burundi</option>
+                          <option value={5}>Cameroon</option>
+                        </select>
+                      </Form.Item>
                     </div>
                     <div className="form-group">
                       <label>
@@ -293,7 +393,17 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                           *
                         </abbr>
                       </label>
-                      <input type="text" className="form-control" />
+                      <Form.Item
+                        name="zip"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your zip code",
+                          },
+                        ]}
+                      >
+                        <Input maxLength={70} className="form-control" />
+                      </Form.Item>
                     </div>
                     <div className="form-group">
                       <label>
@@ -302,7 +412,21 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                           *
                         </abbr>
                       </label>
-                      <input type="tel" className="form-control" />
+                      <Form.Item
+                        name="phone"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your phone number",
+                          },
+                        ]}
+                      >
+                        <Input
+                          type="tel"
+                          maxLength={70}
+                          className="form-control"
+                        />
+                      </Form.Item>
                     </div>
                     <div className="form-group">
                       <label>
@@ -311,7 +435,21 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                           *
                         </abbr>
                       </label>
-                      <input type="email" className="form-control" />
+                      <Form.Item
+                        name="email"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your email id",
+                          },
+                        ]}
+                      >
+                        <Input
+                          type="email"
+                          maxLength={70}
+                          className="form-control"
+                        />
+                      </Form.Item>
                     </div>
                     <div className="form-group mb-1">
                       <div className="custom-control custom-checkbox">
@@ -477,7 +615,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                         defaultValue={""}
                       />
                     </div>
-                  </form>
+                  </Form>
                 </li>
               </ul>
             </div>

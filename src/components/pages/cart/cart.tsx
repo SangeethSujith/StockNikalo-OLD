@@ -277,7 +277,11 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
                   </table>
                   <div className="checkout-methods">
                     {" "}
-                    <a href="cart.html" className="btn btn-block btn-dark">
+                    <a
+                      onClick={() => navigate(RoutePath.checkout)}
+                      style={{ cursor: "pointer" }}
+                      className="btn btn-block btn-dark"
+                    >
                       Proceed to Checkout <i className="fa fa-arrow-right" />
                     </a>{" "}
                   </div>

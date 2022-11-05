@@ -9,6 +9,7 @@
 import { message } from "antd";
 import Constant from "../global/constants";
 import userService from "../services/user-service";
+import swal from "sweetalert";
 
 class userStore {
   addRegistration = async (data: any, callback: any) => {
@@ -22,7 +23,12 @@ class userStore {
         if (err?.response?.data?.ResponseMessage) {
           message.info(err?.response?.data?.ResponseMessage);
         } else {
-          message.info("Oops! Some error occurred");
+          swal({
+            //title: "Are you sure?",
+            text: "Oops! Some error occurred",
+            icon: "error",
+            dangerMode: true,
+          });
         }
       });
   };
@@ -37,7 +43,12 @@ class userStore {
         if (err?.response?.data?.ResponseMessage) {
           message.info(err?.response?.data?.ResponseMessage);
         } else {
-          message.info("Oops! Some error occurred");
+          swal({
+            //title: "Are you sure?",
+            text: "Oops! Some error occurred",
+            icon: "error",
+            dangerMode: true,
+          });
         }
       });
   };
@@ -53,7 +64,12 @@ class userStore {
         if (err?.response?.data?.ResponseMessage) {
           message.info(err?.response?.data?.ResponseMessage);
         } else {
-          message.info("Oops! Some error occurred");
+          swal({
+            //title: "Are you sure?",
+            text: "Oops! Some error occurred",
+            icon: "error",
+            dangerMode: true,
+          });
         }
       });
   };
