@@ -1,13 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Input, message } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import authStore from "../../store/auth-store";
 import RoutePath from "../../global/route-paths";
+import productStore from "../../store/product-store";
 import swal from "sweetalert";
 import "./custom.css";
 type RfqQuotePriceProps = {};
 
 const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
+  const location: any = useLocation();
+  const navigate = useNavigate();
+  const { useForm } = Form;
+  const [form] = useForm();
+  const [RfqsData, setRfqsData] = useState([]);
+  useEffect(() => {
+    const rfqid = location.state?.id;
+    if (rfqid != undefined) {
+      getRfqsDetailsbyID(rfqid);
+    } else {
+      navigate(RoutePath.rfqs);
+    }
+  }, []);
+
+  const getRfqsDetailsbyID = (id: any) => {
+    productStore.getRfqsDetailsByID(id, (res: any) => {
+      setRfqsData(res.data);
+    });
+  };
+  const submitRfqQuote = () => {
+    var data: any = new Array();
+    const arr: any = new Array();
+    RfqsData?.map((item: any, index: number) => {
+      if (form.getFieldValue("price-" + index) != "") {
+        data = {
+          user_id: localStorage.getItem("userId"),
+          rfq_id: item.rfqid,
+          rfq_perticular_id: item.perticularId,
+          amount_raised: form.getFieldValue("price-" + index),
+        };
+      }
+      arr.push(data);
+    });
+    const rfqData = {
+      rfqData: arr,
+    };
+    productStore.submitRfqsQuote(rfqData, (res: any) => {
+      console.log(res);
+    });
+  };
+
   return (
     <>
       <main className="main">
@@ -51,103 +93,84 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                       </div> */}
               </div>
               <div className="wishlist-table-container">
-                <table className="table table-wishlist mb-0 mt-5 border">
-                  <thead>
-                    <tr>
-                      <th className="">Item Code</th>
-                      <th className="">Item Name</th>
-                      <th className="l">Description</th>
-                      <th className="">Size</th>
-                      <th className="">Specification </th>
-                      <th className="">Rate </th>
-                      <th className="action">
-                        <a href="#">Select All</a>{" "}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="">
-                    <tr className="product-row">
-                      <td>
-                        <span className="stock-status">#001</span>
-                      </td>
-                      <td className="">iBELL M200-105 IGBT Inverter</td>
-                      <td>
-                        <span className="stock-status">
-                          Lorem ipsum dolor sit.{" "}
-                        </span>
-                      </td>
-                      <td>
-                        <span className="stock-status">50-75</span>
-                      </td>
-                      <td>
-                        <span className="stock-status">
-                          Lorem ipsum dolor sit.{" "}
-                        </span>
-                      </td>
-                      <td>
-                        <input
-                          type="price"
-                          className="form-control"
-                          name="q"
-                          id="q"
-                          placeholder={"0"}
-                          required
-                        />
-                      </td>
-                      <td className="action d-flex align-items-center justify-content-center">
-                        <input
+                <Form
+                  id="checkout-form"
+                  form={form}
+                  key="checkout-form"
+                  preserve={false}
+                >
+                  <table className="table table-wishlist mb-0 mt-5 border">
+                    <thead>
+                      <tr>
+                        <th className="action">
+                          <a href="#">Select All</a>{" "}
+                          {/* <input
                           type="checkbox"
                           className="form-control checkbox"
-                        />
-                      </td>
-                    </tr>
-                    <tr className="product-row">
-                      <td>
-                        <span className="price-box">#002</span>
-                      </td>
-                      <td className="">iBELL M200-105 IGBT Inverter</td>
-                      <td>
-                        <span className="stock-status">
-                          Lorem ipsum dolor sit.{" "}
-                        </span>
-                      </td>
-                      <td>
-                        <span className="stock-status">50-75</span>
-                      </td>
-                      <td>
-                        <span className="stock-status">
-                          Lorem ipsum dolor sit.{" "}
-                        </span>
-                      </td>
-                      <td>
-                        <input
-                          type="price"
-                          className="form-control"
-                          name="q"
-                          id="q"
-                          placeholder={"0"}
-                          required
-                        />
-                      </td>
-                      <td className="action d-flex align-items-center justify-content-center">
-                        <input
-                          type="checkbox"
-                          className="form-control checkbox"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={7} className="text-right">
-                        <a href="#" className="btn btn-sm btn-danger">
-                          Cancel
-                        </a>
-                        <a href="#" className="btn btn-sm btn-success">
-                          Submit
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                        /> */}
+                        </th>
+                        <th className="">Item Code</th>
+                        <th className="">Item Name</th>
+                        <th className="l">Description</th>
+                        <th className="">Size</th>
+                        <th className="">Specification </th>
+                        <th className="">Rate </th>
+                      </tr>
+                    </thead>
+                    <tbody className="">
+                      {RfqsData?.map((item: any, index: number) => (
+                        <tr className="product-row">
+                          <td className="action d-flex align-items-center justify-content-center">
+                            <input
+                              type="checkbox"
+                              className="form-control checkbox"
+                            />
+                          </td>
+                          <td>
+                            <span className="stock-status">#{index + 1}</span>
+                          </td>
+                          <td className="">{item.product}</td>
+                          <td>
+                            <span className="stock-status">
+                              Lorem ipsum dolor sit
+                            </span>
+                          </td>
+                          <td>
+                            <span className="stock-status">50-75</span>
+                          </td>
+                          <td>
+                            <span className="stock-status">
+                              Lorem ipsum dolor sit.{" "}
+                            </span>
+                          </td>
+                          <td>
+                            <Form.Item name={"price-" + index}>
+                              <Input
+                                className="form-control"
+                                placeholder={"0"}
+                                required
+                              />
+                            </Form.Item>
+                          </td>
+                        </tr>
+                      ))}
+
+                      <tr>
+                        <td colSpan={7} className="text-right">
+                          <a href="#" className="btn btn-sm btn-danger">
+                            Cancel
+                          </a>
+                          <a
+                            onClick={() => submitRfqQuote()}
+                            className="btn btn-sm btn-success"
+                          >
+                            Submit
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </Form>
               </div>
             </div>
             {/* End .col-lg-9 */}

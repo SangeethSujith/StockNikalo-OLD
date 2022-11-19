@@ -27,6 +27,38 @@ class productStore {
       });
   };
 
+  getRfqsDetails = async (callback: any) => {
+    let url = Constant.getrfq;
+    productService
+      .getRfqsDetails(url)
+      .then((res: any) => {
+        res && callback(res?.data);
+      })
+      .catch((err) => {
+        if (err?.response?.data?.ResponseMessage) {
+          message.info(err?.response?.data?.ResponseMessage);
+        } else {
+          message.info("Oops! Some error occurred");
+        }
+      });
+  };
+
+  getRfqsDetailsByID = async (data: any, callback: any) => {
+    let url = Constant.getrfq + "/" + data;
+    productService
+      .getRfqsDetails(url)
+      .then((res: any) => {
+        res && callback(res?.data);
+      })
+      .catch((err) => {
+        if (err?.response?.data?.ResponseMessage) {
+          message.info(err?.response?.data?.ResponseMessage);
+        } else {
+          message.info("Oops! Some error occurred");
+        }
+      });
+  };
+
   getProductsDetails = async (data: any, callback: any) => {
     let url = Constant.products + "/" + data;
     productService
@@ -46,6 +78,22 @@ class productStore {
   addtocart = async (data: any, callback: any) => {
     let url = Constant.addtocart;
     console.log(url);
+    productService
+      .addtocart(url, data)
+      .then((res: any) => {
+        res && callback(res?.data);
+      })
+      .catch((err) => {
+        if (err?.response?.data?.ResponseMessage) {
+          message.info(err?.response?.data?.ResponseMessage);
+        } else {
+          message.info("Oops! Some error occurred");
+        }
+      });
+  };
+
+  submitRfqsQuote = async (data: any, callback: any) => {
+    let url = Constant.submitrfq;
     productService
       .addtocart(url, data)
       .then((res: any) => {

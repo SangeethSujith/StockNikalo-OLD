@@ -1,13 +1,31 @@
-import React, { useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { Form, Button, Input, message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import authStore from "../../store/auth-store";
 import RoutePath from "../../global/route-paths";
 import swal from "sweetalert";
+import productStore from "../../store/product-store";
 import "./custom.css";
 type RfqsProps = {};
 
+interface Options {
+  itemId: number;
+}
+
 const RfqsComponent: React.FC<any> = (props: RfqsProps) => {
+  const navigate = useNavigate();
+  const [rfqs, setRfqs] = useState([]);
+
+  useEffect(() => {
+    getRfqsDetails();
+  }, []);
+
+  const getRfqsDetails = () => {
+    productStore.getRfqsDetails((res: any) => {
+      setRfqs(res.data);
+    });
+  };
+
   return (
     <>
       <main className="main">
@@ -60,66 +78,39 @@ const RfqsComponent: React.FC<any> = (props: RfqsProps) => {
                     </tr>
                   </thead>
                   <tbody className="">
-                    <tr className="product-row">
-                      <td>
-                        <span className="rfq-serial">#001</span>
-                      </td>
-                      <td className="">iBELL M200-105 IGBT Inverter</td>
-                      <td>
-                        <span className="rfq-date">12-11-2022 </span>
-                      </td>
-                      <td>
-                        <span className="rfq-qty">75</span>
-                      </td>
-                      <td>
-                        <span className="rfq-btn">
-                          {" "}
-                          <button className="btn btn-success btn-add-cart product-type-simple btn-shop">
-                            View
-                          </button>
-                        </span>
-                      </td>
-                    </tr>
-                    <tr className="product-row">
-                      <td>
-                        <span className="rfq-serial">#001</span>
-                      </td>
-                      <td className="">iBELL M200-105 IGBT Inverter</td>
-                      <td>
-                        <span className="rfq-date">12-11-2022 </span>
-                      </td>
-                      <td>
-                        <span className="rfq-qty">75</span>
-                      </td>
-                      <td>
-                        <span className="rfq-btn">
-                          {" "}
-                          <button className="btn btn-success btn-add-cart product-type-simple btn-shop">
-                            View
-                          </button>
-                        </span>
-                      </td>
-                    </tr>
-                    <tr className="product-row">
-                      <td>
-                        <span className="rfq-serial">#001</span>
-                      </td>
-                      <td className="">iBELL M200-105 IGBT Inverter</td>
-                      <td>
-                        <span className="rfq-date">12-11-2022 </span>
-                      </td>
-                      <td>
-                        <span className="rfq-qty">75</span>
-                      </td>
-                      <td>
-                        <span className="rfq-btn">
-                          {" "}
-                          <button className="btn btn-success btn-add-cart product-type-simple btn-shop">
-                            View
-                          </button>
-                        </span>
-                      </td>
-                    </tr>
+                    {rfqs?.map((item: any, index: number) => (
+                      <tr className="product-row">
+                        <td>
+                          <span className="rfq-serial">#{index + 1}</span>
+                        </td>
+                        <td className="">{item.name}</td>
+                        <td>
+                          <span className="rfq-date">
+                            {new Date(item.created_at)
+                              .toISOString()
+                              .slice(0, 10)}
+                          </span>
+                        </td>
+                        <td>
+                          <span className="rfq-qty">{item.product_count}</span>
+                        </td>
+                        <td>
+                          <span className="rfq-btn">
+                            {" "}
+                            <button
+                              onClick={() =>
+                                navigate(RoutePath.quoteprice, {
+                                  state: { id: item.id },
+                                })
+                              }
+                              className="btn btn-success btn-add-cart product-type-simple btn-shop"
+                            >
+                              View
+                            </button>
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

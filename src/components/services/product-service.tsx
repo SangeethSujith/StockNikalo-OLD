@@ -22,6 +22,19 @@ class productService {
     });
   };
 
+  getRfqsDetails = (url: string) => {
+    return new Promise(function (resolve, reject) {
+      api
+        .get(url)
+        .then((response: any) => {
+          response && resolve(response);
+        })
+        .catch((err: any) => {
+          reject(err);
+        });
+    });
+  };
+
   addtocart = (url: string, data: any) => {
     return new Promise(function (resolve, reject) {
       api
