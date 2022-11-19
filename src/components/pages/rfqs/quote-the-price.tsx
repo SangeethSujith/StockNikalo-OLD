@@ -46,10 +46,20 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
     const rfqData = {
       rfqData: arr,
     };
-    console.log(rfqData);
-    // productStore.submitRfqsQuote(rfqData, (res: any) => {
-    //   console.log(res);
-    // });
+    productStore.submitRfqsQuote(rfqData, (res: any) => {
+      if (res.status) {
+        swal({
+          //title: "Are you sure?",
+          text: "RFQ created successfully",
+          icon: "success",
+          dangerMode: true,
+        }).then((success) => {
+          if (success) {
+            navigate(RoutePath.home);
+          }
+        });
+      }
+    });
   };
 
   return (

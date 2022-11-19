@@ -9,6 +9,7 @@
 import { message } from "antd";
 import Constant from "../global/constants";
 import productService from "../services/product-service";
+import swal from "sweetalert";
 
 class productStore {
   getProducts = async (callback: any) => {
@@ -100,11 +101,11 @@ class productStore {
         res && callback(res?.data);
       })
       .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
+        swal({
+          text: "Oops! Some error occurred",
+          icon: "error",
+          dangerMode: true,
+        });
       });
   };
 }

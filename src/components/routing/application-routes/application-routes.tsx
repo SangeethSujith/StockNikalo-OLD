@@ -23,19 +23,24 @@ const AppRouter = (props: any) => {
             element={<RegistrationComponent />}
           />
           <Route path={RoutePath.checkout} element={<Home />} />
+          <Route path={RoutePath.rfqs} element={<LoginComponent />} />
+          <Route path={RoutePath.quoteprice} element={<Home />} />
         </>
       ) : (
         <>
           <Route path={RoutePath.login} element={<Home />} />
           <Route path={RoutePath.register} element={<Home />} />
           <Route path={RoutePath.checkout} element={<CheckoutComponent />} />
+          <Route path={RoutePath.rfqs} element={<RfqsComponent />} />
+          <Route
+            path={RoutePath.quoteprice}
+            element={<RfqQuotePriceComponent />}
+          />
         </>
       )}
 
       <Route path={RoutePath.cart} element={<CartComponent />} />
       <Route path={RoutePath.shop} element={<ProductsComponent />} />
-      <Route path={RoutePath.rfqs} element={<RfqsComponent />} />
-      <Route path={RoutePath.quoteprice} element={<RfqQuotePriceComponent />} />
       <Route
         path={RoutePath.complete_profile}
         element={<CompleteRegistrationComponent />}
