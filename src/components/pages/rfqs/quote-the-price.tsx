@@ -31,23 +31,25 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   const submitRfqQuote = () => {
     var data: any = new Array();
     const arr: any = new Array();
+    console.log(arr);
     RfqsData?.map((item: any, index: number) => {
-      if (form.getFieldValue("price-" + index) != "") {
+      if (form.getFieldValue("price-" + index) != undefined) {
         data = {
           user_id: localStorage.getItem("userId"),
           rfq_id: item.rfqid,
           rfq_perticular_id: item.perticularId,
           amount_raised: form.getFieldValue("price-" + index),
         };
+        arr.push(data);
       }
-      arr.push(data);
     });
     const rfqData = {
       rfqData: arr,
     };
-    productStore.submitRfqsQuote(rfqData, (res: any) => {
-      console.log(res);
-    });
+    console.log(rfqData);
+    // productStore.submitRfqsQuote(rfqData, (res: any) => {
+    //   console.log(res);
+    // });
   };
 
   return (
@@ -111,9 +113,9 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                         </th>
                         <th className="">Item Code</th>
                         <th className="">Item Name</th>
-                        <th className="l">Description</th>
-                        <th className="">Size</th>
-                        <th className="">Specification </th>
+                        <th className="l">Quantity</th>
+                        {/* <th className="">Size</th> */}
+                        <th className="">Target Price </th>
                         <th className="">Rate </th>
                       </tr>
                     </thead>
@@ -132,15 +134,15 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                           <td className="">{item.product}</td>
                           <td>
                             <span className="stock-status">
-                              Lorem ipsum dolor sit
+                              {item.quantity}
                             </span>
                           </td>
-                          <td>
+                          {/* <td>
                             <span className="stock-status">50-75</span>
-                          </td>
+                          </td> */}
                           <td>
                             <span className="stock-status">
-                              Lorem ipsum dolor sit.{" "}
+                              {item.target_price}
                             </span>
                           </td>
                           <td>

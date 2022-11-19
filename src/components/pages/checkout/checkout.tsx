@@ -70,7 +70,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
         );
         setsubTotal(tot);
         setTotalQty(qty);
-        setCartId(arr);
+        setCartId(Array.from(new Set(arr)));
       }
     });
   };
