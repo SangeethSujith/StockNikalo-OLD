@@ -15451,3 +15451,20 @@ html { overflow:scroll !important;}
     padding: inherit !important;
 
 }
+
+
+.product-type-simple{
+    transition: all 0.3s;
+    text-transform: uppercase;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: Poppins, sans-serif;
+    line-height: 1.429;
+}
+
+
+input#q {
+    height: 40px;
+}

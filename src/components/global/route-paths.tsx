@@ -16,6 +16,8 @@ const RoutePath = {
   product: "/product",
   complete_profile: "/complete-profile",
   checkout: "/checkout",
+  rfqs: "/rfqs",
+  quoteprice: "/quote-the-price",
 };
 
 export default RoutePath;

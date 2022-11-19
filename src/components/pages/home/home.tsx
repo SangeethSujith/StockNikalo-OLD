@@ -1,6 +1,9 @@
 import React, { Component, useEffect, useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import RoutePath from "../../global/route-paths";
 import productStore from "../../store/product-store";
 const Home: React.FC<any> = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const script = document.createElement("script");
@@ -124,7 +127,8 @@ const Home: React.FC<any> = () => {
                       <div className="banner-layer banner-layer-middle text-left">
                         {" "}
                         <a
-                          href="# "
+                          onClick={() => navigate(RoutePath.rfqs)}
+                          style={{ cursor: "pointer" }}
                           className="text-dark text-uppercase ls-10 py-1"
                         >
                           Quote The Price&nbsp;

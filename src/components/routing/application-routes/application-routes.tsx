@@ -8,6 +8,8 @@ import ProductsComponent from "../../pages/products/products";
 import CompleteRegistrationComponent from "../../pages/complete-register/complete-register";
 import ProductsDetailComponent from "../../pages/products/products-details";
 import CheckoutComponent from "../../pages/checkout/checkout";
+import RfqsComponent from "../../pages/rfqs/rfqs";
+import RfqQuotePriceComponent from "../../pages/rfqs/quote-the-price";
 import { Route, Routes } from "react-router-dom";
 const AppRouter = (props: any) => {
   return (
@@ -32,6 +34,8 @@ const AppRouter = (props: any) => {
 
       <Route path={RoutePath.cart} element={<CartComponent />} />
       <Route path={RoutePath.shop} element={<ProductsComponent />} />
+      <Route path={RoutePath.rfqs} element={<RfqsComponent />} />
+      <Route path={RoutePath.quoteprice} element={<RfqQuotePriceComponent />} />
       <Route
         path={RoutePath.complete_profile}
         element={<CompleteRegistrationComponent />}
