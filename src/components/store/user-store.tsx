@@ -74,6 +74,26 @@ class userStore {
       });
   };
 
+  removeCart = async (callback: any) => {
+    let userId = localStorage.getItem("userId");
+    let data = {
+    "user_id" : userId
+    }
+    let url = Constant.removecart
+    userService
+      .removeCart(url,data)
+      .then((res: any) => {
+        res && callback(res?.data);
+      })
+      .catch((err) => {
+        if (err?.response?.data?.ResponseMessage) {
+          message.info(err?.response?.data?.ResponseMessage);
+        } else {
+          message.info("Oops! Some error occurred");
+        }
+      });
+  };
+
   getUserCart = async (callback: any) => {
     let userId = localStorage.getItem("userId");
     let url = Constant.get_user_cart + "/" + userId;
@@ -90,6 +110,8 @@ class userStore {
         }
       });
   };
+
+
   getUserAddress = async (callback: any) => {
     let userId = localStorage.getItem("userId");
     let url = Constant.user_address + "/" + userId;

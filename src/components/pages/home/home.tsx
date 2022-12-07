@@ -5,11 +5,13 @@ import productStore from "../../store/product-store";
 const Home: React.FC<any> = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const [NewArrivals, setNewArrivals] = useState([]);
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "assets/js/main.min.js";
     document.body.append(script);
     getProductsData();
+    getNewArrivals();
   }, []);
 
   useEffect(() => {
@@ -23,6 +25,12 @@ const Home: React.FC<any> = () => {
       setProducts(values.data);
     });
   };
+   const getNewArrivals = () => {
+    productStore.getNewArrivals((values: any) => {
+      setNewArrivals(values.data);
+    });
+  };
+ 
   return (
     <>
       <main className="main home">
@@ -170,7 +178,8 @@ const Home: React.FC<any> = () => {
                       <div className="banner-layer banner-layer-middle">
                         {" "}
                         <a
-                          href="# "
+                          onClick={() => navigate(RoutePath.shop)}
+                          style={{ cursor: "pointer" }}
                           className="text-dark text-uppercase ls-10 pb-1"
                         >
                           Buy Product&nbsp;
@@ -706,7 +715,7 @@ const Home: React.FC<any> = () => {
                         <a href={`/product?id=${item.productId}`}>
                           {" "}
                           <img
-                            src="../../assets/images/products/product-1.jpg"
+                            src={(item?.images[0].image)}
                             width={300}
                             height={300}
                             alt="product"
@@ -3106,6 +3115,9 @@ const Home: React.FC<any> = () => {
             >
               New Arrivals
             </h2>
+            
+            {NewArrivals.length > 0 && (
+
             <div
               className="owl-carousel owl-theme appear-animate"
               data-owl-options="{
@@ -3125,14 +3137,14 @@ const Home: React.FC<any> = () => {
                   }
               }
           }"
-            >
+            > {NewArrivals?.map((item: any) => (
               <div className="product-default inner-quickview inner-icon">
                 <figure>
                   {" "}
-                  <a href="# ">
+                  <a href={`/product?id=${item.productId}`}>
                     {" "}
                     <img
-                      src="../../assets/images/products/product-1.jpg"
+                      src={(item?.images[0].image)}
                       width={300}
                       height={300}
                       alt="product"
@@ -3156,15 +3168,14 @@ const Home: React.FC<any> = () => {
                   <h3 className="product-title">
                     {" "}
                     <a href="# ">
-                      iBELL M200-105 IGBT Inverter 2 in 1 Flux Core/Solid Wire
-                      MAG Welding Machine with 1 Year Warranty
+                     {item.productName}
                     </a>{" "}
                   </h3>
                   {/* End .product-container */}
                   <div className="price-box">
                     {" "}
-                    <span className="product-price">$259.00</span>{" "}
-                    <del className="old-price">$299.00</del>
+                    <span className="product-price">₹{(item?.mrp)?item.mrp:200}</span>{" "}
+                    <del className="old-price">₹{(item?.mrp)?item.mrp:200}</del>
                     <div className="category-list">
                       {" "}
                       <a href="# ">50% OFF</a>{" "}
@@ -3174,247 +3185,11 @@ const Home: React.FC<any> = () => {
                 </div>
                 {/* End .product-details */}
               </div>
-              <div className="product-default inner-quickview inner-icon">
-                <figure>
-                  {" "}
-                  <a href="# ">
-                    {" "}
-                    <img
-                      src="../../assets/images/products/product-1.jpg"
-                      width={300}
-                      height={300}
-                      alt="product"
-                    />{" "}
-                  </a>{" "}
-                </figure>
-                <div className="product-details">
-                  <div className="category-wrap">
-                    <div className="category-list">
-                      {" "}
-                      <a
-                        href="# "
-                        className="bg-success p-2 rounded-1 text-white"
-                      >
-                        4.3&nbsp;
-                        <i className="fa fa-star" />
-                      </a>{" "}
-                      (2389){" "}
-                    </div>
-                  </div>
-                  <h3 className="product-title">
-                    {" "}
-                    <a href="# ">
-                      iBELL M200-105 IGBT Inverter 2 in 1 Flux Core/Solid Wire
-                      MAG Welding Machine with 1 Year Warranty
-                    </a>{" "}
-                  </h3>
-                  {/* End .product-container */}
-                  <div className="price-box">
-                    {" "}
-                    <span className="product-price">$259.00</span>{" "}
-                    <del className="old-price">$299.00</del>
-                    <div className="category-list">
-                      {" "}
-                      <a href="# ">50% OFF</a>{" "}
-                    </div>
-                  </div>
-                  {/* End .price-box */}
-                </div>
-                {/* End .product-details */}
-              </div>
-              <div className="product-default inner-quickview inner-icon">
-                <figure>
-                  {" "}
-                  <a href="# ">
-                    {" "}
-                    <img
-                      src="../../assets/images/products/product-1.jpg"
-                      width={300}
-                      height={300}
-                      alt="product"
-                    />{" "}
-                  </a>{" "}
-                </figure>
-                <div className="product-details">
-                  <div className="category-wrap">
-                    <div className="category-list">
-                      {" "}
-                      <a
-                        href="# "
-                        className="bg-success p-2 rounded-1 text-white"
-                      >
-                        4.3&nbsp;
-                        <i className="fa fa-star" />
-                      </a>{" "}
-                      (2389){" "}
-                    </div>
-                  </div>
-                  <h3 className="product-title">
-                    {" "}
-                    <a href="# ">
-                      iBELL M200-105 IGBT Inverter 2 in 1 Flux Core/Solid Wire
-                      MAG Welding Machine with 1 Year Warranty
-                    </a>{" "}
-                  </h3>
-                  {/* End .product-container */}
-                  <div className="price-box">
-                    {" "}
-                    <span className="product-price">$259.00</span>{" "}
-                    <del className="old-price">$299.00</del>
-                    <div className="category-list">
-                      {" "}
-                      <a href="# ">50% OFF</a>{" "}
-                    </div>
-                  </div>
-                  {/* End .price-box */}
-                </div>
-                {/* End .product-details */}
-              </div>
-              <div className="product-default inner-quickview inner-icon">
-                <figure>
-                  {" "}
-                  <a href="# ">
-                    {" "}
-                    <img
-                      src="../../assets/images/products/product-1.jpg"
-                      width={300}
-                      height={300}
-                      alt="product"
-                    />{" "}
-                  </a>{" "}
-                </figure>
-                <div className="product-details">
-                  <div className="category-wrap">
-                    <div className="category-list">
-                      {" "}
-                      <a
-                        href="# "
-                        className="bg-success p-2 rounded-1 text-white"
-                      >
-                        4.3&nbsp;
-                        <i className="fa fa-star" />
-                      </a>{" "}
-                      (2389){" "}
-                    </div>
-                  </div>
-                  <h3 className="product-title">
-                    {" "}
-                    <a href="# ">
-                      iBELL M200-105 IGBT Inverter 2 in 1 Flux Core/Solid Wire
-                      MAG Welding Machine with 1 Year Warranty
-                    </a>{" "}
-                  </h3>
-                  {/* End .product-container */}
-                  <div className="price-box">
-                    {" "}
-                    <span className="product-price">$259.00</span>{" "}
-                    <del className="old-price">$299.00</del>
-                    <div className="category-list">
-                      {" "}
-                      <a href="# ">50% OFF</a>{" "}
-                    </div>
-                  </div>
-                  {/* End .price-box */}
-                </div>
-                {/* End .product-details */}
-              </div>
-              <div className="product-default inner-quickview inner-icon">
-                <figure>
-                  {" "}
-                  <a href="# ">
-                    {" "}
-                    <img
-                      src="../../assets/images/products/product-1.jpg"
-                      width={300}
-                      height={300}
-                      alt="product"
-                    />{" "}
-                  </a>{" "}
-                </figure>
-                <div className="product-details">
-                  <div className="category-wrap">
-                    <div className="category-list">
-                      {" "}
-                      <a
-                        href="# "
-                        className="bg-success p-2 rounded-1 text-white"
-                      >
-                        4.3&nbsp;
-                        <i className="fa fa-star" />
-                      </a>{" "}
-                      (2389){" "}
-                    </div>
-                  </div>
-                  <h3 className="product-title">
-                    {" "}
-                    <a href="# ">
-                      iBELL M200-105 IGBT Inverter 2 in 1 Flux Core/Solid Wire
-                      MAG Welding Machine with 1 Year Warranty
-                    </a>{" "}
-                  </h3>
-                  {/* End .product-container */}
-                  <div className="price-box">
-                    {" "}
-                    <span className="product-price">$259.00</span>{" "}
-                    <del className="old-price">$299.00</del>
-                    <div className="category-list">
-                      {" "}
-                      <a href="# ">50% OFF</a>{" "}
-                    </div>
-                  </div>
-                  {/* End .price-box */}
-                </div>
-                {/* End .product-details */}
-              </div>
-              <div className="product-default inner-quickview inner-icon">
-                <figure>
-                  {" "}
-                  <a href="# ">
-                    {" "}
-                    <img
-                      src="../../assets/images/products/product-1.jpg"
-                      width={300}
-                      height={300}
-                      alt="product"
-                    />{" "}
-                  </a>{" "}
-                </figure>
-                <div className="product-details">
-                  <div className="category-wrap">
-                    <div className="category-list">
-                      {" "}
-                      <a
-                        href="# "
-                        className="bg-success p-2 rounded-1 text-white"
-                      >
-                        4.3&nbsp;
-                        <i className="fa fa-star" />
-                      </a>{" "}
-                      (2389){" "}
-                    </div>
-                  </div>
-                  <h3 className="product-title">
-                    {" "}
-                    <a href="# ">
-                      iBELL M200-105 IGBT Inverter 2 in 1 Flux Core/Solid Wire
-                      MAG Welding Machine with 1 Year Warranty
-                    </a>{" "}
-                  </h3>
-                  {/* End .product-container */}
-                  <div className="price-box">
-                    {" "}
-                    <span className="product-price">$259.00</span>{" "}
-                    <del className="old-price">$299.00</del>
-                    <div className="category-list">
-                      {" "}
-                      <a href="# ">50% OFF</a>{" "}
-                    </div>
-                  </div>
-                  {/* End .price-box */}
-                </div>
-                {/* End .product-details */}
-              </div>
+            ))}
+              
             </div>
+
+            )}
           </div>
         </section>
         <section className="contact-section">

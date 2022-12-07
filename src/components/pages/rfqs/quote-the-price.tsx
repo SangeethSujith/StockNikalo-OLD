@@ -14,10 +14,11 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   const { useForm } = Form;
   const [form] = useForm();
   const [RfqsData, setRfqsData] = useState([]);
+  const [QuotedRfqsData, setQuotedRfqsData] = useState([]);
   useEffect(() => {
     const rfqid = location.state?.id;
     if (rfqid != undefined) {
-      getRfqsDetailsbyID(rfqid);
+      getQuotedRfq(rfqid);
     } else {
       navigate(RoutePath.rfqs);
     }
@@ -28,10 +29,17 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
       setRfqsData(res.data);
     });
   };
+  const getQuotedRfq = (id: any) => {
+    productStore.getQuotedRfq(id, (res: any) => {  
+    setQuotedRfqsData(res?.data[0]?.rfq_perticular_id);
+    getRfqsDetailsbyID(id);
+  });
+     };
+
+
   const submitRfqQuote = () => {
     var data: any = new Array();
     const arr: any = new Array();
-    console.log(arr);
     RfqsData?.map((item: any, index: number) => {
       if (form.getFieldValue("price-" + index) != undefined) {
         data = {
@@ -43,6 +51,8 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
         arr.push(data);
       }
     });
+
+    if(arr.length > 0) {
     const rfqData = {
       rfqData: arr,
     };
@@ -60,6 +70,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
         });
       }
     });
+  }
   };
 
   return (
@@ -105,6 +116,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                       </div> */}
               </div>
               <div className="wishlist-table-container">
+                
                 <Form
                   id="checkout-form"
                   form={form}
@@ -125,15 +137,18 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                         <th className="">Item Name</th>
                         <th className="l">Quantity</th>
                         {/* <th className="">Size</th> */}
-                        <th className="">Target Price </th>
+                        {/* <th className="">Target Price </th> */}
                         <th className="">Rate </th>
                       </tr>
                     </thead>
                     <tbody className="">
+                      
                       {RfqsData?.map((item: any, index: number) => (
-                        <tr className="product-row">
+
+                        <tr style={{background: (item.perticularId==QuotedRfqsData)? "#e9ecef" :""}}  className="product-row">
                           <td className="action d-flex align-items-center justify-content-center">
-                            <input
+                            <input 
+                              disabled={(item.perticularId == QuotedRfqsData) ? true : false}
                               type="checkbox"
                               className="form-control checkbox"
                             />
@@ -150,17 +165,18 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                           {/* <td>
                             <span className="stock-status">50-75</span>
                           </td> */}
-                          <td>
+                          {/* <td>
                             <span className="stock-status">
                               {item.target_price}
                             </span>
-                          </td>
+                          </td> */}
                           <td>
                             <Form.Item name={"price-" + index}>
                               <Input
                                 className="form-control"
-                                placeholder={"0"}
+                                placeholder={(item.perticularId == QuotedRfqsData) ? "submitted" : "0"}
                                 required
+                                disabled={(item.perticularId == QuotedRfqsData) ? true : false}
                               />
                             </Form.Item>
                           </td>

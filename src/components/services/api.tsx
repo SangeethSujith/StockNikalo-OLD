@@ -126,7 +126,7 @@ class API {
       headers: headers,
     };
     const url: string = Constant.SNBaseUrl + requestUrl;
-    return this.api.get(url, config, config1);
+    return this.api.get(url, config1);
   }
 
   async authPost(

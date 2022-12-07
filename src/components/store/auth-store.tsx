@@ -73,6 +73,29 @@ class AuthStore {
         callback(err);
       });
   };
+
+
+  signOut(data:any,callback?: any) {
+    const url = Constant.logout;
+    authService
+      .logout(url,{token:data})
+      .then((res: any) => {
+          localStorage.setItem("userCmpReg", JSON.stringify(null));
+          localStorage.setItem("userId", JSON.stringify(null));
+          localStorage.setItem("userToken", JSON.stringify(null));
+        if (callback) {
+          res && callback(res);
+        }
+      })
+      .catch((err) => {
+       swal({
+            //title: "Are you sure?",
+            text: "Error occured",
+            icon: "error",
+            dangerMode: true,
+          });
+      });
+  }
 }
 
 export default new AuthStore();

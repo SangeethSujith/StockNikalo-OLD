@@ -15,7 +15,7 @@ const AppRouter = (props: any) => {
   return (
     <Routes>
       <Route path={RoutePath.home} element={<Home />} />
-      {localStorage.getItem("userId") === "null" ? (
+      {localStorage.getItem("userId") == "null" ? (
         <>
           <Route path={RoutePath.login} element={<LoginComponent />} />
           <Route

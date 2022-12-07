@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import productStore from "../../store/product-store";
 import RoutePath from "../../global/route-paths";
 import { useNavigate, useParams } from "react-router-dom";
-
+import userStore from "../../store/user-store";
+import swal from "sweetalert";
 type ProductsProps = {};
 
 const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
@@ -10,6 +11,8 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
   const [pid, setPid] = useState();
   const [CartQty, setCartQty] = useState();
   const [ProductsData, setProductsData] = useState([]);
+  const [isaddtosucc, setisaddtosucc] = useState(true);
+  const [ProductName, setProductName] = useState("Product");
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const product: any = urlParams.get("id");
@@ -28,23 +31,62 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
       ],
     };
     productStore.addtocart(data, (res: any) => {
-      // if (res.status) {
-      //   setProductsData(res.data);
-      // } else {
-      //   navigate(RoutePath.home);
-      // }
+      if (res.status) {
+        setisaddtosucc(false);
+      }
     });
   };
+
   const getProductDetails = () => {
     productStore.getProductsDetails(product, (res: any) => {
-      console.log(res.data);
-      if (res.status) {
-        setProductsData(res.data);
+      if (res?.status) {
+        setProductsData(res?.data);
+        setProductName(res?.data[0]?.productName);
       } else {
         navigate(RoutePath.home);
       }
     });
   };
+
+  const removeCart = () => {
+    userStore.removeCart((res: any) => {});
+  };
+
+  const getUserCart = (e:any) => {
+    userStore.getUserCart((res: any) => {
+      console.log(res);
+      if (res.status) {
+        if (res?.data?.length > 0) {
+          swal({
+            title: "Are you sure?",
+            text: "You have items from another seller added to the cart. Do you want to clear the cart and add this item?",
+            icon: "warning",
+            buttons: ["No, cancel it!", "Yes, I am sure!"],
+            dangerMode: true,
+          }).then(function (isConfirm) {
+            if (isConfirm) {
+              removeCart();
+              addtoCart();
+              
+              e.target.classList.add("added-to-cart");
+              swal({
+                title: "Added to cart",
+                text: "Product added to cart successfully!",
+                icon: "success",
+              }).then(function () {
+                // form.submit(); // <--- submit form programmatically
+              });
+            } else {
+              // swal("Cancelled", "Your imaginary file is safe :)", "error");
+            }
+          });
+        }
+      } else {
+        addtoCart();
+      }
+    });
+  };
+
   useEffect(() => {
     setPid(product);
   }, []);
@@ -68,11 +110,9 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
             </ol>
           </nav>
           <div className="product-single-container product-single-info">
-            <div className="cart-message d-none">
+            <div className="cart-message" hidden={isaddtosucc}>
               {" "}
-              <strong className="single-cart-notice">
-                "Men Black Sports Shoes"
-              </strong>{" "}
+              <strong className="single-cart-notice">{ProductName}</strong>{" "}
               <span>has been added to your cart.</span>{" "}
             </div>
             <div className="row">
@@ -81,8 +121,10 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                   <div className="inner">
                     {" "}
                     <img
-                      src="assets/images/products/product-1.jpg"
-                      data-zoom-image="assets/images/products/product-1.jpg"
+                      src={ProductsData[0]?.["images"][0]?.["image"]}
+                      data-zoom-image={
+                        ProductsData[0]?.["images"][0]?.["image"]
+                      }
                       width={480}
                       height={480}
                       alt="proudct-img"
@@ -98,8 +140,10 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                   <div className="inner">
                     {" "}
                     <img
-                      src="assets/images/products/product-2.jpg"
-                      data-zoom-image="assets/images/products/product-2.jpg"
+                      src={ProductsData[0]?.["images"][1]?.["image"]}
+                      data-zoom-image={
+                        ProductsData[0]?.["images"][1]?.["image"]
+                      }
                       width={480}
                       height={480}
                       alt="proudct-img"
@@ -115,8 +159,10 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                   <div className="inner">
                     {" "}
                     <img
-                      src="assets/images/products/product-1.jpg"
-                      data-zoom-image="assets/images/products/product-1.jpg"
+                      src={ProductsData[0]?.["images"][2]?.["image"]}
+                      data-zoom-image={
+                        ProductsData[0]?.["images"][2]?.["image"]
+                      }
                       width={480}
                       height={480}
                       alt="proudct-img"
@@ -249,7 +295,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                       {/* End .product-single-qty */}
                       <a
                         href="# "
-                        onClick={() => {
+                        onClick={(e) => {
                           if (localStorage.getItem("userId") == "null") {
                             navigate(RoutePath.login);
                           } else if (
@@ -257,7 +303,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                           ) {
                             navigate(RoutePath.complete_profile);
                           } else {
-                            addtoCart();
+                            getUserCart(e);
                           }
                         }}
                         className="btn btn-dark disabled add-cart icon-shopping-cart mr-2"
@@ -267,7 +313,8 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                       </a>{" "}
                       <a
                         onClick={() => navigate(RoutePath.cart)}
-                        className="btn btn-gray view-cart d-none"
+                        className="btn btn-gray view-cart"
+                        hidden={isaddtosucc}
                       >
                         View cart
                       </a>{" "}

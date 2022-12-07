@@ -208,8 +208,8 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
           </div>
           <div className="checkout-discount">
             <h4>
-              Have a coupon?
-              <button
+              Select your delivery address
+              {/* <button
                 data-toggle="collapse"
                 data-target="#collapseTwo"
                 aria-expanded="true"
@@ -217,7 +217,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                 className="btn btn-link btn-toggle"
               >
                 ENTER YOUR CODE
-              </button>
+              </button> */}
             </h4>
             <div id="collapseTwo" className="collapse">
               <div className="feature-box">

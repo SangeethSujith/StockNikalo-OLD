@@ -1,13 +1,81 @@
-import React from "react";
+import React, { Component, useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import RoutePath from "../global/route-paths";
+import authStore from "../store/auth-store";
+import productStore from "../store/product-store";
+import userStore from "../store/user-store";
 const Header: React.FC<any> = () => {
   const navigate = useNavigate();
+  const [proCategory, setproCategory] = useState([]);
+  const [CurrentCategory, setCurrentCategory] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [CartData, setCartData] = useState([]);
+  const [subTotal, setsubTotal] = useState(Number);
+  useEffect(() => {
+    getProductCategory();
+    getUserCart();
+  }, []);
+
   const logOut = () => {
-    localStorage.setItem("userId", JSON.stringify(null));
-    localStorage.setItem("userToken", JSON.stringify(null));
-    navigate(RoutePath.home);
+    authStore.signOut(localStorage.getItem("userToken"),() => {
+      navigate(RoutePath.login);
+    });
   };
+
+  const getUserCart = () => {
+    userStore.getUserCart((res: any) => {
+      console.log(res);
+      if (res.status) {
+        setCartData(res.data);
+        var tot = 0;
+        var price = 0;
+        res?.data?.map(
+          (item: any) => (
+            (price = item.qty * item.productPrice), (tot = tot + price)
+          )
+        );
+        setsubTotal(tot);
+      }
+    });
+  };
+
+  const getProductCategory = () => {
+    productStore.getProductCategory((values: any) => {
+      setproCategory(values.data);
+    });
+  };
+  const onTextChange = (e: any) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleCategorySelect = (e: any) => {
+    setCurrentCategory(e.target.value);
+  };
+
+  const onSearch = (e: any) => {
+    if (CurrentCategory != "" && searchText != "") {
+      let data = {
+        category_id: CurrentCategory,
+        subcategory_id: "",
+        childcategory_id: "",
+        product_name: searchText,
+        min_rate: "",
+        max_rate: "",
+        sort_by: "",
+        show: "",
+        limit: 10,
+        page: 1,
+      };
+      productStore.onSearch(data, (callback: any) => {
+        if (callback.status) {
+          navigate(RoutePath.shop, {
+            state: { data: callback.data },
+          });
+        }
+      });
+    }
+  };
+
   return (
     <>
       <header className="header home">
@@ -36,50 +104,38 @@ const Header: React.FC<any> = () => {
                 <a href="# " className="search-toggle" role="button">
                   <i className="icon-search-3"></i>
                 </a>
-                <form action="# " method="get">
-                  <div className="header-search-wrapper">
-                    <div className="select-custom">
-                      <select id="cat" name="cat">
-                        <option value="">All Category</option>
-                        <option value="4">Fashion</option>
-                        <option value="12">- Women</option>
-                        <option value="13">- Men</option>
-                        <option value="66">- Jewellery</option>
-                        <option value="67">- Kids Fashion</option>
-                        <option value="5">Electronics</option>
-                        <option value="21">- Smart TVs</option>
-                        <option value="22">- Cameras</option>
-                        <option value="63">- Games</option>
-                        <option value="7">Home &amp; Garden</option>
-                        <option value="11">Motors</option>
-                        <option value="31">- Cars and Trucks</option>
-                        <option value="32">
-                          - Motorcycles &amp; Powersports
-                        </option>
-                        <option value="33">- Parts &amp; Accessories</option>
-                        <option value="34">- Boats</option>
-                        <option value="57">- Auto Tools &amp; Supplies</option>
-                      </select>
-                    </div>
-                    <input
-                      type="search"
-                      className="form-control"
-                      name="q"
-                      id="q"
-                      placeholder="Search..."
-                      required
-                    />
-
-                    <button
-                      className="btn icon-magnifier"
-                      type="submit"
-                    ></button>
+                {/* <form action="# " method="get"> */}
+                <div className="header-search-wrapper">
+                  <div className="select-custom">
+                    <select id="cat" name="cat" onChange={handleCategorySelect}>
+                      <option value="">All Category</option>
+                      {proCategory?.map((item: any) => (
+                        <option value={item.id}>{item.categoryname}</option>
+                      ))}
+                    </select>
                   </div>
-                </form>
+                  <input
+                    type="search"
+                    className="form-control"
+                    name="q"
+                    id="q"
+                    placeholder="Search..."
+                    required
+                    onChange={onTextChange}
+                  />
+
+                  <button
+                    className="btn icon-magnifier"
+                    type="submit"
+                    onClick={onSearch}
+                  ></button>
+                </div>
+                {/* </form> */}
               </div>
               {localStorage.getItem("userId") == "null" ? (
                 <div
-                  onClick={() => navigate(RoutePath.login)}
+                  onClick={() => {console.log(localStorage.getItem("userId"), "what hrer")
+                  navigate(RoutePath.login)}}
                   style={{ cursor: "pointer" }}
                   className="header-contact d-none d-lg-flex align-items-center pr-xl-5 mr-5 mr-xl-3 ml-5"
                 >
@@ -138,109 +194,69 @@ const Header: React.FC<any> = () => {
                   <div className="dropdownmenu-wrapper custom-scrollbar">
                     <div className="dropdown-cart-header">Shopping Cart</div>
 
-                    <div className="dropdown-cart-products">
-                      <div className="product">
-                        <div className="product-details">
-                          <h4 className="product-title">
-                            <a href="# ">Ultimate 3D Bluetooth Speaker</a>
-                          </h4>
-                          <span className="cart-product-info">
-                            <span className="cart-product-qty">1</span> × $99.00
+                    {CartData.length > 0 ? (
+                      <>
+                        <div className="dropdown-cart-products">
+                          {CartData?.map((item: any) => (
+                            <div className="product">
+                              <div className="product-details">
+                                <h4 className="product-title">
+                                  <a href="# ">{item.productName}</a>
+                                </h4>
+                                <span className="cart-product-info">
+                                  <span className="cart-product-qty">
+                                    {item.qty}
+                                  </span>{" "}
+                                  ×{item.productPrice}
+                                </span>
+                              </div>
+
+                              <figure className="product-image-container">
+                                <a href="# " className="product-image">
+                                  <img
+                                    src={item?.images[0].image}
+                                    alt="product"
+                                    width="80"
+                                    height="80"
+                                  />
+                                </a>
+                                <a
+                                  href="# "
+                                  className="btn-remove"
+                                  title="Remove Product"
+                                >
+                                  <span>×</span>
+                                </a>
+                              </figure>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="dropdown-cart-total">
+                          <span>SUBTOTAL:</span>
+                          <span className="cart-total-price float-right">
+                            ₹{subTotal}
                           </span>
                         </div>
 
-                        <figure className="product-image-container">
-                          <a href="# " className="product-image">
-                            <img
-                              src="assets/images/products/product-1.jpg"
-                              alt="product"
-                              width="80"
-                              height="80"
-                            />
+                        <div className="dropdown-cart-action">
+                          <a
+                            onClick={() => navigate(RoutePath.cart)}
+                            className="btn btn-gray btn-block view-cart"
+                          >
+                            View Cart
                           </a>
                           <a
-                            href="# "
-                            className="btn-remove"
-                            title="Remove Product"
+                            onClick={() => navigate(RoutePath.checkout)}
+                            className="btn btn-dark btn-block"
                           >
-                            <span>×</span>
+                            Checkout
                           </a>
-                        </figure>
-                      </div>
-
-                      <div className="product">
-                        <div className="product-details">
-                          <h4 className="product-title">
-                            <a href="# ">Brown Women Casual HandBag</a>
-                          </h4>
-                          <span className="cart-product-info">
-                            <span className="cart-product-qty">1</span> × $35.00
-                          </span>
                         </div>
-                        <figure className="product-image-container">
-                          <a href="# " className="product-image">
-                            <img
-                              src="assets/images/products/product-2.jpg"
-                              alt="product"
-                              width="80"
-                              height="80"
-                            />
-                          </a>
-                          <a
-                            href="# "
-                            className="btn-remove"
-                            title="Remove Product"
-                          >
-                            <span>×</span>
-                          </a>
-                        </figure>
-                      </div>
-
-                      <div className="product">
-                        <div className="product-details">
-                          <h4 className="product-title">
-                            <a href="# ">Circled Ultimate 3D Speaker</a>
-                          </h4>
-                          <span className="cart-product-info">
-                            <span className="cart-product-qty">1</span> × $35.00
-                          </span>
-                        </div>
-
-                        <figure className="product-image-container">
-                          <a href="# " className="product-image">
-                            <img
-                              src="assets/images/products/product-1.jpg"
-                              alt="product"
-                              width="80"
-                              height="80"
-                            />
-                          </a>
-                          <a
-                            href="# "
-                            className="btn-remove"
-                            title="Remove Product"
-                          >
-                            <span>×</span>
-                          </a>
-                        </figure>
-                      </div>
-                    </div>
-
-                    <div className="dropdown-cart-total">
-                      <span>SUBTOTAL:</span>
-                      <span className="cart-total-price float-right">
-                        $134.00
-                      </span>
-                    </div>
-
-                    <div className="dropdown-cart-action">
-                      <a href="# " className="btn btn-gray btn-block view-cart">
-                        View Cart
-                      </a>
-                      <a href="# " className="btn btn-dark btn-block">
-                        Checkout
-                      </a>
-                    </div>
+                      </>
+                    ) : (
+                      "Empty Cart"
+                    )}
                   </div>
                 </div>
               </div>

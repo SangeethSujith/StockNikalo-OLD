@@ -83,10 +83,10 @@ class AuthService {
     });
   };
 
-  logout = async (url: string) => {
+  logout = async (url: string, data:any) => {
     return new Promise(function (resolve, reject) {
       api
-        .post(url)
+        .post(url,data)
         .then((response: any) => {
           response && resolve(response);
         })

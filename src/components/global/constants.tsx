@@ -20,12 +20,18 @@ const Constant = {
   comp_registration: "api/completeRegistration",
   login: "api/login",
   products: "api/products",
+  newarrivals: "api/new-arrival",
   addtocart: "api/add-cart",
   get_user_cart: "api/get-user-cart",
   create_order: "api/create-order",
   user_address: "api/get-user-address",
   getrfq: "api/getrfq",
   submitrfq: "api/submitrfq",
+  logout: "api/logout",
+  quotedrfq: "api/quoted-rfq",
+  removecart: "api/remove-carts-and-add",
+  category: "api/listcategory",
+  productsearch: "api/product-search",
 };
 
 export default Constant;

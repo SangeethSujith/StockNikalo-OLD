@@ -22,7 +22,13 @@ const RfqsComponent: React.FC<any> = (props: RfqsProps) => {
 
   const getRfqsDetails = () => {
     productStore.getRfqsDetails((res: any) => {
-      setRfqs(res.data);
+
+      if (res.status) {
+        setRfqs(res.data);
+      }
+      else {
+         navigate(RoutePath.home);
+      }
     });
   };
 
