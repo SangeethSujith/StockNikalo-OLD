@@ -88,12 +88,14 @@ class AuthStore {
         }
       })
       .catch((err) => {
-       swal({
-            //title: "Are you sure?",
-            text: "Error occured",
-            icon: "error",
-            dangerMode: true,
-          });
+        callback(err)
+      //  swal({
+      //       //title: "Are you sure?",
+      //       text: "Error occured",
+      //       icon: "error",
+      //       dangerMode: true,
+      //     });
+      
       });
   }
 }

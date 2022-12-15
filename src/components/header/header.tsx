@@ -298,7 +298,7 @@ const Header: React.FC<any> = () => {
                   ?.filter((item, index) => index < 7)
                   .map((item: any) => (
                     <li>
-                      <a onClick={() => onSearch(item.id)}>
+                      <a style={{cursor:"pointer"}} onClick={() => onSearch(item.id)}>
                         {item.categoryname}
                       </a>
                     </li>

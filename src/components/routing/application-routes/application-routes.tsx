@@ -10,6 +10,8 @@ import ProductsDetailComponent from "../../pages/products/products-details";
 import CheckoutComponent from "../../pages/checkout/checkout";
 import RfqsComponent from "../../pages/rfqs/rfqs";
 import RfqQuotePriceComponent from "../../pages/rfqs/quote-the-price";
+import AuctionDetailComponent from "../../pages/auction/auction-details";
+import AuctionComponent from "../../pages/auction/auction";
 import { Route, Routes } from "react-router-dom";
 const AppRouter = (props: any) => {
   return (
@@ -41,11 +43,13 @@ const AppRouter = (props: any) => {
 
       <Route path={RoutePath.cart} element={<CartComponent />} />
       <Route path={RoutePath.shop} element={<ProductsComponent />} />
+      <Route path={RoutePath.auctionpage} element={<AuctionComponent />} />
       <Route
         path={RoutePath.complete_profile}
         element={<CompleteRegistrationComponent />}
       />
       <Route path={RoutePath.product} element={<ProductsDetailComponent />} />
+      <Route path={RoutePath.auction} element={<AuctionDetailComponent />} />
     </Routes>
   );
 };

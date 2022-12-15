@@ -911,7 +911,7 @@ const onSearch = (id: any) => {
                   ?.filter((item, index) => index < 7)
                   .map((item: any) => (
                     <li>
-                      <a onClick={() => onSearch(item.id)}>{item.categoryname}</a>
+                      <a style={{cursor:"pointer"}} onClick={() => onSearch(item.id)}>{item.categoryname}</a>
                       {/* <span className="products-count">(2)</span> */}
                     </li>
                   ))}

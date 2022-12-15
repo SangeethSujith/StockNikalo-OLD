@@ -18,6 +18,8 @@ const RoutePath = {
   checkout: "/checkout",
   rfqs: "/rfqs",
   quoteprice: "/quote-the-price",
+  auctionpage: "/auctions",
+  auction: "/auction",
 };
 
 export default RoutePath;
