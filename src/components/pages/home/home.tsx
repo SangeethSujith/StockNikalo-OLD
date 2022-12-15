@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
 import productStore from "../../store/product-store";
-const Home: React.FC<any> = () => {
+  const Home: React.FC<any> = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [NewArrivals, setNewArrivals] = useState([]);
@@ -715,7 +715,7 @@ const Home: React.FC<any> = () => {
                         <a href={`/product?id=${item.productId}`}>
                           {" "}
                           <img
-                            src={(item?.images[0].image)}
+                            src={(item?.images[0]?.image)?item?.images[0]?.image:"/assets/images/products/product-1.jpg"}
                             width={300}
                             height={300}
                             alt="product"

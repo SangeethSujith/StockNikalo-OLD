@@ -755,7 +755,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                     </tr>
                   </tfoot>
                 </table>
-                <div className="payment-methods">
+                {/* <div className="payment-methods">
                   <h4 className="">Payment methods</h4>
                   <div className="info-box with-icon p-0">
                     <p>
@@ -764,7 +764,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                       assistance or wish to make alternate arrangements.
                     </p>
                   </div>
-                </div>
+                </div> */}
                 <button
                   onClick={placeOrder}
                   className="btn btn-dark btn-place-order"

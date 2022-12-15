@@ -13,7 +13,7 @@
 //StockNikalo = SN
 
 const Constant = {
-  SNBaseUrl: "http://stocknikalo.kraftlabs.com/",
+  SNBaseUrl: "https://qriocty.com/",
 
   // API urls
   registration: "api/register",

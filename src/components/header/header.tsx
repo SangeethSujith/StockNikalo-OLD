@@ -17,7 +17,7 @@ const Header: React.FC<any> = () => {
   }, []);
 
   const logOut = () => {
-    authStore.signOut(localStorage.getItem("userToken"),() => {
+    authStore.signOut(localStorage.getItem("userToken"), () => {
       navigate(RoutePath.login);
     });
   };
@@ -52,10 +52,10 @@ const Header: React.FC<any> = () => {
     setCurrentCategory(e.target.value);
   };
 
-  const onSearch = (e: any) => {
-    if (CurrentCategory != "" && searchText != "") {
+  const onSearch = (id: any) => {
+    if ((CurrentCategory != "" && searchText != "") || id != null) {
       let data = {
-        category_id: CurrentCategory,
+        category_id: CurrentCategory ? CurrentCategory : id,
         subcategory_id: "",
         childcategory_id: "",
         product_name: searchText,
@@ -127,15 +127,17 @@ const Header: React.FC<any> = () => {
                   <button
                     className="btn icon-magnifier"
                     type="submit"
-                    onClick={onSearch}
+                    onClick={() => onSearch(null)}
                   ></button>
                 </div>
                 {/* </form> */}
               </div>
               {localStorage.getItem("userId") == "null" ? (
                 <div
-                  onClick={() => {console.log(localStorage.getItem("userId"), "what hrer")
-                  navigate(RoutePath.login)}}
+                  onClick={() => {
+                    console.log(localStorage.getItem("userId"), "what hrer");
+                    navigate(RoutePath.login);
+                  }}
                   style={{ cursor: "pointer" }}
                   className="header-contact d-none d-lg-flex align-items-center pr-xl-5 mr-5 mr-xl-3 ml-5"
                 >
@@ -153,13 +155,17 @@ const Header: React.FC<any> = () => {
                 >
                   <i className="icon-user-2"></i>
                   <h6 className="pt-1 line-height-1">
-                    My Account
+                    My
                     <a
-                      onClick={() => logOut()}
+                      // onClick={() => logOut()}
+                      href={
+                        "https://qriocty.com/auto-login/" +
+                        localStorage.getItem("userToken")
+                      }
                       style={{ cursor: "pointer" }}
                       className="d-block text-dark ls-10 pt-1"
                     >
-                      Logout
+                      Account
                     </a>
                   </h6>
                 </div>
@@ -214,7 +220,7 @@ const Header: React.FC<any> = () => {
                               <figure className="product-image-container">
                                 <a href="# " className="product-image">
                                   <img
-                                    src={item?.images[0].image}
+                                   // src={item?.images[0]?.image}
                                     alt="product"
                                     width="80"
                                     height="80"
@@ -271,7 +277,7 @@ const Header: React.FC<any> = () => {
           <div className="container">
             <nav className="main-nav w-100">
               <ul className="menu">
-                <li>
+                {/* <li>
                   <a href="# ">
                     <i className="fas fa-bars"></i> &nbsp;Ready To Ship
                   </a>
@@ -286,11 +292,19 @@ const Header: React.FC<any> = () => {
                       <a href="# ">Ready To Ship 03</a>
                     </li>
                   </ul>
-                </li>
-                <li>
-                  <a href="# ">Ready To Ship</a>
-                </li>
-                <li>
+                </li> */}
+
+                {proCategory
+                  ?.filter((item, index) => index < 7)
+                  .map((item: any) => (
+                    <li>
+                      <a onClick={() => onSearch(item.id)}>
+                        {item.categoryname}
+                      </a>
+                    </li>
+                  ))}
+
+                {/* <li>
                   <a href="# ">Trade Show</a>
                 </li>
                 <li>
@@ -328,20 +342,26 @@ const Header: React.FC<any> = () => {
                       <a href="# ">Help</a>
                     </li>
                   </ul>
-                </li>
-                <li className="float-right">
-                  <a href="# " className="pl-5">
-                    English USD
-                  </a>
-                  <ul>
+                </li> */}
+                {localStorage.getItem("userId") != "null" && (
+                  <li className="float-right">
+                    <a
+                      style={{ cursor: "pointer" }}
+                      onClick={() => logOut()}
+                      className="pl-5"
+                    >
+                      Logout
+                    </a>
+                    {/* <ul>
                     <li>
                       <a href="# ">USD</a>
                     </li>
                     <li>
                       <a href="# ">INR</a>
                     </li>
-                  </ul>
-                </li>
+                  </ul> */}
+                  </li>
+                )}
               </ul>
             </nav>
           </div>
