@@ -2347,11 +2347,10 @@ a.btn.disabled {
 	padding-left:0.7rem
 }
 .btn-primary {
-	
-	background-color:##007bff;
+	border-color:#08c;
+	background-color:#08c;
 	color:#fff;
-	box-shadow:none;
-	border-radius: 5px;
+	box-shadow:none
 }
 .btn-primary.focus, .btn-primary:focus, .btn-primary:hover {
 	border-color:#00a3f5;
@@ -2455,8 +2454,8 @@ background-color:#ff7272;
 color:#fff
 }
 .btn-dark {
-	border-color:#0166fe;
-	background-color:#0166fe;
+	border-color:#222529;
+	background-color:#222529;
 	color:#fff;
 	box-shadow:none
 }
@@ -4300,35 +4299,15 @@ form h2 {
 	border-radius: 50%;
   }
 
-  .form-footer-right {
-    float: right;
-}
-
-div#v-pills-tabContent {
-    border: 1px solid #f4f4f4;
-}
-
-a#v-pills-home-tab {
-    border: 1px solid #f4f4f4;
-
-}
-a#v-pills-profile-tab {
-    border: 1px solid #f4f4f4;
-
-}
-a#v-pills-messages-tab {
-    border: 1px solid #f4f4f4;
-
-}
 
 
 .form-control-sm {
 	height:4.6rem;
 	padding:0.8rem 1.2rem
 }
-/* select.form-control:not([size]):not([multiple]) {
+select.form-control:not([size]):not([multiple]) {
 height:6rem
-} */
+}
 select.form-control-sm:not([size]):not([multiple]) {
 padding:0;
 padding-left:1.2rem;
@@ -4349,8 +4328,8 @@ textarea.form-control {
 	display:flex;
 	-ms-flex-align:center;
 	align-items:center;
-	/* margin-top:2rem;
-	margin-bottom:3.5rem; */
+	margin-top:2rem;
+	margin-bottom:3.5rem;
 	font-size:1.2rem;
 	vertical-align:middle
 }
@@ -4414,8 +4393,8 @@ color:currentColor
 .select-custom:after {
 	display:inline-block;
 	position:absolute;
-	top:64%;
-	right:2.9rem;
+	top:50%;
+	right:1.9rem;
 	transform:translateY(-50%);
 	font-family:"porto";
 	font-size:1.6rem;
@@ -14391,7 +14370,6 @@ padding-bottom:1.2rem
 .footer {
 	position:relative;
 	background:#000 !important;
-	margin-top: 60px;
 }
 .footer .container {
 	position:static
@@ -15424,7 +15402,7 @@ right:auto
 
 .sidebar-list li input { margin-right:6px;}
 .product-slide{
-	/* display: none; */
+	display: none;
 	position: relative;
 }
 
@@ -15441,30 +15419,78 @@ html { overflow:scroll !important;}
 	font-size: 28px;
 }
 
-.container {
-    width: inherit !important;
-    margin: 0 auto;
-    background: none !important;
+
+
+
+
+section.location {
+    display: flex;
+    justify-content: space-between;
 }
 
-.main {
-    padding: inherit !important;
 
+.product-head {
+    margin-left: 15px;
+	margin-right: 20px;
 }
 
+.product-move {
+    color: #000;
+    background: #fff;
+    
+	width: 247px;
+}
+.product-move:hover{
+	color: #fff;
+    background: #005ce6;
 
-.product-type-simple{
-    transition: all 0.3s;
-    text-transform: uppercase;
-    padding: 10px;
+}
+span.view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	padding: 10px;
+	border: 1px solid #cccccc;
+}
+
+.cart {
+    background: #f7f7f7;
+    height: 50px;
+    /* margin-left: 10px; */
+}
+
+h3.rupee {
+    padding-top: 10px;
+    padding-left: 20px;
+}
+.price {
+    border: 1px solid #f7f7f7;
+}
+
+form.offer {
+    margin-bottom: auto;
+    
+}
+
+button.btn.btn-primary.submit {
+    width: inherit;
+    padding: 2px;
+	height: 40px;
     border-radius: 5px;
-    font-size: 12px;
-    font-weight: 400;
-    font-family: Poppins, sans-serif;
-    line-height: 1.429;
+}
+i.fa.fa-eye {
+    font-size: 20px;
+    margin: 15px;
+	float: right;
+}
+i.fa.fa-plus {
+    font-size: 20px;
+    margin: 15px;
+	float: right;
 }
 
-
-input#q {
-    height: 40px;
+input.w-100 {
+    border: 2px solid #ced4da;
+    border-radius: 5px;
+	height: 40px;
 }

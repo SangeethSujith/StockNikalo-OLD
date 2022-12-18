@@ -31,6 +31,22 @@ class productStore {
       });
   };
 
+  getAuction = async (callback: any) => {
+    let url = Constant.get_auctions;
+    productService
+      .getProducts(url)
+      .then((res: any) => {
+        res && callback(res?.data);
+      })
+      .catch((err) => {
+        if (err?.response?.data?.ResponseMessage) {
+          message.info(err?.response?.data?.ResponseMessage);
+        } else {
+          message.info("Oops! Some error occurred");
+        }
+      });
+  };
+
   getNewArrivals = async (callback: any) => {
     let url = Constant.newarrivals;
     productService
@@ -129,6 +145,22 @@ class productStore {
 
   getProductsDetails = async (data: any, callback: any) => {
     let url = Constant.products + "/" + data;
+    productService
+      .getProducts(url)
+      .then((res: any) => {
+        res && callback(res?.data);
+      })
+      .catch((err) => {
+        if (err?.response?.data?.ResponseMessage) {
+          message.info(err?.response?.data?.ResponseMessage);
+        } else {
+          message.info("Oops! Some error occurred");
+        }
+      });
+  };
+
+   getAuctionDetails = async (data: any, callback: any) => {
+    let url = Constant.get_auctions + "/" + data;
     productService
       .getProducts(url)
       .then((res: any) => {

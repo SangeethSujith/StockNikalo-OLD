@@ -13,7 +13,7 @@ const Header: React.FC<any> = () => {
   const [subTotal, setsubTotal] = useState(Number);
   useEffect(() => {
     getProductCategory();
-    getUserCart();
+    //getUserCart();
   }, []);
 
   const logOut = () => {

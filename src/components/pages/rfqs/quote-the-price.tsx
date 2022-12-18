@@ -98,7 +98,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                 className="category-banner banner text-uppercase"
                 style={{
                   background:
-                    'no-repeat 60%/cover url("assets/images/slider/slide-1.jpg")',
+                    'no-repeat 60%/cover url("/assets/images/slider/slide-1.jpg")',
                 }}
               >
                 {/* <div class="row">

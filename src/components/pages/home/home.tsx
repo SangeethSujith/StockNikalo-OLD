@@ -4,11 +4,12 @@ import RoutePath from "../../global/route-paths";
 import productStore from "../../store/product-store";
   const Home: React.FC<any> = () => {
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [auction, setAuction] = useState([]);
   const [NewArrivals, setNewArrivals] = useState([]);
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = "assets/js/main.min.js";
+    script.src = "/assets/js/main.min.js";
     document.body.append(script);
     getProductsData();
     getNewArrivals();
@@ -16,14 +17,18 @@ import productStore from "../../store/product-store";
 
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = "assets/js/main.min.js";
+    script.src = "/assets/js/main.min.js";
     document.body.append(script);
-  }, [products]);
+  }, [products,auction]);
 
   const getProductsData = () => {
     productStore.getProducts((values: any) => {
       setProducts(values.data);
     });
+    productStore.getAuction((values: any) => {
+      setAuction(values.data);
+    });
+
   };
    const getNewArrivals = () => {
     productStore.getNewArrivals((values: any) => {
@@ -157,7 +162,7 @@ import productStore from "../../store/product-store";
                       <div className="banner-layer banner-layer-middle text-left">
                         {" "}
                         <a
-                          href="# "
+                         onClick={() => navigate(RoutePath.auctionpage)}
                           className="text-dark text-uppercase ls-10 py-1"
                         >
                           Auction Price&nbsp;
@@ -208,10 +213,12 @@ import productStore from "../../store/product-store";
             <div className="row">
               <div className="col-lg-12">
                 {/* End .home-slider */}
-                <div
-                  className="products-slider owl-carousel owl-theme dots-top dots-small m-b-1 pb-1 appear-animate mt-3 mb-3 p-3 pl-0 pr-0"
-                  data-animation-name="fadeInUpShorter"
-                  data-owl-options="{
+
+                {auction.length > 0 && (
+                  <div
+                    className="products-slider owl-carousel owl-theme dots-top dots-small m-b-1 pb-1 appear-animate mt-3 mb-3 p-3 pl-0 pr-0"
+                    data-animation-name="fadeInUpShorter"
+                    data-owl-options="{
               'loop': false,
               'dots': false,
               'nav': true,
@@ -228,443 +235,107 @@ import productStore from "../../store/product-store";
                   }
               }
           }"
-                >
-                  <div className="product-default inner-quickview inner-icon bg-white p-3">
-                    <figure className="img-effect">
-                      {" "}
-                      <a href="# ">
+                  >
+                   {auction?.map((item: any) => (
+                    <div className="product-default inner-quickview inner-icon bg-white p-3">
+                      <figure className="img-effect">
                         {" "}
-                        <img
-                          src="../../assets/images/products/product-1.jpg"
-                          width={205}
-                          height={205}
-                          alt="product"
-                        />{" "}
-                        <img
-                          src="../../assets/images/products/product-2.jpg"
-                          width={205}
-                          height={205}
-                          alt="product"
-                        />{" "}
-                      </a>
-                      <div className="label-group">
-                        <div className="product-label label-hot">
-                          Auction 4352
-                        </div>
-                      </div>
-                      {/* End .product-countdown-container */}
-                    </figure>
-                    <div className="product-details">
-                      <h3 className="product-title">
-                        {" "}
-                        <a href="# ">
-                          AgriPro 3 HP Butterfly Combined Rice Mill Machine
-                          without Motor APCRM6N9FC
-                        </a>{" "}
-                      </h3>
-                      <div className="category-wrap">
-                        <div className="category-list">
+                         <a
+                          onClick={() =>
+                              navigate(`${RoutePath.auction}/${item.id}`)
+                              }
+                         >
                           {" "}
-                          <a href="# " className="product-category">
-                            Construction
+                          <img
+                            src="../../assets/images/products/product-1.jpg"
+                            width={205}
+                            height={205}
+                            alt="product"
+                          />{" "}
+                          <img
+                            src="../../assets/images/products/product-2.jpg"
+                            width={205}
+                            height={205}
+                            alt="product"
+                          />{" "}
+                        </a>
+                        <div className="label-group">
+                          <div className="product-label label-hot">
+                            Auction {item.id}
+                          </div>
+                        </div>
+                        {/* End .product-countdown-container */}
+                      </figure>
+                      <div className="product-details">
+                        <h3 className="product-title">
+                          {" "}
+                          <a href="# ">
+                            {item.title}
+                          </a>{" "}
+                        </h3>
+                        <div className="category-wrap">
+                          <div className="category-list">
+                            {" "}
+                            <a href="# " className="product-category">
+                              Construction
+                            </a>{" "}
+                          </div>
+                        </div>
+                        <p>Auction Single - 6' Experiment</p>
+                        {/* End .product-container */}
+                        <div className="info-boxes-container row row-joined mb-2 font2 w-100">
+                          <div className="info-box info-box-icon-left col-lg-4 p-0">
+                            <div className="info-box-content">
+                              <h4>9</h4>
+                              <p className="text-body">Lots</p>
+                            </div>
+                            {/* End .info-box-content */}
+                          </div>
+                          {/* End .info-box */}
+                          <div className="info-box info-box-icon-left col-lg-4 p-0">
+                            <div className="info-box-content">
+                              {" "}
+                              <i className="fa fa-eye" />
+                              <h4>1K</h4>
+                              <p className="text-body">Visiters</p>
+                            </div>
+                            {/* End .info-box-content */}
+                          </div>
+                          {/* End .info-box */}
+                          <div className="info-box info-box-icon-left col-lg-4 p-0">
+                            <div className="info-box-content">
+                              {" "}
+                              <i className="icon-support" />
+                              <h4>21 Jan 2022</h4>
+                              <p className="text-body">End On</p>
+                            </div>
+                            {/* End .info-box-content */}
+                          </div>
+                          {/* End .info-box */}
+                        </div>
+                        <div className="price-box w-100">
+                          {" "}
+                          <a
+                            href="# "
+                            className="btn btn-primary btn-md text-white w-100"
+                            title="Bid Now"
+                          >
+                            Bid Now
                           </a>{" "}
                         </div>
+                        {/* End .price-box */}
                       </div>
-                      <p>Auction Single - 6' Experiment</p>
-                      {/* End .product-container */}
-                      <div className="info-boxes-container row row-joined mb-2 font2 w-100">
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            <h4>9</h4>
-                            <p className="text-body">Lots</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            {" "}
-                            <i className="fa fa-eye" />
-                            <h4>1K</h4>
-                            <p className="text-body">Visiters</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            {" "}
-                            <i className="icon-support" />
-                            <h4>21 Jan 2022</h4>
-                            <p className="text-body">End On</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                      </div>
-                      <div className="price-box w-100">
-                        {" "}
-                        <a
-                          href="# "
-                          className="btn btn-primary btn-md text-white w-100"
-                          title="Bid Now"
-                        >
-                          Bid Now
-                        </a>{" "}
-                      </div>
-                      {/* End .price-box */}
+                      {/* End .product-details */}
                     </div>
-                    {/* End .product-details */}
+
+                   ))}
+
+                 
                   </div>
-                  <div className="product-default inner-quickview inner-icon bg-white p-3">
-                    <figure className="img-effect">
-                      {" "}
-                      <a href="# ">
-                        {" "}
-                        <img
-                          src="../../assets/images/products/product-1.jpg"
-                          width={205}
-                          height={205}
-                          alt="product"
-                        />{" "}
-                        <img
-                          src="../../assets/images/products/product-2.jpg"
-                          width={205}
-                          height={205}
-                          alt="product"
-                        />{" "}
-                      </a>
-                      <div className="label-group">
-                        <div className="product-label label-hot">
-                          Auction 4352
-                        </div>
-                      </div>
-                      {/* End .product-countdown-container */}
-                    </figure>
-                    <div className="product-details">
-                      <h3 className="product-title">
-                        {" "}
-                        <a href="# ">
-                          AgriPro 3 HP Butterfly Combined Rice Mill Machine
-                          without Motor APCRM6N9FC
-                        </a>{" "}
-                      </h3>
-                      <div className="category-wrap">
-                        <div className="category-list">
-                          {" "}
-                          <a href="# " className="product-category">
-                            Construction
-                          </a>{" "}
-                        </div>
-                      </div>
-                      <p>Auction Single - 6' Experiment</p>
-                      {/* End .product-container */}
-                      <div className="info-boxes-container row row-joined mb-2 font2 w-100">
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            <h4>9</h4>
-                            <p className="text-body">Lots</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            {" "}
-                            <i className="fa fa-eye" />
-                            <h4>1K</h4>
-                            <p className="text-body">Visiters</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            {" "}
-                            <i className="icon-support" />
-                            <h4>21 Jan 2022</h4>
-                            <p className="text-body">End On</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                      </div>
-                      <div className="price-box w-100">
-                        {" "}
-                        <a
-                          href="# "
-                          className="btn btn-primary btn-md text-white w-100"
-                          title="Bid Now"
-                        >
-                          Bid Now
-                        </a>{" "}
-                      </div>
-                      {/* End .price-box */}
-                    </div>
-                    {/* End .product-details */}
-                  </div>
-                  <div className="product-default inner-quickview inner-icon bg-white p-3">
-                    <figure className="img-effect">
-                      {" "}
-                      <a href="# ">
-                        {" "}
-                        <img
-                          src="../../assets/images/products/product-1.jpg"
-                          width={205}
-                          height={205}
-                          alt="product"
-                        />{" "}
-                        <img
-                          src="../../assets/images/products/product-2.jpg"
-                          width={205}
-                          height={205}
-                          alt="product"
-                        />{" "}
-                      </a>
-                      <div className="label-group">
-                        <div className="product-label label-hot">
-                          Auction 4352
-                        </div>
-                      </div>
-                      {/* End .product-countdown-container */}
-                    </figure>
-                    <div className="product-details">
-                      <h3 className="product-title">
-                        {" "}
-                        <a href="# ">
-                          AgriPro 3 HP Butterfly Combined Rice Mill Machine
-                          without Motor APCRM6N9FC
-                        </a>{" "}
-                      </h3>
-                      <div className="category-wrap">
-                        <div className="category-list">
-                          {" "}
-                          <a href="# " className="product-category">
-                            Construction
-                          </a>{" "}
-                        </div>
-                      </div>
-                      <p>Auction Single - 6' Experiment</p>
-                      {/* End .product-container */}
-                      <div className="info-boxes-container row row-joined mb-2 font2 w-100">
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            <h4>9</h4>
-                            <p className="text-body">Lots</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            {" "}
-                            <i className="fa fa-eye" />
-                            <h4>1K</h4>
-                            <p className="text-body">Visiters</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            {" "}
-                            <i className="icon-support" />
-                            <h4>21 Jan 2022</h4>
-                            <p className="text-body">End On</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                      </div>
-                      <div className="price-box w-100">
-                        {" "}
-                        <a
-                          href="# "
-                          className="btn btn-primary btn-md text-white w-100"
-                          title="Bid Now"
-                        >
-                          Bid Now
-                        </a>{" "}
-                      </div>
-                      {/* End .price-box */}
-                    </div>
-                    {/* End .product-details */}
-                  </div>
-                  <div className="product-default inner-quickview inner-icon bg-white p-3">
-                    <figure className="img-effect">
-                      {" "}
-                      <a href="# ">
-                        {" "}
-                        <img
-                          src="../../assets/images/products/product-1.jpg"
-                          width={205}
-                          height={205}
-                          alt="product"
-                        />{" "}
-                        <img
-                          src="../../assets/images/products/product-2.jpg"
-                          width={205}
-                          height={205}
-                          alt="product"
-                        />{" "}
-                      </a>
-                      <div className="label-group">
-                        <div className="product-label label-hot">
-                          Auction 4352
-                        </div>
-                      </div>
-                      {/* End .product-countdown-container */}
-                    </figure>
-                    <div className="product-details">
-                      <h3 className="product-title">
-                        {" "}
-                        <a href="# ">
-                          AgriPro 3 HP Butterfly Combined Rice Mill Machine
-                          without Motor APCRM6N9FC
-                        </a>{" "}
-                      </h3>
-                      <div className="category-wrap">
-                        <div className="category-list">
-                          {" "}
-                          <a href="# " className="product-category">
-                            Construction
-                          </a>{" "}
-                        </div>
-                      </div>
-                      <p>Auction Single - 6' Experiment</p>
-                      {/* End .product-container */}
-                      <div className="info-boxes-container row row-joined mb-2 font2 w-100">
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            <h4>9</h4>
-                            <p className="text-body">Lots</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            {" "}
-                            <i className="fa fa-eye" />
-                            <h4>1K</h4>
-                            <p className="text-body">Visiters</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            {" "}
-                            <i className="icon-support" />
-                            <h4>21 Jan 2022</h4>
-                            <p className="text-body">End On</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                      </div>
-                      <div className="price-box w-100">
-                        {" "}
-                        <a
-                          href="# "
-                          className="btn btn-primary btn-md text-white w-100"
-                          title="Bid Now"
-                        >
-                          Bid Now
-                        </a>{" "}
-                      </div>
-                      {/* End .price-box */}
-                    </div>
-                    {/* End .product-details */}
-                  </div>
-                  <div className="product-default inner-quickview inner-icon bg-white p-3">
-                    <figure className="img-effect">
-                      {" "}
-                      <a href="# ">
-                        {" "}
-                        <img
-                          src="../../assets/images/products/product-1.jpg"
-                          width={205}
-                          height={205}
-                          alt="product"
-                        />{" "}
-                        <img
-                          src="../../assets/images/products/product-2.jpg"
-                          width={205}
-                          height={205}
-                          alt="product"
-                        />{" "}
-                      </a>
-                      <div className="label-group">
-                        <div className="product-label label-hot">
-                          Auction 4352
-                        </div>
-                      </div>
-                      {/* End .product-countdown-container */}
-                    </figure>
-                    <div className="product-details">
-                      <h3 className="product-title">
-                        {" "}
-                        <a href="# ">
-                          AgriPro 3 HP Butterfly Combined Rice Mill Machine
-                          without Motor APCRM6N9FC
-                        </a>{" "}
-                      </h3>
-                      <div className="category-wrap">
-                        <div className="category-list">
-                          {" "}
-                          <a href="# " className="product-category">
-                            Construction
-                          </a>{" "}
-                        </div>
-                      </div>
-                      <p>Auction Single - 6' Experiment</p>
-                      {/* End .product-container */}
-                      <div className="info-boxes-container row row-joined mb-2 font2 w-100">
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            <h4>9</h4>
-                            <p className="text-body">Lots</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            {" "}
-                            <i className="fa fa-eye" />
-                            <h4>1K</h4>
-                            <p className="text-body">Visiters</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                        <div className="info-box info-box-icon-left col-lg-4 p-0">
-                          <div className="info-box-content">
-                            {" "}
-                            <i className="icon-support" />
-                            <h4>21 Jan 2022</h4>
-                            <p className="text-body">End On</p>
-                          </div>
-                          {/* End .info-box-content */}
-                        </div>
-                        {/* End .info-box */}
-                      </div>
-                      <div className="price-box w-100">
-                        {" "}
-                        <a
-                          href="# "
-                          className="btn btn-primary btn-md text-white w-100"
-                          title="Bid Now"
-                        >
-                          Bid Now
-                        </a>{" "}
-                      </div>
-                      {/* End .price-box */}
-                    </div>
-                    {/* End .product-details */}
-                  </div>
-                </div>
+                )}
+
+
+
                 {/* End .featured-proucts */}
               </div>
             </div>
@@ -712,7 +383,11 @@ import productStore from "../../store/product-store";
                     <div className="product-default inner-quickview inner-icon">
                       <figure>
                         {" "}
-                        <a href={`/product?id=${item.productId}`}>
+                        <a 
+                              onClick={() =>
+                              navigate(`${RoutePath.product}/${item.productId}`)
+                              }
+                        >
                           {" "}
                           <img
                             src={(item?.images[0]?.image)?item?.images[0]?.image:"/assets/images/products/product-1.jpg"}
@@ -3141,7 +2816,9 @@ import productStore from "../../store/product-store";
               <div className="product-default inner-quickview inner-icon">
                 <figure>
                   {" "}
-                  <a href={`/product?id=${item.productId}`}>
+                  <a onClick={() =>
+                              navigate(`${RoutePath.product}/${item.productId}`)
+                              }>
                     {" "}
                     <img
                       src={(item?.images[0].image)}

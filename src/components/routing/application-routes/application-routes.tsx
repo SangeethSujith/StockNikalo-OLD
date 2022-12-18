@@ -48,8 +48,8 @@ const AppRouter = (props: any) => {
         path={RoutePath.complete_profile}
         element={<CompleteRegistrationComponent />}
       />
-      <Route path={RoutePath.product} element={<ProductsDetailComponent />} />
-      <Route path={RoutePath.auction} element={<AuctionDetailComponent />} />
+      <Route path={RoutePath.product+'/:id'}  element={<ProductsDetailComponent />} />
+      <Route path={RoutePath.auction+'/:id'} element={<AuctionDetailComponent />} />
     </Routes>
   );
 };

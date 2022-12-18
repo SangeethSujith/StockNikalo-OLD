@@ -12,7 +12,7 @@ class Footer extends Component {
                     <div className="widget">
                       <a href="#">
                         <img
-                          src="assets/images/logo-footer.png"
+                          src="/assets/images/logo-footer.png"
                           alt="Logo"
                           className="logo-footer"
                         />
