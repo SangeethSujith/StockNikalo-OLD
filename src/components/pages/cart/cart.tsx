@@ -91,7 +91,11 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
                               <a href="#" className="product-image">
                                 {" "}
                                 <img
-                                  src="/assets/images/products/product-1.jpg"
+                                  src={
+                                    CartData[0]?.["images"][0]?.["image"]
+                                      ? CartData[0]?.["images"][0]?.["image"]
+                                      : "/assets/images/products/product-1.jpg"
+                                  }
                                   alt="product"
                                 />{" "}
                               </a>{" "}

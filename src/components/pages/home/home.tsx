@@ -384,7 +384,7 @@ const Home: React.FC<any> = () => {
                           {" "}
                           <img
                             src={
-                              item?.images[0]?.image
+                              item?.images
                                 ? item?.images[0]?.image
                                 : "/assets/images/products/product-1.jpg"
                             }
@@ -2821,7 +2821,11 @@ const Home: React.FC<any> = () => {
                       >
                         {" "}
                         <img
-                          src={item?.images[0].image}
+                          src={
+                            item?.images
+                              ? item?.images[0]?.image
+                              : "/assets/images/products/product-1.jpg"
+                          }
                           width={300}
                           height={300}
                           alt="product"

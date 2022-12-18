@@ -52,7 +52,9 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
   };
 
   const removeCart = () => {
-    userStore.removeCart((res: any) => {});
+    userStore.removeCart((res: any) => {
+      addtoCart();
+    });
   };
 
   const getUserCart = (e: any) => {
@@ -69,7 +71,6 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
           }).then(function (isConfirm) {
             if (isConfirm) {
               removeCart();
-              addtoCart();
 
               e.target.classList.add("added-to-cart");
               swal({
