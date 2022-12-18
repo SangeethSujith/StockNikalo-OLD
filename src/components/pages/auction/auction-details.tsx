@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
 import productStore from "../../store/product-store";
 import RoutePath from "../../global/route-paths";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import userStore from "../../store/user-store";
 import swal from "sweetalert";
 type AuctionProps = {};
 
 const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
   const navigate = useNavigate();
-  const [pid, setPid] = useState();
   const [CartQty, setCartQty] = useState();
   const [ProductsData, setProductsData] = useState([]);
   const [isaddtosucc, setisaddtosucc] = useState(true);
   const [ProductName, setProductName] = useState("Product");
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const product: any = urlParams.get("id");
+  const urlParams = useParams();
+  const { id } = useParams();
+  const product = String(id)
   const addtoCart = () => {
     let qty: any = document.getElementById("cartqty");
     qty = qty.value;
@@ -88,9 +87,9 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
   };
 
   useEffect(() => {
-    setPid(product);
-  }, []);
-  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "/assets/js/main.min.js";
+    document.body.append(script);
     getProductDetails();
   }, [product]);
   return (

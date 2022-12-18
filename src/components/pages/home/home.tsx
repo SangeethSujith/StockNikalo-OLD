@@ -240,7 +240,11 @@ import productStore from "../../store/product-store";
                     <div className="product-default inner-quickview inner-icon bg-white p-3">
                       <figure className="img-effect">
                         {" "}
-                        <a href={`/auction?id=${item.id}`}>
+                         <a
+                          onClick={() =>
+                              navigate(`${RoutePath.auction}/${item.id}`)
+                              }
+                         >
                           {" "}
                           <img
                             src="../../assets/images/products/product-1.jpg"
@@ -2812,7 +2816,9 @@ import productStore from "../../store/product-store";
               <div className="product-default inner-quickview inner-icon">
                 <figure>
                   {" "}
-                  <a href={`/product?id=${item.productId}`}>
+                  <a onClick={() =>
+                              navigate(`${RoutePath.product}/${item.productId}`)
+                              }>
                     {" "}
                     <img
                       src={(item?.images[0].image)}
