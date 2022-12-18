@@ -9,8 +9,10 @@
 
 import { message } from "antd";
 import Constant from "../global/constants";
+import { observable, action, makeObservable } from "mobx";
 import authService from "../services/auth-service";
 import swal from "sweetalert";
+import userStore from "./user-store";
 
 if (!JSON.parse(localStorage.getItem("userId")!)) {
   localStorage.setItem("userId", JSON.stringify(null));
@@ -31,7 +33,7 @@ type userDetails = {
 class AuthStore {
   currentuserId: number | null = JSON.parse(localStorage.getItem("userId")!);
   currentuserToken: string | null = localStorage.getItem("userToken")!;
-  isUserLoggedIn: boolean | null = null;
+  isUserLoggedIn: boolean = true;
   currentUser: userDetails | null = null;
 
   login = async (email: string, password: string, callback: any) => {
@@ -54,6 +56,7 @@ class AuthStore {
           localStorage.setItem("userId", res.data?.data?.userId);
           localStorage.setItem("userToken", res.data?.data?.token);
           this.isUserLoggedIn = true;
+          userStore.getUserCart(res);
           callback(res);
         }
       })
@@ -74,29 +77,41 @@ class AuthStore {
       });
   };
 
-
-  signOut(data:any,callback?: any) {
+  signOut(data: any, callback?: any) {
     const url = Constant.logout;
     authService
-      .logout(url,{token:data})
+      .logout(url, { token: data })
       .then((res: any) => {
-          localStorage.setItem("userCmpReg", JSON.stringify(null));
-          localStorage.setItem("userId", JSON.stringify(null));
-          localStorage.setItem("userToken", JSON.stringify(null));
+        this.isUserLoggedIn = false;
+        this.currentUser = null;
+        userStore.cartItem = {};
+        localStorage.setItem("userCmpReg", JSON.stringify(null));
+        localStorage.setItem("userId", JSON.stringify(null));
+        localStorage.setItem("userToken", JSON.stringify(null));
         if (callback) {
           res && callback(res);
         }
       })
       .catch((err) => {
-        callback(err)
-      //  swal({
-      //       //title: "Are you sure?",
-      //       text: "Error occured",
-      //       icon: "error",
-      //       dangerMode: true,
-      //     });
-      
+        callback(err);
+        //  swal({
+        //       //title: "Are you sure?",
+        //       text: "Error occured",
+        //       icon: "error",
+        //       dangerMode: true,
+        //     });
       });
+  }
+
+  constructor() {
+    makeObservable(this, {
+      currentUser: observable,
+      isUserLoggedIn: observable,
+      // error: observable,
+      login: action,
+      signOut: action,
+      // updateCurrentUserRole: action
+    });
   }
 }
 

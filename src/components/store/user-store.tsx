@@ -10,8 +10,11 @@ import { message } from "antd";
 import Constant from "../global/constants";
 import userService from "../services/user-service";
 import swal from "sweetalert";
+import { observable, action, makeObservable, toJS } from "mobx";
 
 class userStore {
+  cartItem: any = {};
+
   addRegistration = async (data: any, callback: any) => {
     let url = Constant.registration;
     userService
@@ -77,21 +80,15 @@ class userStore {
   removeCart = async (callback: any) => {
     let userId = localStorage.getItem("userId");
     let data = {
-    "user_id" : userId
-    }
-    let url = Constant.removecart
+      user_id: userId,
+    };
+    let url = Constant.removecart;
     userService
-      .removeCart(url,data)
+      .removeCart(url, data)
       .then((res: any) => {
         res && callback(res?.data);
       })
-      .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
-      });
+      .catch((err) => {});
   };
 
   getUserCart = async (callback: any) => {
@@ -100,17 +97,11 @@ class userStore {
     userService
       .getUserCart(url)
       .then((res: any) => {
-        res && callback(res?.data);
+        this.cartItem = toJS(res?.data?.data);
+        callback(res?.data);
       })
-      .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
-      });
+      .catch((err) => {});
   };
-
 
   getUserAddress = async (callback: any) => {
     let userId = localStorage.getItem("userId");
@@ -120,13 +111,31 @@ class userStore {
       .then((res: any) => {
         res && callback(res?.data);
       })
-      .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
-      });
+      .catch((err) => {});
   };
+
+  // getUserCart = () => {
+  //   userStore.getUserCart((res: any) => {
+  //     console.log(res);
+  //     if (res.status) {
+  //       setCartData(res.data);
+  //       var tot = 0;
+  //       var price = 0;
+  //       res?.data?.map(
+  //         (item: any) => (
+  //           (price = item.qty * item.productPrice), (tot = tot + price)
+  //         )
+  //       );
+  //       setsubTotal(tot);
+  //     }
+  //   });
+  // };
+
+  constructor() {
+    makeObservable(this, {
+      cartItem: observable,
+      getUserCart: action,
+    });
+  }
 }
 export default new userStore();

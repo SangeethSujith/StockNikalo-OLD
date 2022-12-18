@@ -1,11 +1,12 @@
 import React, { Component, useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
+import GoToTop from "../../gototop";
 import productStore from "../../store/product-store";
-  const Home: React.FC<any> = () => {
+const Home: React.FC<any> = () => {
   const navigate = useNavigate();
-    const [products, setProducts] = useState([]);
-    const [auction, setAuction] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [auction, setAuction] = useState([]);
   const [NewArrivals, setNewArrivals] = useState([]);
   useEffect(() => {
     const script = document.createElement("script");
@@ -19,7 +20,7 @@ import productStore from "../../store/product-store";
     const script = document.createElement("script");
     script.src = "/assets/js/main.min.js";
     document.body.append(script);
-  }, [products,auction]);
+  }, [products, auction]);
 
   const getProductsData = () => {
     productStore.getProducts((values: any) => {
@@ -28,14 +29,13 @@ import productStore from "../../store/product-store";
     productStore.getAuction((values: any) => {
       setAuction(values.data);
     });
-
   };
-   const getNewArrivals = () => {
+  const getNewArrivals = () => {
     productStore.getNewArrivals((values: any) => {
       setNewArrivals(values.data);
     });
   };
- 
+
   return (
     <>
       <main className="main home">
@@ -162,7 +162,7 @@ import productStore from "../../store/product-store";
                       <div className="banner-layer banner-layer-middle text-left">
                         {" "}
                         <a
-                         onClick={() => navigate(RoutePath.auctionpage)}
+                          onClick={() => navigate(RoutePath.auctionpage)}
                           className="text-dark text-uppercase ls-10 py-1"
                         >
                           Auction Price&nbsp;
@@ -236,105 +236,98 @@ import productStore from "../../store/product-store";
               }
           }"
                   >
-                   {auction?.map((item: any) => (
-                    <div className="product-default inner-quickview inner-icon bg-white p-3">
-                      <figure className="img-effect">
-                        {" "}
-                         <a
-                          onClick={() =>
-                              navigate(`${RoutePath.auction}/${item.id}`)
-                              }
-                         >
-                          {" "}
-                          <img
-                            src="../../assets/images/products/product-1.jpg"
-                            width={205}
-                            height={205}
-                            alt="product"
-                          />{" "}
-                          <img
-                            src="../../assets/images/products/product-2.jpg"
-                            width={205}
-                            height={205}
-                            alt="product"
-                          />{" "}
-                        </a>
-                        <div className="label-group">
-                          <div className="product-label label-hot">
-                            Auction {item.id}
-                          </div>
-                        </div>
-                        {/* End .product-countdown-container */}
-                      </figure>
-                      <div className="product-details">
-                        <h3 className="product-title">
-                          {" "}
-                          <a href="# ">
-                            {item.title}
-                          </a>{" "}
-                        </h3>
-                        <div className="category-wrap">
-                          <div className="category-list">
-                            {" "}
-                            <a href="# " className="product-category">
-                              Construction
-                            </a>{" "}
-                          </div>
-                        </div>
-                        <p>Auction Single - 6' Experiment</p>
-                        {/* End .product-container */}
-                        <div className="info-boxes-container row row-joined mb-2 font2 w-100">
-                          <div className="info-box info-box-icon-left col-lg-4 p-0">
-                            <div className="info-box-content">
-                              <h4>9</h4>
-                              <p className="text-body">Lots</p>
-                            </div>
-                            {/* End .info-box-content */}
-                          </div>
-                          {/* End .info-box */}
-                          <div className="info-box info-box-icon-left col-lg-4 p-0">
-                            <div className="info-box-content">
-                              {" "}
-                              <i className="fa fa-eye" />
-                              <h4>1K</h4>
-                              <p className="text-body">Visiters</p>
-                            </div>
-                            {/* End .info-box-content */}
-                          </div>
-                          {/* End .info-box */}
-                          <div className="info-box info-box-icon-left col-lg-4 p-0">
-                            <div className="info-box-content">
-                              {" "}
-                              <i className="icon-support" />
-                              <h4>21 Jan 2022</h4>
-                              <p className="text-body">End On</p>
-                            </div>
-                            {/* End .info-box-content */}
-                          </div>
-                          {/* End .info-box */}
-                        </div>
-                        <div className="price-box w-100">
+                    {auction?.map((item: any) => (
+                      <div className="product-default inner-quickview inner-icon bg-white p-3">
+                        <figure className="img-effect">
                           {" "}
                           <a
-                            href="# "
-                            className="btn btn-primary btn-md text-white w-100"
-                            title="Bid Now"
+                            onClick={() =>
+                              navigate(`${RoutePath.auction}/${item.id}`)
+                            }
                           >
-                            Bid Now
-                          </a>{" "}
+                            {" "}
+                            <img
+                              src="../../assets/images/products/product-1.jpg"
+                              width={205}
+                              height={205}
+                              alt="product"
+                            />{" "}
+                            <img
+                              src="../../assets/images/products/product-2.jpg"
+                              width={205}
+                              height={205}
+                              alt="product"
+                            />{" "}
+                          </a>
+                          <div className="label-group">
+                            <div className="product-label label-hot">
+                              Auction {item.id}
+                            </div>
+                          </div>
+                          {/* End .product-countdown-container */}
+                        </figure>
+                        <div className="product-details">
+                          <h3 className="product-title">
+                            {" "}
+                            <a href="# ">{item.title}</a>{" "}
+                          </h3>
+                          <div className="category-wrap">
+                            <div className="category-list">
+                              {" "}
+                              <a href="# " className="product-category">
+                                Construction
+                              </a>{" "}
+                            </div>
+                          </div>
+                          <p>Auction Single - 6' Experiment</p>
+                          {/* End .product-container */}
+                          <div className="info-boxes-container row row-joined mb-2 font2 w-100">
+                            <div className="info-box info-box-icon-left col-lg-4 p-0">
+                              <div className="info-box-content">
+                                <h4>9</h4>
+                                <p className="text-body">Lots</p>
+                              </div>
+                              {/* End .info-box-content */}
+                            </div>
+                            {/* End .info-box */}
+                            <div className="info-box info-box-icon-left col-lg-4 p-0">
+                              <div className="info-box-content">
+                                {" "}
+                                <i className="fa fa-eye" />
+                                <h4>1K</h4>
+                                <p className="text-body">Visiters</p>
+                              </div>
+                              {/* End .info-box-content */}
+                            </div>
+                            {/* End .info-box */}
+                            <div className="info-box info-box-icon-left col-lg-4 p-0">
+                              <div className="info-box-content">
+                                {" "}
+                                <i className="icon-support" />
+                                <h4>21 Jan 2022</h4>
+                                <p className="text-body">End On</p>
+                              </div>
+                              {/* End .info-box-content */}
+                            </div>
+                            {/* End .info-box */}
+                          </div>
+                          <div className="price-box w-100">
+                            {" "}
+                            <a
+                              href="# "
+                              className="btn btn-primary btn-md text-white w-100"
+                              title="Bid Now"
+                            >
+                              Bid Now
+                            </a>{" "}
+                          </div>
+                          {/* End .price-box */}
                         </div>
-                        {/* End .price-box */}
+                        {/* End .product-details */}
                       </div>
-                      {/* End .product-details */}
-                    </div>
-
-                   ))}
-
-                 
+                    ))}
                   </div>
                 )}
-
-
 
                 {/* End .featured-proucts */}
               </div>
@@ -383,14 +376,18 @@ import productStore from "../../store/product-store";
                     <div className="product-default inner-quickview inner-icon">
                       <figure>
                         {" "}
-                        <a 
-                              onClick={() =>
-                              navigate(`${RoutePath.product}/${item.productId}`)
-                              }
+                        <a
+                          onClick={() =>
+                            navigate(`${RoutePath.product}/${item.productId}`)
+                          }
                         >
                           {" "}
                           <img
-                            src={(item?.images[0]?.image)?item?.images[0]?.image:"/assets/images/products/product-1.jpg"}
+                            src={
+                              item?.images[0]?.image
+                                ? item?.images[0]?.image
+                                : "/assets/images/products/product-1.jpg"
+                            }
                             width={300}
                             height={300}
                             alt="product"
@@ -2790,12 +2787,11 @@ import productStore from "../../store/product-store";
             >
               New Arrivals
             </h2>
-            
-            {NewArrivals.length > 0 && (
 
-            <div
-              className="owl-carousel owl-theme appear-animate"
-              data-owl-options="{
+            {NewArrivals.length > 0 && (
+              <div
+                className="owl-carousel owl-theme appear-animate"
+                data-owl-options="{
               'loop': false,
               'dots': false,
               'nav': true,
@@ -2812,60 +2808,64 @@ import productStore from "../../store/product-store";
                   }
               }
           }"
-            > {NewArrivals?.map((item: any) => (
-              <div className="product-default inner-quickview inner-icon">
-                <figure>
-                  {" "}
-                  <a onClick={() =>
-                              navigate(`${RoutePath.product}/${item.productId}`)
-                              }>
-                    {" "}
-                    <img
-                      src={(item?.images[0].image)}
-                      width={300}
-                      height={300}
-                      alt="product"
-                    />{" "}
-                  </a>{" "}
-                </figure>
-                <div className="product-details">
-                  <div className="category-wrap">
-                    <div className="category-list">
+              >
+                {" "}
+                {NewArrivals?.map((item: any) => (
+                  <div className="product-default inner-quickview inner-icon">
+                    <figure>
                       {" "}
                       <a
-                        href="# "
-                        className="bg-success p-2 rounded-1 text-white"
+                        onClick={() =>
+                          navigate(`${RoutePath.product}/${item.productId}`)
+                        }
                       >
-                        4.3&nbsp;
-                        <i className="fa fa-star" />
+                        {" "}
+                        <img
+                          src={item?.images[0].image}
+                          width={300}
+                          height={300}
+                          alt="product"
+                        />{" "}
                       </a>{" "}
-                      (2389){" "}
+                    </figure>
+                    <div className="product-details">
+                      <div className="category-wrap">
+                        <div className="category-list">
+                          {" "}
+                          <a
+                            href="# "
+                            className="bg-success p-2 rounded-1 text-white"
+                          >
+                            4.3&nbsp;
+                            <i className="fa fa-star" />
+                          </a>{" "}
+                          (2389){" "}
+                        </div>
+                      </div>
+                      <h3 className="product-title">
+                        {" "}
+                        <a href="# ">{item.productName}</a>{" "}
+                      </h3>
+                      {/* End .product-container */}
+                      <div className="price-box">
+                        {" "}
+                        <span className="product-price">
+                          ₹{item?.mrp ? item.mrp : 200}
+                        </span>{" "}
+                        <del className="old-price">
+                          ₹{item?.mrp ? item.mrp : 200}
+                        </del>
+                        <div className="category-list">
+                          {" "}
+                          <a href="# ">50% OFF</a>{" "}
+                        </div>
+                      </div>
+                      {/* End .price-box */}
                     </div>
+                    {/* End .product-details */}
                   </div>
-                  <h3 className="product-title">
-                    {" "}
-                    <a href="# ">
-                     {item.productName}
-                    </a>{" "}
-                  </h3>
-                  {/* End .product-container */}
-                  <div className="price-box">
-                    {" "}
-                    <span className="product-price">₹{(item?.mrp)?item.mrp:200}</span>{" "}
-                    <del className="old-price">₹{(item?.mrp)?item.mrp:200}</del>
-                    <div className="category-list">
-                      {" "}
-                      <a href="# ">50% OFF</a>{" "}
-                    </div>
-                  </div>
-                  {/* End .price-box */}
-                </div>
-                {/* End .product-details */}
+                ))}
               </div>
-            ))}
-              
-            </div>
-
             )}
           </div>
         </section>
@@ -2993,6 +2993,7 @@ import productStore from "../../store/product-store";
           </div>
         </section>
         {/* End .container */}
+        <GoToTop />
       </main>
     </>
   );

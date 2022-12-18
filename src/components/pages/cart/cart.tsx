@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import userStore from "../../store/user-store";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
+import GoToTop from "../../gototop";
 type CartProps = {};
 
 const CartComponent: React.FC<any> = (props: CartProps) => {
@@ -180,7 +181,6 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
                         <td>Subtotal</td>
                         <td>₹{subTotal}</td>
                       </tr>
-                      
                     </tbody>
                     <tfoot>
                       <tr>
@@ -209,6 +209,7 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
           {/* End .container */}
           <div className="mb-6" />
           {/* margin */}
+          <GoToTop />
         </main>
       )}
       <script src="/assets/js/nouislider.min.js"></script>

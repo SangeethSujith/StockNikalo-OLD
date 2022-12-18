@@ -4,6 +4,7 @@ import RoutePath from "../global/route-paths";
 import authStore from "../store/auth-store";
 import productStore from "../store/product-store";
 import userStore from "../store/user-store";
+import Minicart from "./minicart";
 const Header: React.FC<any> = () => {
   const navigate = useNavigate();
   const [proCategory, setproCategory] = useState([]);
@@ -13,7 +14,7 @@ const Header: React.FC<any> = () => {
   const [subTotal, setsubTotal] = useState(Number);
   useEffect(() => {
     getProductCategory();
-    //getUserCart();
+    getUserCart();
   }, []);
 
   const logOut = () => {
@@ -135,7 +136,6 @@ const Header: React.FC<any> = () => {
               {localStorage.getItem("userId") == "null" ? (
                 <div
                   onClick={() => {
-                    console.log(localStorage.getItem("userId"), "what hrer");
                     navigate(RoutePath.login);
                   }}
                   style={{ cursor: "pointer" }}
@@ -162,6 +162,7 @@ const Header: React.FC<any> = () => {
                         "https://qriocty.com/auto-login/" +
                         localStorage.getItem("userToken")
                       }
+                      target={"_blank"}
                       style={{ cursor: "pointer" }}
                       className="d-block text-dark ls-10 pt-1"
                     >
@@ -178,94 +179,7 @@ const Header: React.FC<any> = () => {
                 <i className="fa fa-envelope"></i>
                 <span className="cart-count badge-circle top-adj">3</span>
               </a>
-              <div className="dropdown cart-dropdown">
-                <a
-                  href="# "
-                  title="Cart"
-                  className="dropdown-toggle dropdown-arrow cart-toggle"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  data-display="static"
-                >
-                  <i className="minicart-icon"></i>
-                  <span className="cart-count badge-circle">3</span>
-                </a>
-                <div className="cart-overlay"></div>
-                <div className="dropdown-menu mobile-cart">
-                  <a href="# " title="Close (Esc)" className="btn-close">
-                    ×
-                  </a>
-                  <div className="dropdownmenu-wrapper custom-scrollbar">
-                    <div className="dropdown-cart-header">Shopping Cart</div>
-
-                    {CartData.length > 0 ? (
-                      <>
-                        <div className="dropdown-cart-products">
-                          {CartData?.map((item: any) => (
-                            <div className="product">
-                              <div className="product-details">
-                                <h4 className="product-title">
-                                  <a href="# ">{item.productName}</a>
-                                </h4>
-                                <span className="cart-product-info">
-                                  <span className="cart-product-qty">
-                                    {item.qty}
-                                  </span>{" "}
-                                  ×{item.productPrice}
-                                </span>
-                              </div>
-
-                              <figure className="product-image-container">
-                                <a href="# " className="product-image">
-                                  <img
-                                   // src={item?.images[0]?.image}
-                                    alt="product"
-                                    width="80"
-                                    height="80"
-                                  />
-                                </a>
-                                <a
-                                  href="# "
-                                  className="btn-remove"
-                                  title="Remove Product"
-                                >
-                                  <span>×</span>
-                                </a>
-                              </figure>
-                            </div>
-                          ))}
-                        </div>
-
-                        <div className="dropdown-cart-total">
-                          <span>SUBTOTAL:</span>
-                          <span className="cart-total-price float-right">
-                            ₹{subTotal}
-                          </span>
-                        </div>
-
-                        <div className="dropdown-cart-action">
-                          <a
-                            onClick={() => navigate(RoutePath.cart)}
-                            className="btn btn-gray btn-block view-cart"
-                          >
-                            View Cart
-                          </a>
-                          <a
-                            onClick={() => navigate(RoutePath.checkout)}
-                            className="btn btn-dark btn-block"
-                          >
-                            Checkout
-                          </a>
-                        </div>
-                      </>
-                    ) : (
-                      "Empty Cart"
-                    )}
-                  </div>
-                </div>
-              </div>
+              <Minicart />
             </div>
           </div>
         </div>
@@ -298,7 +212,10 @@ const Header: React.FC<any> = () => {
                   ?.filter((item, index) => index < 7)
                   .map((item: any) => (
                     <li>
-                      <a style={{cursor:"pointer"}} onClick={() => onSearch(item.id)}>
+                      <a
+                        style={{ cursor: "pointer" }}
+                        onClick={() => onSearch(item.id)}
+                      >
                         {item.categoryname}
                       </a>
                     </li>

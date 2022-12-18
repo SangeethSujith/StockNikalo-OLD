@@ -22,13 +22,7 @@ class productStore {
       .then((res: any) => {
         res && callback(res?.data);
       })
-      .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
-      });
+      .catch((err) => {});
   };
 
   getAuction = async (callback: any) => {
@@ -38,13 +32,7 @@ class productStore {
       .then((res: any) => {
         res && callback(res?.data);
       })
-      .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
-      });
+      .catch((err) => {});
   };
 
   getNewArrivals = async (callback: any) => {
@@ -54,13 +42,7 @@ class productStore {
       .then((res: any) => {
         res && callback(res?.data);
       })
-      .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
-      });
+      .catch((err) => {});
   };
 
   getProductCategory = async (callback: any) => {
@@ -70,13 +52,7 @@ class productStore {
       .then((res: any) => {
         res && callback(res?.data);
       })
-      .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
-      });
+      .catch((err) => {});
   };
 
   getRfqsDetails = async (callback: any) => {
@@ -86,13 +62,7 @@ class productStore {
       .then((res: any) => {
         res && callback(res?.data);
       })
-      .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
-      });
+      .catch((err) => {});
   };
 
   getRfqsDetailsByID = async (data: any, callback: any) => {
@@ -102,13 +72,7 @@ class productStore {
       .then((res: any) => {
         res && callback(res?.data);
       })
-      .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
-      });
+      .catch((err) => {});
   };
 
   getQuotedRfq = async (data: any, callback: any) => {
@@ -118,13 +82,7 @@ class productStore {
       .then((res: any) => {
         res && callback(res?.data);
       })
-      .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
-      });
+      .catch((err) => {});
   };
 
   onSearch = async (data: any, callback: any) => {
@@ -134,13 +92,7 @@ class productStore {
       .then((res: any) => {
         res && callback(res?.data);
       })
-      .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
-      });
+      .catch((err) => {});
   };
 
   getProductsDetails = async (data: any, callback: any) => {
@@ -150,29 +102,17 @@ class productStore {
       .then((res: any) => {
         res && callback(res?.data);
       })
-      .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
-      });
+      .catch((err) => {});
   };
 
-   getAuctionDetails = async (data: any, callback: any) => {
+  getAuctionDetails = async (data: any, callback: any) => {
     let url = Constant.get_auctions + "/" + data;
     productService
       .getProducts(url)
       .then((res: any) => {
         res && callback(res?.data);
       })
-      .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
-      });
+      .catch((err) => {});
   };
 
   addtocart = async (data: any, callback: any) => {
@@ -183,13 +123,7 @@ class productStore {
       .then((res: any) => {
         res && callback(res?.data);
       })
-      .catch((err) => {
-        if (err?.response?.data?.ResponseMessage) {
-          message.info(err?.response?.data?.ResponseMessage);
-        } else {
-          message.info("Oops! Some error occurred");
-        }
-      });
+      .catch((err) => {});
   };
 
   submitRfqsQuote = async (data: any, callback: any) => {

@@ -13,33 +13,41 @@ import RfqQuotePriceComponent from "../../pages/rfqs/quote-the-price";
 import AuctionDetailComponent from "../../pages/auction/auction-details";
 import AuctionComponent from "../../pages/auction/auction";
 import { Route, Routes } from "react-router-dom";
+import { PrivateRoute } from "../private-route";
 const AppRouter = (props: any) => {
   return (
     <Routes>
       <Route path={RoutePath.home} element={<Home />} />
-      {localStorage.getItem("userId") == "null" ? (
-        <>
-          <Route path={RoutePath.login} element={<LoginComponent />} />
-          <Route
-            path={RoutePath.register}
-            element={<RegistrationComponent />}
-          />
-          <Route path={RoutePath.checkout} element={<Home />} />
-          <Route path={RoutePath.rfqs} element={<LoginComponent />} />
-          <Route path={RoutePath.quoteprice} element={<Home />} />
-        </>
-      ) : (
-        <>
-          <Route path={RoutePath.login} element={<Home />} />
-          <Route path={RoutePath.register} element={<Home />} />
-          <Route path={RoutePath.checkout} element={<CheckoutComponent />} />
-          <Route path={RoutePath.rfqs} element={<RfqsComponent />} />
-          <Route
-            path={RoutePath.quoteprice}
-            element={<RfqQuotePriceComponent />}
-          />
-        </>
-      )}
+
+      <>
+        <Route path={RoutePath.login} element={<LoginComponent />} />
+        <Route path={RoutePath.register} element={<RegistrationComponent />} />
+
+        <Route
+          path={RoutePath.checkout}
+          element={
+            <PrivateRoute>
+              <CheckoutComponent />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={RoutePath.rfqs}
+          element={
+            <PrivateRoute>
+              <RfqsComponent />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={RoutePath.quoteprice}
+          element={
+            <PrivateRoute>
+              <RfqQuotePriceComponent />
+            </PrivateRoute>
+          }
+        />
+      </>
 
       <Route path={RoutePath.cart} element={<CartComponent />} />
       <Route path={RoutePath.shop} element={<ProductsComponent />} />
@@ -48,8 +56,14 @@ const AppRouter = (props: any) => {
         path={RoutePath.complete_profile}
         element={<CompleteRegistrationComponent />}
       />
-      <Route path={RoutePath.product+'/:id'}  element={<ProductsDetailComponent />} />
-      <Route path={RoutePath.auction+'/:id'} element={<AuctionDetailComponent />} />
+      <Route
+        path={RoutePath.product + "/:id"}
+        element={<ProductsDetailComponent />}
+      />
+      <Route
+        path={RoutePath.auction + "/:id"}
+        element={<AuctionDetailComponent />}
+      />
     </Routes>
   );
 };

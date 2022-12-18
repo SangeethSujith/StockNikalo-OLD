@@ -5,6 +5,7 @@ import RoutePath from "../../global/route-paths";
 import userStore from "../../store/user-store";
 import swal from "sweetalert";
 import "./style.css";
+import GoToTop from "../../gototop";
 type CartProps = {};
 
 const CheckoutComponent: React.FC<any> = (props: CartProps) => {
@@ -779,6 +780,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
           {/* End .row */}
         </div>
         {/* End .container */}
+        <GoToTop />
       </main>
     </>
   );

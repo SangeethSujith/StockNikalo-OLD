@@ -6,6 +6,7 @@ import RoutePath from "../../global/route-paths";
 import swal from "sweetalert";
 import productStore from "../../store/product-store";
 import "./custom.css";
+import { observer } from "mobx-react-lite";
 type RfqsProps = {};
 
 interface Options {
@@ -310,4 +311,4 @@ const RfqsComponent: React.FC<any> = (props: RfqsProps) => {
   );
 };
 
-export default RfqsComponent;
+export default observer(RfqsComponent);

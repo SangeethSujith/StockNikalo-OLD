@@ -15402,7 +15402,7 @@ right:auto
 
 .sidebar-list li input { margin-right:6px;}
 .product-slide{
-	display: none;
+	/* display: none; */
 	position: relative;
 }
 

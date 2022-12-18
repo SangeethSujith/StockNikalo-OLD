@@ -15,7 +15,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
   const [ProductName, setProductName] = useState("Product");
   const urlParams = useParams();
   const { id } = useParams();
-  const product = String(id)
+  const product = String(id);
   const addtoCart = () => {
     let qty: any = document.getElementById("cartqty");
     qty = qty.value;
@@ -33,6 +33,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
     productStore.addtocart(data, (res: any) => {
       if (res.status) {
         setisaddtosucc(false);
+        userStore.getUserCart((res: any) => {});
       }
     });
   };
@@ -52,7 +53,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
     userStore.removeCart((res: any) => {});
   };
 
-  const getUserCart = (e:any) => {
+  const getUserCart = (e: any) => {
     userStore.getUserCart((res: any) => {
       console.log(res);
       if (res.status) {
@@ -67,7 +68,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
             if (isConfirm) {
               removeCart();
               addtoCart();
-              
+
               e.target.classList.add("added-to-cart");
               swal({
                 title: "Added to cart",
@@ -87,9 +88,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
     });
   };
 
-
   useEffect(() => {
-    
     const script = document.createElement("script");
     script.src = "/assets/js/main.min.js";
     document.body.append(script);
@@ -97,7 +96,6 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
   }, [product]);
   return (
     <>
-      {console.log(product,"product")}
       <main className="main">
         <div className="container">
           <nav aria-label="breadcrumb" className="breadcrumb-nav">
@@ -984,7 +982,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
             </div>
           </div>
         </section>
-         <GoToTop />
+        <GoToTop />
       </main>
 
       {/* End .main */}
