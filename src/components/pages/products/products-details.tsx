@@ -11,6 +11,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
   const navigate = useNavigate();
   const [CartQty, setCartQty] = useState();
   const [ProductsData, setProductsData] = useState([]);
+  const [ProductsImg, setProductsImg] = useState(Array);
   const [isaddtosucc, setisaddtosucc] = useState(true);
   const [ProductName, setProductName] = useState("Product");
   const urlParams = useParams();
@@ -42,6 +43,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
     productStore.getProductsDetails(product, (res: any) => {
       if (res?.status) {
         setProductsData(res?.data);
+        setProductsImg(res?.data[0].images);
         setProductName(res?.data[0]?.productName);
       } else {
         navigate(RoutePath.home);
@@ -118,62 +120,28 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
             </div>
             <div className="row">
               <div className="col-lg-5 col-md-6 product-single-gallery">
-                <div className="product-item">
-                  <div className="inner">
-                    {" "}
-                    <img
-                      src={ProductsData[0]?.["images"][0]?.["image"]}
-                      data-zoom-image={
-                        ProductsData[0]?.["images"][0]?.["image"]
-                      }
-                      width={480}
-                      height={480}
-                      alt="proudct-img"
-                    />{" "}
-                    <span className="prod-full-screen">
+                {ProductsImg?.map((item: any) => (
+                  <div className="product-item">
+                    <div className="inner">
                       {" "}
-                      <i className="icon-plus" />{" "}
-                    </span>{" "}
+                      <img
+                        src={item?.image}
+                        data-zoom-image={item?.image}
+                        width={480}
+                        height={480}
+                        alt="proudct-img"
+                      />{" "}
+                      <span className="prod-full-screen">
+                        {" "}
+                        <i className="icon-plus" />{" "}
+                      </span>{" "}
+                    </div>
                   </div>
-                </div>
+                ))}
                 {/* End .product-item */}
-                <div className="product-item">
-                  <div className="inner">
-                    {" "}
-                    <img
-                      src={ProductsData[0]?.["images"][1]?.["image"]}
-                      data-zoom-image={
-                        ProductsData[0]?.["images"][1]?.["image"]
-                      }
-                      width={480}
-                      height={480}
-                      alt="proudct-img"
-                    />{" "}
-                    <span className="prod-full-screen">
-                      {" "}
-                      <i className="icon-plus" />{" "}
-                    </span>{" "}
-                  </div>
-                </div>
+
                 {/* End .product-item */}
-                <div className="product-item">
-                  <div className="inner">
-                    {" "}
-                    <img
-                      src={ProductsData[0]?.["images"][2]?.["image"]}
-                      data-zoom-image={
-                        ProductsData[0]?.["images"][2]?.["image"]
-                      }
-                      width={480}
-                      height={480}
-                      alt="proudct-img"
-                    />{" "}
-                    <span className="prod-full-screen">
-                      {" "}
-                      <i className="icon-plus" />{" "}
-                    </span>{" "}
-                  </div>
-                </div>
+
                 {/* End .product-item */}
               </div>
               {/* End .col-md-5 */}

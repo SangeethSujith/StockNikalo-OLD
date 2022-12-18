@@ -54,7 +54,7 @@ const Header: React.FC<any> = () => {
   };
 
   const onSearch = (id: any) => {
-    if ((CurrentCategory != "" && searchText != "") || id != null) {
+    if (CurrentCategory != "" || searchText != "" || id != null) {
       let data = {
         category_id: CurrentCategory ? CurrentCategory : id,
         subcategory_id: "",
