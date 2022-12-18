@@ -10,13 +10,13 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
   const [subTotal, setsubTotal] = useState(Number);
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = "assets/js/main.min.js";
+    script.src = "/assets/js/main.min.js";
     document.body.append(script);
     getUserCart();
   }, []);
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = "assets/js/main.min.js";
+    script.src = "/assets/js/main.min.js";
     document.body.append(script);
   }, [CartData]);
 
@@ -39,7 +39,7 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
 
   return (
     <>
-      <link rel="stylesheet" href="assets/css/style.min.css"></link>
+      <link rel="stylesheet" href="/assets/css/style.min.css"></link>
 
       {Array.isArray(CartData) && CartData.length > 0 && (
         <main className="main">
@@ -90,7 +90,7 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
                               <a href="#" className="product-image">
                                 {" "}
                                 <img
-                                  src="assets/images/products/product-1.jpg"
+                                  src="/assets/images/products/product-1.jpg"
                                   alt="product"
                                 />{" "}
                               </a>{" "}
@@ -211,7 +211,7 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
           {/* margin */}
         </main>
       )}
-      <script src="assets/js/nouislider.min.js"></script>
+      <script src="/assets/js/nouislider.min.js"></script>
     </>
   );
 };

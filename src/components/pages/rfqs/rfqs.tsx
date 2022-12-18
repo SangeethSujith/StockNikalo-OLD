@@ -55,7 +55,7 @@ const RfqsComponent: React.FC<any> = (props: RfqsProps) => {
                 className="category-banner banner text-uppercase"
                 style={{
                   background:
-                    'no-repeat 60%/cover url("assets/images/slider/slide-1.jpg")',
+                    'no-repeat 60%/cover url("/assets/images/slider/slide-1.jpg")',
                 }}
               >
                 {/* <div class="row">

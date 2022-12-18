@@ -29,7 +29,7 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
   }, []);
 
   const getProductsData = () => {
-    productStore.getProducts((values: any) => {
+    productStore.getAuction((values: any) => {
       if (location.state?.data == undefined) {
         setSearchResult(values.data);
       }
@@ -268,174 +268,71 @@ const onSearch = (id: any) => {
             </div>
             {/* End .toolbox-right */}
           </nav>
-          <div className="row">
-            <div className="col-6 col-sm-4">
-              <div className="product-default">
-                <figure>
-                  {" "}
-                  <a href="#">
-                    {" "}
-                    <img
-                      src="assets/images/products/product-1.jpg"
-                      width={280}
-                      height={280}
-                      alt="product"
-                    />{" "}
-                    <img
-                      src="assets/images/products/product-2.jpg"
-                      width={280}
-                      height={280}
-                      alt="product"
-                    />{" "}
-                  </a>
-                  <div className="label-group">
-                    <div className="product-label label-hot">HOT</div>
-                    <div className="product-label label-sale">-20%</div>
-                  </div>
-                </figure>
-                <div className="product-head">
-                  <div className="category-wrap">
-                    <div className="product-list">
-                      {" "}
-                      <a href="#" className="product-category">
-                        category
-                      </a>{" "}
+              <div className="row">
+                
+
+                {Array.isArray(SearchResult) && SearchResult.length > 0 &&
+                  SearchResult?.map((item: any) => (
+                    <div className="col-6 col-sm-4">
+                      <div className="product-default">
+                        <figure>
+                          {" "}
+                          <a href={`/auction?id=${item.id}`}>
+                            {" "}
+                            <img
+                              src="/assets/images/products/product-1.jpg"
+                              width={280}
+                              height={280}
+                              alt="product"
+                            />{" "}
+                            <img
+                              src="/assets/images/products/product-2.jpg"
+                              width={280}
+                              height={280}
+                              alt="product"
+                            />{" "}
+                          </a>
+                          <div className="label-group">
+                            <div className="product-label label-hot">HOT</div>
+                            <div className="product-label label-sale">-20%</div>
+                          </div>
+                        </figure>
+                        <div className="product-head">
+                          <div className="category-wrap">
+                            <div className="product-list">
+                              {" "}
+                              <a href="#" className="product-category">
+                                category
+                              </a>{" "}
+                            </div>
+                          </div>
+                          <p className="product-header">
+                            {" "}
+                            <a href="#">{item.title}</a>{" "}
+                          </p>
+                          <section className="location">
+                            <div>
+                              <p>Location</p>
+                            </div>
+                            <div>
+                              <p>India</p>
+                            </div>
+                          </section>
+                          {/* End .product-container */}
+                          {/* End .price-box */}
+                          <div className="product-move">
+                            <a href="search-detail.html">
+                              <span className="view">View Details</span>
+                            </a>
+                          </div>
+                        </div>
+                        {/* End .product-details */}
+                      </div>
                     </div>
-                  </div>
-                  <p className="product-header">
-                    {" "}
-                    <a href="#">iBELL M200-105 IGBT Inverter Parts</a>{" "}
-                  </p>
-                  <section className="location">
-                    <div>
-                      <p>Location</p>
-                    </div>
-                    <div>
-                      <p>India</p>
-                    </div>
-                  </section>
-                  {/* End .product-container */}
-                  {/* End .price-box */}
-                  <div className="product-move">
-                    <a href="search-detail.html">
-                      <span className="view">View Details</span>
-                    </a>
-                  </div>
-                </div>
-                {/* End .product-details */}
-              </div>
-            </div>
+                  ))}
             {/* End .col-sm-4 */}
-            <div className="col-6 col-sm-4">
-              <div className="product-default">
-                <figure>
-                  {" "}
-                  <a href="#">
-                    {" "}
-                    <img
-                      src="assets/images/products/product-1.jpg"
-                      width={280}
-                      height={280}
-                      alt="product"
-                    />{" "}
-                    <img
-                      src="assets/images/products/product-2.jpg"
-                      width={280}
-                      height={280}
-                      alt="product"
-                    />{" "}
-                  </a>{" "}
-                </figure>
-                <div className="product-head">
-                  <div className="category-wrap">
-                    <div className="product-list">
-                      {" "}
-                      <a href="#" className="product-category">
-                        category
-                      </a>{" "}
-                    </div>
-                  </div>
-                  <p className="product-header">
-                    {" "}
-                    <a href="#">iBELL M200-105 IGBT Inverter Parts</a>{" "}
-                  </p>
-                  <section className="location">
-                    <div>
-                      <p>Location</p>
-                    </div>
-                    <div>
-                      <p>India</p>
-                    </div>
-                  </section>
-                  {/* End .product-container */}
-                  {/* End .price-box */}
-                  <div className="product-move">
-                    {" "}
-                    <a href="search-detail.html">
-                      <span className="view">View Details</span>
-                    </a>
-                  </div>
-                </div>
-                {/* End .product-details */}
-              </div>
-            </div>
-            {/* End .col-sm-4 */}
-            <div className="col-6 col-sm-4">
-              <div className="product-default">
-                <figure>
-                  {" "}
-                  <a href="#">
-                    {" "}
-                    <img
-                      src="assets/images/products/product-1.jpg"
-                      width={280}
-                      height={280}
-                      alt="product"
-                    />{" "}
-                    <img
-                      src="assets/images/products/product-2.jpg"
-                      width={280}
-                      height={280}
-                      alt="product"
-                    />{" "}
-                  </a>
-                  <div className="label-group">
-                    <div className="product-label label-sale">-20%</div>
-                  </div>
-                </figure>
-                <div className="product-head">
-                  <div className="category-wrap">
-                    <div className="product-list">
-                      {" "}
-                      <a href="#" className="product-category">
-                        category
-                      </a>{" "}
-                    </div>
-                  </div>
-                  <p className="product-header">
-                    {" "}
-                    <a href="#">iBELL M200-105 IGBT Inverter Parts</a>{" "}
-                  </p>
-                  <section className="location">
-                    <div>
-                      <p>Location</p>
-                    </div>
-                    <div>
-                      <p>India</p>
-                    </div>
-                  </section>
-                  {/* End .product-container */}
-                  {/* End .price-box */}
-                  <div className="product-move">
-                    {" "}
-                    <a href="search-detail.html">
-                      <span className="view">View Details</span>
-                    </a>
-                  </div>
-                </div>
-                {/* End .product-details */}
-              </div>
-            </div>
+            
+            
           </div>
           {/* End .row */}
           {/* product-slide start*/}
@@ -532,7 +429,7 @@ const onSearch = (id: any) => {
                             aria-selected="true"
                           >
                             <img
-                              src="assets/images/products/product-1.jpg"
+                              src="/assets/images/products/product-1.jpg"
                               alt=""
                             />
                           </a>
@@ -550,7 +447,7 @@ const onSearch = (id: any) => {
                             aria-selected="true"
                           >
                             <img
-                              src="assets/images/products/product-1.jpg"
+                              src="/assets/images/products/product-1.jpg"
                               alt=""
                             />
                           </a>
@@ -568,7 +465,7 @@ const onSearch = (id: any) => {
                             aria-selected="false"
                           >
                             <img
-                              src="assets/images/products/product-1.jpg"
+                              src="/assets/images/products/product-1.jpg"
                               alt=""
                             />
                           </a>
@@ -586,7 +483,7 @@ const onSearch = (id: any) => {
                             aria-selected="false"
                           >
                             <img
-                              src="assets/images/products/product-1.jpg"
+                              src="/assets/images/products/product-1.jpg"
                               alt=""
                             />
                           </a>
@@ -659,7 +556,7 @@ const onSearch = (id: any) => {
                               alt="product"
                               width={150}
                               height={150}
-                              src="assets/images/products/product-1.jpg"
+                              src="/assets/images/products/product-1.jpg"
                               style={{ paddingTop: 0 }}
                             />
                             <span>Circled Ultimate 3D Speaker</span>
@@ -676,7 +573,7 @@ const onSearch = (id: any) => {
                               alt="product"
                               width={150}
                               height={150}
-                              src="assets/images/products/product-2.jpg"
+                              src="/assets/images/products/product-2.jpg"
                               style={{ paddingTop: 0 }}
                             />
                             <span>Blue Backpack for the Young</span>

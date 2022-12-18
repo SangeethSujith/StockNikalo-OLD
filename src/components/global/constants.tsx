@@ -32,7 +32,7 @@ const Constant = {
   removecart: "api/remove-carts-and-add",
   category: "api/listcategory",
   productsearch: "api/product-search",
-  get_auctions: "/api/auctions",
+  get_auctions: "api/auctions",
 };
 
 export default Constant;

@@ -112,7 +112,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
   };
   return (
     <>
-      <link rel="stylesheet" href="assets/css/style.min.css"></link>
+      <link rel="stylesheet" href="/assets/css/style.min.css"></link>
       <main className="main main-test">
         <div className="container checkout-container">
           <ul className="checkout-progress-bar d-flex justify-content-center flex-wrap">

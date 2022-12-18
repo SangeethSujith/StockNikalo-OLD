@@ -174,7 +174,7 @@ const onSearch = (id: any) => {
             className="category-banner banner text-uppercase"
             style={{
               background:
-                'no-repeat 60%/cover url("assets/images/slider/slide-1.jpg")'
+                'no-repeat 60%/cover url("/assets/images/slider/slide-1.jpg")'
             }}
           >
             <div className="row">
@@ -564,7 +564,7 @@ const onSearch = (id: any) => {
                                       alt="product"
                                       width={150}
                                       height={150}
-                                      src="assets/images/products/product-1.jpg"
+                                      src="/assets/images/products/product-1.jpg"
                                       style={{ paddingTop: 0 }}
                                     />
                                     <span>Circled Ultimate 3D Speaker</span>
@@ -581,7 +581,7 @@ const onSearch = (id: any) => {
                                       alt="product"
                                       width={150}
                                       height={150}
-                                      src="assets/images/products/product-2.jpg"
+                                      src="/assets/images/products/product-2.jpg"
                                       style={{ paddingTop: 0 }}
                                     />
                                     <span>Blue Backpack for the Young</span>
@@ -1055,13 +1055,13 @@ const onSearch = (id: any) => {
                         <a href="#">
                           {" "}
                           <img
-                            src="assets/images/products/product-1.jpg"
+                            src="/assets/images/products/product-1.jpg"
                             width={75}
                             height={75}
                             alt="product"
                           />{" "}
                           <img
-                            src="assets/images/products/product-2.jpg"
+                            src="/assets/images/products/product-2.jpg"
                             width={75}
                             height={75}
                             alt="product"
@@ -1100,13 +1100,13 @@ const onSearch = (id: any) => {
                         <a href="#">
                           {" "}
                           <img
-                            src="assets/images/products/product-1.jpg"
+                            src="/assets/images/products/product-1.jpg"
                             width={75}
                             height={75}
                             alt="product"
                           />{" "}
                           <img
-                            src="assets/images/products/product-2.jpg"
+                            src="/assets/images/products/product-2.jpg"
                             width={75}
                             height={75}
                             alt="product"
@@ -1145,13 +1145,13 @@ const onSearch = (id: any) => {
                         <a href="#">
                           {" "}
                           <img
-                            src="assets/images/products/product-1.jpg"
+                            src="/assets/images/products/product-1.jpg"
                             width={75}
                             height={75}
                             alt="product"
                           />{" "}
                           <img
-                            src="assets/images/products/product-2.jpg"
+                            src="/assets/images/products/product-2.jpg"
                             width={75}
                             height={75}
                             alt="product"
@@ -1193,13 +1193,13 @@ const onSearch = (id: any) => {
                         <a href="#">
                           {" "}
                           <img
-                            src="assets/images/products/product-1.jpg"
+                            src="/assets/images/products/product-1.jpg"
                             width={75}
                             height={75}
                             alt="product"
                           />{" "}
                           <img
-                            src="assets/images/products/product-2.jpg"
+                            src="/assets/images/products/product-2.jpg"
                             width={75}
                             height={75}
                             alt="product"
@@ -1238,13 +1238,13 @@ const onSearch = (id: any) => {
                         <a href="#">
                           {" "}
                           <img
-                            src="assets/images/products/product-1.jpg"
+                            src="/assets/images/products/product-1.jpg"
                             width={75}
                             height={75}
                             alt="product"
                           />{" "}
                           <img
-                            src="assets/images/products/product-2.jpg"
+                            src="/assets/images/products/product-2.jpg"
                             width={75}
                             height={75}
                             alt="product"
@@ -1283,13 +1283,13 @@ const onSearch = (id: any) => {
                         <a href="#">
                           {" "}
                           <img
-                            src="assets/images/products/product-1.jpg"
+                            src="/assets/images/products/product-1.jpg"
                             width={75}
                             height={75}
                             alt="product"
                           />{" "}
                           <img
-                            src="assets/images/products/product-2.jpg"
+                            src="/assets/images/products/product-2.jpg"
                             width={75}
                             height={75}
                             alt="product"
