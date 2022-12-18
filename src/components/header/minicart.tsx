@@ -114,7 +114,11 @@ const Minicart: React.FC<any> = () => {
                       <figure className="product-image-container">
                         <a href="# " className="product-image">
                           <img
-                            src={item?.images[0]?.image}
+                            src={
+                              item?.images
+                                ? item?.images[0]?.image
+                                : "/assets/images/products/product-1.jpg"
+                            }
                             alt="product"
                             width="80"
                             height="80"

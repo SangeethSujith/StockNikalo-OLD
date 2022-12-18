@@ -43,7 +43,10 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
     productStore.getProductsDetails(product, (res: any) => {
       if (res?.status) {
         setProductsData(res?.data);
-        setProductsImg(res?.data[0].images);
+        res?.data[0].images
+          ? setProductsImg(res?.data[0].images)
+          : setProductsImg([{ item: "/assets/images/products/product-1.jpg" }]);
+        // setProductsImg(res?.data[0].images);
         setProductName(res?.data[0]?.productName);
       } else {
         navigate(RoutePath.home);
@@ -126,8 +129,16 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                     <div className="inner">
                       {" "}
                       <img
-                        src={item?.image}
-                        data-zoom-image={item?.image}
+                        src={
+                          item?.image
+                            ? item?.image
+                            : "/assets/images/products/product-1.jpg"
+                        }
+                        data-zoom-image={
+                          item?.image
+                            ? item?.image
+                            : "/assets/images/products/product-1.jpg"
+                        }
                         width={480}
                         height={480}
                         alt="proudct-img"

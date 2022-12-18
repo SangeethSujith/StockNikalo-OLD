@@ -334,9 +334,9 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                               {" "}
                               <img
                                 src={
-                                  item?.images != undefined
+                                  item?.images
                                     ? item?.images[0]?.image
-                                    : ""
+                                    : "/assets/images/products/product-1.jpg"
                                 }
                                 width={280}
                                 height={280}
@@ -344,9 +344,9 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                               />{" "}
                               <img
                                 src={
-                                  item?.images != undefined
+                                  item?.images
                                     ? item?.images[0]?.image
-                                    : ""
+                                    : "/assets/images/products/product-1.jpg"
                                 }
                                 width={280}
                                 height={280}
