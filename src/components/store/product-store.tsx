@@ -117,7 +117,6 @@ class productStore {
 
   addtocart = async (data: any, callback: any) => {
     let url = Constant.addtocart;
-    console.log(url);
     productService
       .addtocart(url, data)
       .then((res: any) => {

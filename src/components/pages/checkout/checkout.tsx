@@ -3,6 +3,7 @@ import { Form, Button, Input, message, Select } from "antd";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
 import userStore from "../../store/user-store";
+import { Country, State, City } from "country-state-city";
 import swal from "sweetalert";
 import "./style.css";
 import GoToTop from "../../gototop";
@@ -12,6 +13,10 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
   const navigate = useNavigate();
   const { useForm } = Form;
   const [form] = useForm();
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
   const [CartData, setCartData] = useState([]);
   const [BillingAddress, setBillingAddress] = useState([]);
   const [BillingAddressId, setBillingAddressId] = useState(0);
@@ -23,6 +28,52 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
     getUserCart();
     getUserAddress();
   }, []);
+  useEffect(() => {
+    const getCountries = async () => {
+      try {
+        const result = await Country.getAllCountries();
+        let allCountries: any = [];
+        allCountries = result?.map(({ isoCode, name }) => ({
+          isoCode,
+          name,
+        }));
+        //const [{ isoCode: firstCountry } = {}] = allCountries;
+        console.log(allCountries);
+        const [{ isoCode: firstCountry = "IN" } = {}] = allCountries;
+        setCountries(allCountries);
+        setSelectedCountry(firstCountry);
+        form.setFieldsValue({
+          country: firstCountry,
+        });
+      } catch (error) {
+        setCountries([]);
+      }
+    };
+    getCountries();
+  }, []);
+  useEffect(() => {
+    const getStates = async () => {
+      try {
+        const result = await State.getStatesOfCountry(selectedCountry);
+        let allStates: any = [];
+        allStates = result?.map(({ isoCode, name }) => ({
+          isoCode,
+          name,
+        }));
+        const [{ isoCode: firstState = "" } = {}] = allStates;
+        setStates(allStates);
+        setSelectedState(firstState);
+        form.setFieldsValue({
+          state: firstState,
+        });
+      } catch (error) {
+        setStates([]);
+      }
+    };
+
+    getStates();
+  }, [selectedCountry]);
+
   const getUserAddress = () => {
     userStore.getUserAddress((res: any) => {
       if (res.status) {
@@ -37,6 +88,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
     }
     e.currentTarget.classList.toggle("active");
     setBillingAddressId(BillingAddress[index]?.["id"]);
+    setSelectedCountry(BillingAddress[index]?.["country"]);
 
     form.setFieldsValue({
       first_name: BillingAddress[index]?.["first_name"],
@@ -94,15 +146,17 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
 
         userStore.createOrder(data, (res: any) => {
           if (res.status) {
-            swal({
-              //title: "Are you sure?",
-              text: "Order Created successfully",
-              icon: "success",
-              dangerMode: true,
-            }).then((success) => {
-              if (success) {
-                navigate(RoutePath.home);
-              }
+            userStore.getUserCart((res: any) => {
+              swal({
+                //title: "Are you sure?",
+                text: "Order Created successfully",
+                icon: "success",
+                dangerMode: true,
+              }).then((success) => {
+                if (success) {
+                  navigate(RoutePath.home);
+                }
+              });
             });
           }
         });
@@ -328,34 +382,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                         <Input maxLength={70} className="form-control" />
                       </Form.Item>
                     </div>
-                    <div className="select-custom">
-                      <label>
-                        Country / Region
-                        <abbr className="required" title="required">
-                          *
-                        </abbr>
-                      </label>
-                      <Form.Item
-                        name="country"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please enter your country",
-                          },
-                        ]}
-                      >
-                        <select name="orderby" className="form-control">
-                          <option value="0" selected>
-                            Select
-                          </option>
-                          <option value={1}>Brunei</option>
-                          <option value={2}>Bulgaria</option>
-                          <option value={3}>Burkina Faso</option>
-                          <option value={4}>Burundi</option>
-                          <option value={5}>Cameroon</option>
-                        </select>
-                      </Form.Item>
-                    </div>
+
                     <div className="form-group mb-1 pb-2">
                       <label>
                         Street address
@@ -396,6 +423,80 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                         />
                       </Form.Item>
                     </div>
+                    <div className="select-custom">
+                      <label>
+                        Country / Region
+                        <abbr className="required" title="required">
+                          *
+                        </abbr>
+                      </label>
+                      <Form.Item
+                        name="country"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your country",
+                          },
+                        ]}
+                      >
+                        <select
+                          name="orderby"
+                          className="form-control"
+                          value={selectedCountry}
+                          onChange={(event) =>
+                            setSelectedCountry(event.target.value)
+                          }
+                        >
+                          <option value="0" selected>
+                            Select
+                          </option>
+                          {countries.map(({ isoCode, name }) => (
+                            <option value={isoCode} key={isoCode}>
+                              {name}
+                            </option>
+                          ))}
+                        </select>
+                      </Form.Item>
+                    </div>
+
+                    <div className="select-custom">
+                      <label>
+                        State / County{" "}
+                        <abbr className="required" title="required">
+                          *
+                        </abbr>
+                      </label>
+                      <Form.Item
+                        name="state"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please select state",
+                          },
+                        ]}
+                      >
+                        <select
+                          name="orderby"
+                          className="form-control"
+                          value={selectedState}
+                          onChange={(event) =>
+                            setSelectedState(event.target.value)
+                          }
+                        >
+                          {states.length > 0 ? (
+                            states.map(({ isoCode, name }) => (
+                              <option value={isoCode} key={isoCode}>
+                                {name}
+                              </option>
+                            ))
+                          ) : (
+                            <option value="0" key="">
+                              No state found
+                            </option>
+                          )}
+                        </select>
+                      </Form.Item>
+                    </div>
                     <div className="form-group">
                       <label>
                         Town / City
@@ -413,34 +514,6 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                         ]}
                       >
                         <Input maxLength={70} className="form-control" />
-                      </Form.Item>
-                    </div>
-                    <div className="select-custom">
-                      <label>
-                        State / County{" "}
-                        <abbr className="required" title="required">
-                          *
-                        </abbr>
-                      </label>
-                      <Form.Item
-                        name="state"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please select state",
-                          },
-                        ]}
-                      >
-                        <select name="orderby" className="form-control">
-                          <option value="0" selected>
-                            Select
-                          </option>
-                          <option value={1}>Brunei</option>
-                          <option value={2}>Bulgaria</option>
-                          <option value={3}>Burkina Faso</option>
-                          <option value={4}>Burundi</option>
-                          <option value={5}>Cameroon</option>
-                        </select>
                       </Form.Item>
                     </div>
                     <div className="form-group">
@@ -508,7 +581,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                         />
                       </Form.Item>
                     </div>
-                    <div className="form-group mb-1">
+                    {/* <div className="form-group mb-1">
                       <div className="custom-control custom-checkbox">
                         <input
                           type="checkbox"
@@ -558,7 +631,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                           Ship to a different address?
                         </label>
                       </div>
-                    </div>
+                    </div> */}
                     <div id="collapseFour" className="collapse">
                       <div className="shipping-info">
                         <div className="row">
@@ -722,13 +795,13 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                               defaultChecked
                             />
                             <label className="custom-control-label">
-                              Local Pickup
+                              Standard
                             </label>
                           </div>
                           {/* End .custom-checkbox */}
                         </div>
                         {/* End .form-group */}
-                        <div className="form-group form-group-custom-control mb-0">
+                        {/* <div className="form-group form-group-custom-control mb-0">
                           <div className="custom-control custom-radio d-flex mb-0">
                             <input
                               type="radio"
@@ -739,8 +812,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                               Flat Rate
                             </label>
                           </div>
-                          {/* End .custom-checkbox */}
-                        </div>
+                        </div> */}
                         {/* End .form-group */}
                       </td>
                     </tr>

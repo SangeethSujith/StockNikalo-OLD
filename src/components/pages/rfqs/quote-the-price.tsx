@@ -30,12 +30,11 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
     });
   };
   const getQuotedRfq = (id: any) => {
-    productStore.getQuotedRfq(id, (res: any) => {  
-    setQuotedRfqsData(res?.data[0]?.rfq_perticular_id);
-    getRfqsDetailsbyID(id);
-  });
-     };
-
+    productStore.getQuotedRfq(id, (res: any) => {
+      setQuotedRfqsData(res?.data[0]?.rfq_perticular_id);
+      getRfqsDetailsbyID(id);
+    });
+  };
 
   const submitRfqQuote = () => {
     var data: any = new Array();
@@ -52,25 +51,25 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
       }
     });
 
-    if(arr.length > 0) {
-    const rfqData = {
-      rfqData: arr,
-    };
-    productStore.submitRfqsQuote(rfqData, (res: any) => {
-      if (res.status) {
-        swal({
-          //title: "Are you sure?",
-          text: "RFQ created successfully",
-          icon: "success",
-          dangerMode: true,
-        }).then((success) => {
-          if (success) {
-            navigate(RoutePath.home);
-          }
-        });
-      }
-    });
-  }
+    if (arr.length > 0) {
+      const rfqData = {
+        rfqData: arr,
+      };
+      productStore.submitRfqsQuote(rfqData, (res: any) => {
+        if (res.status) {
+          swal({
+            //title: "Are you sure?",
+            text: "RFQ sumbmitted successfully",
+            icon: "success",
+            dangerMode: true,
+          }).then((success) => {
+            if (success) {
+              navigate(RoutePath.home);
+            }
+          });
+        }
+      });
+    }
   };
 
   return (
@@ -116,7 +115,6 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                       </div> */}
               </div>
               <div className="wishlist-table-container">
-                
                 <Form
                   id="checkout-form"
                   form={form}
@@ -142,13 +140,23 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                       </tr>
                     </thead>
                     <tbody className="">
-                      
                       {RfqsData?.map((item: any, index: number) => (
-
-                        <tr style={{background: (item.perticularId==QuotedRfqsData)? "#e9ecef" :""}}  className="product-row">
+                        <tr
+                          style={{
+                            background:
+                              item.perticularId == QuotedRfqsData
+                                ? "#e9ecef"
+                                : "",
+                          }}
+                          className="product-row"
+                        >
                           <td className="action d-flex align-items-center justify-content-center">
-                            <input 
-                              disabled={(item.perticularId == QuotedRfqsData) ? true : false}
+                            <input
+                              disabled={
+                                item.perticularId == QuotedRfqsData
+                                  ? true
+                                  : false
+                              }
                               type="checkbox"
                               className="form-control checkbox"
                             />
@@ -174,9 +182,17 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                             <Form.Item name={"price-" + index}>
                               <Input
                                 className="form-control"
-                                placeholder={(item.perticularId == QuotedRfqsData) ? "submitted" : "0"}
+                                placeholder={
+                                  item.perticularId == QuotedRfqsData
+                                    ? "submitted"
+                                    : "0"
+                                }
                                 required
-                                disabled={(item.perticularId == QuotedRfqsData) ? true : false}
+                                disabled={
+                                  item.perticularId == QuotedRfqsData
+                                    ? true
+                                    : false
+                                }
                               />
                             </Form.Item>
                           </td>

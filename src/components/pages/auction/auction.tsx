@@ -324,7 +324,11 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                           {/* End .product-container */}
                           {/* End .price-box */}
                           <div className="product-move">
-                            <a href="search-detail.html">
+                            <a
+                              onClick={() =>
+                                navigate(`${RoutePath.auction}/${item.id}`)
+                              }
+                            >
                               <span className="view">View Details</span>
                             </a>
                           </div>

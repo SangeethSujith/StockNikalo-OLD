@@ -172,13 +172,13 @@ const Header: React.FC<any> = () => {
                 </div>
               )}
 
-              <a href="# " className="header-icon header-icon-user">
+              {/* <a href="# " className="header-icon header-icon-user">
                 <i className="fa fa-print"></i>
               </a>
               <a href="# " className="header-icon position-relative">
                 <i className="fa fa-envelope"></i>
                 <span className="cart-count badge-circle top-adj">3</span>
-              </a>
+              </a> */}
               <Minicart />
             </div>
           </div>

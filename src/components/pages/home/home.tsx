@@ -314,7 +314,9 @@ const Home: React.FC<any> = () => {
                           <div className="price-box w-100">
                             {" "}
                             <a
-                              href="# "
+                              onClick={() =>
+                                navigate(`${RoutePath.auction}/${item.id}`)
+                              }
                               className="btn btn-primary btn-md text-white w-100"
                               title="Bid Now"
                             >

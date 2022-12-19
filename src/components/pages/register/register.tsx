@@ -25,7 +25,6 @@ const RegistrationComponent: React.FC<any> = (props: RegistrationProps) => {
 
         userStore.addRegistration(data, (res: any) => {
           if (res) {
-            message.success("User registration completed successfully");
             form.resetFields();
             swal({
               //title: "Are you sure?",

@@ -86,7 +86,9 @@ const Minicart: React.FC<any> = () => {
           data-display="static"
         >
           <i className="minicart-icon"></i>
-          <span className="cart-count badge-circle">3</span>
+          <span className="cart-count badge-circle">
+            {userStore?.cartItem.length}
+          </span>
         </a>
         <div className="cart-overlay"></div>
         <div className="dropdown-menu mobile-cart">
