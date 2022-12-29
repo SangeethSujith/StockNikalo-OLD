@@ -94,11 +94,84 @@ const CompleteRegistrationComponent: React.FC<any> = (
     <>
       <main className="main">
         {/* Demo header*/}
+
         <section className="py-5 header">
           <div className="container py-4">
             <div className="row">
-              <div className="col-md-12">
-                {/* Tabs nav */}
+              <div className="col-md-4">
+                <div
+                  className="nav flex-column nav-pills nav-pills-custom"
+                  id="v-pills-tab"
+                  role="tablist"
+                  aria-orientation="vertical"
+                >
+                  <a
+                    className="nav-link mb-3 p-3  active"
+                    id="v-pills-home-tab"
+                    data-toggle="pill"
+                    href="#v-pills-home"
+                    role="tab"
+                    aria-controls="v-pills-home"
+                    aria-selected="true"
+                  >
+                    <i className="fa fa-user-circle-o mr-2" />
+                    <span className="font-weight-bold small text-uppercase">
+                      Basic Information
+                    </span>
+                  </a>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div
+                  className="nav flex-column nav-pills nav-pills-custom"
+                  id="v-pills-tab"
+                  role="tablist"
+                  aria-orientation="vertical"
+                >
+                  <a
+                    className="nav-link mb-3 p-3"
+                    id="v-pills-profile-tab1"
+                    data-toggle="pill"
+                    href="#v-pills-profile"
+                    role="tab"
+                    aria-controls="v-pills-profile"
+                    aria-selected="false"
+                  >
+                    <i className="fa fa-calendar-minus-o mr-2" />
+                    <span className="font-weight-bold small text-uppercase">
+                      {" "}
+                      Company Information
+                    </span>
+                  </a>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div
+                  className="nav flex-column nav-pills nav-pills-custom"
+                  id="v-pills-tab"
+                  role="tablist"
+                  aria-orientation="vertical"
+                >
+                  <a
+                    className="nav-link mb-3 p-3"
+                    id="v-pills-messages-tab2"
+                    data-toggle="pill"
+                    href="#v-pills-messages"
+                    role="tab"
+                    aria-controls="v-pills-messages"
+                    aria-selected="false"
+                  >
+                    <i className="fa fa-user-circle-o mr-2" />
+                    <span className="font-weight-bold small text-uppercase">
+                      Bank Details
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              {/* <div className="col-md-12">
+                
                 <div
                   className="nav flex-column nav-pills nav-pills-custom"
                   id="v-pills-tab"
@@ -119,6 +192,13 @@ const CompleteRegistrationComponent: React.FC<any> = (
                       Basic Information
                     </span>
                   </a>
+                </div>
+                <div
+                  className="nav flex-column nav-pills nav-pills-custom"
+                  id="v-pills-tab"
+                  role="tablist"
+                  aria-orientation="vertical"
+                >
                   <a
                     className="nav-link mb-3 p-3 col-4"
                     id="v-pills-profile-tab1"
@@ -134,6 +214,13 @@ const CompleteRegistrationComponent: React.FC<any> = (
                       Company Information
                     </span>
                   </a>
+                </div>
+                <div
+                  className="nav flex-column nav-pills nav-pills-custom"
+                  id="v-pills-tab"
+                  role="tablist"
+                  aria-orientation="vertical"
+                >
                   <a
                     className="nav-link mb-3 p-3 col-4"
                     id="v-pills-messages-tab2"
@@ -149,7 +236,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                     </span>
                   </a>
                 </div>
-              </div>
+              </div> */}
               <div className="col-md-12">
                 {/* Tabs content */}
                 <div className="tab-content" id="v-pills-tabContent">

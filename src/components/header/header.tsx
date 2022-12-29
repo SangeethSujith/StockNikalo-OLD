@@ -18,9 +18,12 @@ const Header: React.FC<any> = () => {
   }, []);
 
   const logOut = () => {
-    authStore.signOut(localStorage.getItem("userToken"), () => {
-      navigate(RoutePath.login);
-    });
+    authStore.signOut(
+      localStorage.getItem("userToken"),
+      (res: any, err: any) => {
+        if (res || err) navigate(RoutePath.login);
+      }
+    );
   };
 
   const getUserCart = () => {

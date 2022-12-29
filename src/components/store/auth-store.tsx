@@ -93,6 +93,12 @@ class AuthStore {
         }
       })
       .catch((err) => {
+        this.isUserLoggedIn = false;
+        this.currentUser = null;
+        userStore.cartItem = {};
+        localStorage.setItem("userCmpReg", JSON.stringify(null));
+        localStorage.setItem("userId", JSON.stringify(null));
+        localStorage.setItem("userToken", JSON.stringify(null));
         callback(err);
         //  swal({
         //       //title: "Are you sure?",

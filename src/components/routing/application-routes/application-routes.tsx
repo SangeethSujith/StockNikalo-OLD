@@ -14,14 +14,30 @@ import AuctionDetailComponent from "../../pages/auction/auction-details";
 import AuctionComponent from "../../pages/auction/auction";
 import { Route, Routes } from "react-router-dom";
 import { PrivateRoute } from "../private-route";
+import authStore from "../../store/auth-store";
+import { PublicRoute } from "../public-route";
 const AppRouter = (props: any) => {
   return (
     <Routes>
       <Route path={RoutePath.home} element={<Home />} />
 
       <>
-        <Route path={RoutePath.login} element={<LoginComponent />} />
-        <Route path={RoutePath.register} element={<RegistrationComponent />} />
+        <Route
+          path={RoutePath.login}
+          element={
+            <PublicRoute>
+              <LoginComponent />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path={RoutePath.register}
+          element={
+            <PublicRoute>
+              <RegistrationComponent />
+            </PublicRoute>
+          }
+        />
 
         <Route
           path={RoutePath.checkout}

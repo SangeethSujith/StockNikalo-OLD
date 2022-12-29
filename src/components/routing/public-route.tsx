@@ -1,4 +1,3 @@
-
 /**
  * Public  Route
  *
@@ -8,23 +7,17 @@
  * Project: Stocknikalo
  */
 
-import React from 'react';
-import { Navigate, Route } from 'react-router-dom';
-import RoutePath from '../global/route-paths';
-import AuthStore from '../store/auth-store';
+import React from "react";
+import { Navigate, Route } from "react-router-dom";
+import RoutePath from "../global/route-paths";
+import AuthStore from "../store/auth-store";
+import userStore from "../store/user-store";
 
-interface Props
-{
-  restricted: boolean
-  component: React.ComponentType
-  path?: string
-}
-
-export const PublicRoute: React.FC<Props> = ( { component: RouteComponent, restricted } ) =>
-{
-  if ( AuthStore.currentUser != null && restricted )
-  {
-    return <RouteComponent />
-  }
-  return <Navigate to={ RoutePath.login } />
-}
+export const PublicRoute: React.FC<any> = ({ children }) => {
+  return AuthStore.isUserLoggedIn &&
+    localStorage.getItem("userId") != "null" ? (
+    <Navigate to={RoutePath.home} />
+  ) : (
+    children
+  );
+};
