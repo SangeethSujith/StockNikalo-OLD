@@ -77,35 +77,35 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
 
   const getUserCart = (e: any) => {
     userStore.getUserCart((res: any) => {
-      console.log(res);
-      if (res.status) {
-        if (res?.data?.length > 0) {
-          swal({
-            title: "Are you sure?",
-            text: "You have items from another seller added to the cart. Do you want to clear the cart and add this item?",
-            icon: "warning",
-            buttons: ["No, cancel it!", "Yes, I am sure!"],
-            dangerMode: true,
-          }).then(function (isConfirm) {
-            if (isConfirm) {
-              removeCart();
+      // console.log(res);
+      // if (res.status) {
+      //   if (res?.data?.length > 0) {
+      //     swal({
+      //       title: "Are you sure?",
+      //       text: "You have items from another seller added to the cart. Do you want to clear the cart and add this item?",
+      //       icon: "warning",
+      //       buttons: ["No, cancel it!", "Yes, I am sure!"],
+      //       dangerMode: true,
+      //     }).then(function (isConfirm) {
+      //       if (isConfirm) {
+      //         removeCart();
 
-              e.target.classList.add("added-to-cart");
-              swal({
-                title: "Added to cart",
-                text: "Product added to cart successfully!",
-                icon: "success",
-              }).then(function () {
-                // form.submit(); // <--- submit form programmatically
-              });
-            } else {
-              // swal("Cancelled", "Your imaginary file is safe :)", "error");
-            }
-          });
-        }
-      } else {
+      //         e.target.classList.add("added-to-cart");
+      //         swal({
+      //           title: "Added to cart",
+      //           text: "Product added to cart successfully!",
+      //           icon: "success",
+      //         }).then(function () {
+      //           // form.submit(); // <--- submit form programmatically
+      //         });
+      //       } else {
+      //         // swal("Cancelled", "Your imaginary file is safe :)", "error");
+      //       }
+      //     });
+      //   }
+      // } else {
         addtoCart();
-      }
+      // }
     });
   };
 

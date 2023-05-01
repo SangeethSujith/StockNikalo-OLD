@@ -153,8 +153,8 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
                                 {" "}
                                 <img
                                   src={
-                                    CartData[0]?.["images"]
-                                      ? CartData[0]?.["images"][0]?.["image"]
+                                    item.images
+                                      ? item.images[0].image
                                       : "/assets/images/products/product-1.jpg"
                                   }
                                   alt="product"
