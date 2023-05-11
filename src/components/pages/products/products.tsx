@@ -75,7 +75,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
     });
   };
   const removeCart = () => {
-    userStore.removeCart((res: any) => { });
+    userStore.removeCart((res: any) => {});
   };
   const addtoCart = () => {
     console.log(itemData, "itemData");
@@ -222,11 +222,10 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
     });
   };
 
-
   const getHomeBanner = () => {
     settingsStore.getSettings((values: any) => {
       setNewBannerDetails(values.data);
-      console.log("=>",NewBannerDetails)
+      console.log("=>", NewBannerDetails);
     });
   };
 
@@ -256,8 +255,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                 <div
                   className="category-banner banner text-uppercase"
                   style={{
-                    background:
-                      `no-repeat 60%/cover url(https://qriocty.com/public/images/${NewBannerDetails[0]?.image})`,
+                    background: `no-repeat 60%/cover url(https://qriocty.com/public/images/${NewBannerDetails[0]?.image})`,
                   }}
                 >
                   <div className="row">
@@ -267,7 +265,10 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                         <br />
                         Deals
                       </h3>
-                      <a   href={NewBannerDetails && NewBannerDetails[0]?.link} className="btn btn-dark btn-black ls-10">
+                      <a
+                        href={NewBannerDetails && NewBannerDetails[0]?.link}
+                        className="btn btn-dark btn-black ls-10"
+                      >
                         Get Yours!
                       </a>
                     </div>
@@ -384,17 +385,23 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                       {" "}
                       <a
                         href="#"
-                        className={`layout-btn btn-grid ${productview == "grid"?"active":""}`}
+                        className={`layout-btn btn-grid ${
+                          productview == "grid" ? "active" : ""
+                        }`}
                         title="Grid"
-                        onClick={()=>setProductview("grid")}
+                        onClick={() => setProductview("grid")}
                       >
                         {" "}
                         <i className="icon-mode-grid" />{" "}
                       </a>{" "}
-                      <a href="#" 
-                      className={`layout-btn btn-list ${productview == "list"?"active":""}`} 
-                      title="List" 
-                      onClick={()=>setProductview("list")}>
+                      <a
+                        href="#"
+                        className={`layout-btn btn-list ${
+                          productview == "list" ? "active" : ""
+                        }`}
+                        title="List"
+                        onClick={() => setProductview("list")}
+                      >
                         {" "}
                         <i className="icon-mode-list" />{" "}
                       </a>{" "}
@@ -406,21 +413,23 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                 <div className="row">
                   {isspinner ? (
                     <Loader active={true} />
-                  ) : (
-                    productview == "grid" ?
+                  ) : productview == "grid" ? (
                     Array.isArray(SearchResult) &&
                     SearchResult.length > 0 &&
                     SearchResult?.filter((item, index) => index < 6).map(
                       (item: any) => (
-                       < GridProductList item={item} handleClick={handleClick}/>
+                        <GridProductList
+                          item={item}
+                          handleClick={handleClick}
+                        />
                       )
-                    ):
+                    )
+                  ) : (
                     Array.isArray(SearchResult) &&
                     SearchResult.length > 0 &&
                     SearchResult?.filter((item, index) => index < 6).map(
                       (item: any) => (
-                       < RowProductList item={item} handleClick={handleClick}/>
-                        
+                        <RowProductList item={item} handleClick={handleClick} />
                       )
                     )
                   )}
@@ -430,7 +439,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
 
                 {Array.isArray(itemData) && itemData.length > 0 && (
                   <div
-                    className="product-slide w-100 Shadows p-4 alert"
+                    className="product-slide quick-view-popup w-100 Shadows p-4 alert"
                     style={{ boxShadow: "0 0 8px rgba(0, 0, 0, 0.6)" }}
                     hidden={itemPopup}
                   >
@@ -441,121 +450,123 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                     >
                       <span aria-hidden="true">×</span>
                     </button>
-                    <div className="row pt-4">
-                      <div className="col-sm-8">
-                        <ul
-                          className="nav nav-tabs product-single-tabs"
-                          role="tablist"
-                        >
-                          <div className="container w-100">
-                            <div className="row">
-                              <div className="col-sm-3">
-                                <li className="nav-item">
-                                  <a
-                                    className="nav-link active"
-                                    id="product-tab-desc"
-                                    data-toggle="tab"
-                                    href="#product-desc-content"
-                                    role="tab"
-                                    aria-controls="product-desc-content"
-                                    aria-selected="true"
-                                  >
-                                    {" "}
-                                    View More Info
-                                  </a>
-                                </li>
-                              </div>
-                              <div className="col-sm-3">
-                                <li className="nav-item">
-                                  <a
-                                    className="nav-link"
-                                    id="product-tab-size"
-                                    data-toggle="tab"
-                                    href="#product-size-content"
-                                    role="tab"
-                                    aria-controls="product-size-content"
-                                    aria-selected="true"
-                                  >
-                                    Make an Offer
-                                  </a>
-                                </li>
-                              </div>
-                              <div className="col-sm-3">
-                                <li className="nav-item">
-                                  <a
-                                    className="nav-link"
-                                    id="product-tab-tags"
-                                    data-toggle="tab"
-                                    onClick={(e) => {
-                                      if (
-                                        localStorage.getItem("userId") == "null"
-                                      ) {
-                                        navigate(RoutePath.login);
-                                      } else if (
-                                        localStorage.getItem("userCmpReg") ==
-                                        "0"
-                                      ) {
-                                        navigate(RoutePath.complete_profile);
-                                      } else {
-                                        getUserCart(e);
-                                      }
-                                    }}
-                                    role="tab"
-                                    aria-controls="product-tags-content"
-                                    aria-selected="false"
-                                  >
-                                    {" "}
-                                    Add to Cart{" "}
-                                  </a>
-                                </li>
-                              </div>
-                              <div className="col-sm-3">
-                                <li className="nav-item">
-                                  <a
-                                    className="nav-link"
-                                    id="product-tab-reviews"
-                                    data-toggle="tab"
-                                    href="#product-reviews-content"
-                                    role="tab"
-                                    aria-controls="product-reviews-content"
-                                    aria-selected="false"
-                                  >
-                                    {" "}
-                                    Print
-                                  </a>
-                                </li>
+                    <div className="quick-view-inner">
+                      <div className="row pt-4">
+                        <div className="col-sm-8">
+                          <ul
+                            className="nav nav-tabs product-single-tabs"
+                            role="tablist"
+                          >
+                            <div className="container w-100">
+                              <div className="row">
+                                <div className="col-sm-3">
+                                  <li className="nav-item">
+                                    <a
+                                      className="nav-link active"
+                                      id="product-tab-desc"
+                                      data-toggle="tab"
+                                      href="#product-desc-content"
+                                      role="tab"
+                                      aria-controls="product-desc-content"
+                                      aria-selected="true"
+                                    >
+                                      {" "}
+                                      View More Info
+                                    </a>
+                                  </li>
+                                </div>
+                                <div className="col-sm-3">
+                                  <li className="nav-item">
+                                    <a
+                                      className="nav-link"
+                                      id="product-tab-size"
+                                      data-toggle="tab"
+                                      href="#product-size-content"
+                                      role="tab"
+                                      aria-controls="product-size-content"
+                                      aria-selected="true"
+                                    >
+                                      Make an Offer
+                                    </a>
+                                  </li>
+                                </div>
+                                <div className="col-sm-3">
+                                  <li className="nav-item">
+                                    <a
+                                      className="nav-link"
+                                      id="product-tab-tags"
+                                      data-toggle="tab"
+                                      onClick={(e) => {
+                                        if (
+                                          localStorage.getItem("userId") ==
+                                          "null"
+                                        ) {
+                                          navigate(RoutePath.login);
+                                        } else if (
+                                          localStorage.getItem("userCmpReg") ==
+                                          "0"
+                                        ) {
+                                          navigate(RoutePath.complete_profile);
+                                        } else {
+                                          getUserCart(e);
+                                        }
+                                      }}
+                                      role="tab"
+                                      aria-controls="product-tags-content"
+                                      aria-selected="false"
+                                    >
+                                      {" "}
+                                      Add to Cart{" "}
+                                    </a>
+                                  </li>
+                                </div>
+                                <div className="col-sm-3">
+                                  <li className="nav-item">
+                                    <a
+                                      className="nav-link"
+                                      id="product-tab-reviews"
+                                      data-toggle="tab"
+                                      href="#product-reviews-content"
+                                      role="tab"
+                                      aria-controls="product-reviews-content"
+                                      aria-selected="false"
+                                    >
+                                      {" "}
+                                      Print
+                                    </a>
+                                  </li>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </ul>
-                        <ul className="nav nav-tabs" role="tablist">
-                          <div className="container w-100">
-                            <div className="row">
-                              {itemData[0]?.images
-                                ?.filter(
-                                  (item: any, index: number) => index < 4
-                                )
-                                .map((item: any) => (
-                                  <div className="col-sm-3">
-                                    <li className="nav-item">
-                                      <a
-                                        className="nav-link"
-                                        id="product-tab-desc"
-                                        data-toggle="tab"
-                                        href="#product-desc-content"
-                                        role="tab"
-                                        aria-controls="product-desc-content"
-                                        aria-selected="true"
-                                      >
-                                        <img src={item.image} alt="" />
-                                      </a>
-                                    </li>
-                                  </div>
-                                ))}
+                          </ul>
+                          <ul className="nav nav-tabs" role="tablist">
+                            <div className="container w-100">
+                              <div className="row">
+                                {itemData[0]?.images
+                                  ?.filter(
+                                    (item: any, index: number) => index < 4
+                                  )
+                                  .map((item: any) => (
+                                    <div className="col-sm-3">
+                                      <li className="nav-item">
+                                        <a
+                                          className="nav-link"
+                                          id="product-tab-desc"
+                                          data-toggle="tab"
+                                          href="#product-desc-content"
+                                          role="tab"
+                                          aria-controls="product-desc-content"
+                                          aria-selected="true"
+                                        >
+                                          <img src={item.image} alt="" />
+                                        </a>
+                                      </li>
+                                    </div>
+                                  ))}
+                              </div>
                             </div>
-                          </div>
-                        </ul>
-                        {/*  <div className="col-sm-12">
+                          </ul>
+                          {/*  <div className="col-sm-12">
                           <table className="table table-size">
                             <thead>
                               <tr>
@@ -605,190 +616,192 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                             </tbody>
                           </table> 
                         </div> */}
-                      </div>
-                      <div className="col-sm-4">
-                        <div className="col-lg-7 col-md-6 product-single-details">
-                          <h4 className="product-title">
-                            {itemData[0]?.productName}
-                          </h4>
-                          <div className="product-nav">
-                            <div className="product-prev">
-                              <a href="#">
-                                <span className="product-link" />
-                                <span className="product-popup">
-                                  <span className="box-content">
-                                    <img
-                                      alt="product"
-                                      width={150}
-                                      height={150}
-                                      src="/assets/images/products/product-1.jpg"
-                                      style={{ paddingTop: 0 }}
-                                    />
-                                    <span>Circled Ultimate 3D Speaker</span>
+                        </div>
+                        <div className="col-sm-4">
+                          <div className="col-lg-7 col-md-6 product-single-details">
+                            <h4 className="product-title">
+                              {itemData[0]?.productName}
+                            </h4>
+                            <div className="product-nav">
+                              <div className="product-prev">
+                                <a href="#">
+                                  <span className="product-link" />
+                                  <span className="product-popup">
+                                    <span className="box-content">
+                                      <img
+                                        alt="product"
+                                        width={150}
+                                        height={150}
+                                        src="/assets/images/products/product-1.jpg"
+                                        style={{ paddingTop: 0 }}
+                                      />
+                                      <span>Circled Ultimate 3D Speaker</span>
+                                    </span>
                                   </span>
-                                </span>
-                              </a>
-                            </div>
-                            <div className="product-next">
-                              <a href="#">
-                                <span className="product-link" />
-                                <span className="product-popup">
-                                  <span className="box-content">
-                                    <img
-                                      alt="product"
-                                      width={150}
-                                      height={150}
-                                      src="/assets/images/products/product-2.jpg"
-                                      style={{ paddingTop: 0 }}
-                                    />
-                                    <span>Blue Backpack for the Young</span>
+                                </a>
+                              </div>
+                              <div className="product-next">
+                                <a href="#">
+                                  <span className="product-link" />
+                                  <span className="product-popup">
+                                    <span className="box-content">
+                                      <img
+                                        alt="product"
+                                        width={150}
+                                        height={150}
+                                        src="/assets/images/products/product-2.jpg"
+                                        style={{ paddingTop: 0 }}
+                                      />
+                                      <span>Blue Backpack for the Young</span>
+                                    </span>
                                   </span>
-                                </span>
-                              </a>
-                            </div>
-                          </div>
-                          <div className="ratings-container">
-                            <div className="product-ratings">
-                              <span
-                                className="ratings"
-                                style={{ width: "60%" }}
-                              />
-                              {/* End .ratings */}
-                              <span className="tooltiptext tooltip-top" />
-                            </div>
-                            {/* End .product-ratings */}
-                            <a href="#" className="rating-link">
-                              ( 6 Reviews )
-                            </a>
-                          </div>
-                          {/* End .ratings-container */}
-                          <hr className="short-divider" />
-                          <div className="price-box">
-                            <span className="old-price">
-                              ₹{itemData[0]?.mrp}
-                            </span>
-                            <span className="new-price">
-                              ₹{itemData[0]?.salePrice}
-                            </span>
-                          </div>
-                          {/* End .price-box */}
-                          <div className="product-desc">
-                            <p>{itemData[0]?.description}</p>
-                          </div>
-                          {/* End .product-desc */}
-                          <ul className="single-info-list">
-                            <li>
-                              SKU: <strong>{itemData[0]?.sku}</strong>
-                            </li>
-                            <li>
-                              CATEGORY:{" "}
-                              <strong>
-                                <a href="#" className="product-category">
-                                  SHOES
                                 </a>
-                              </strong>
-                            </li>
-                            <li>
-                              TAGs:{" "}
-                              <strong>
-                                <a href="#" className="product-category">
-                                  CLOTHES
-                                </a>
-                              </strong>
-                              ,
-                              <strong>
-                                <a href="#" className="product-category">
-                                  SWEATER
-                                </a>
-                              </strong>
-                            </li>
-                          </ul>
-                          <div className="product-action">
-                            <div className="product-single-qty">
-                              <div className="input-group bootstrap-touchspin bootstrap-touchspin-injected">
-                                <span className="input-group-btn input-group-prepend">
-                                  <button
-                                    className="btn btn-outline btn-down-icon bootstrap-touchspin-down bootstrap-touchspin-injected"
-                                    type="button"
-                                  />
-                                </span>
-                                <input
-                                  id="cartqty"
-                                  value={1}
-                                  className="horizontal-quantity form-control"
-                                  type="text"
-                                />
-                                <span className="input-group-btn input-group-append">
-                                  <button
-                                    className="btn btn-outline btn-up-icon bootstrap-touchspin-up bootstrap-touchspin-injected"
-                                    type="button"
-                                  />
-                                </span>
                               </div>
                             </div>
-                            {/* End .product-single-qty */}
-                            <a
-                              onClick={(e) => {
-                                if (localStorage.getItem("userId") == "null") {
-                                  navigate(RoutePath.login);
-                                } else if (
-                                  localStorage.getItem("userCmpReg") == "0"
-                                ) {
-                                  navigate(RoutePath.complete_profile);
-                                } else {
-                                  getUserCart(e);
-                                }
-                              }}
-                              className="btn btn-dark add-cart mr-2"
-                              title="Add to Cart"
-                            >
-                              Add to Cart
-                            </a>
-                            <a
-                              href="cart.html"
-                              className="btn btn-gray view-cart d-none"
-                            >
-                              View cart
-                            </a>
-                          </div>
-                          {/* End .product-action */}
-                          <hr className="divider mb-0 mt-0" />
-                          <div className="product-single-share mb-3">
-                            <label className="sr-only">Share:</label>
-                            <div className="social-icons mr-2">
-                              <a
-                                href="#"
-                                className="social-icon social-facebook icon-facebook"
-                                target="_blank"
-                                title="Facebook"
-                              />
-                              <a
-                                href="#"
-                                className="social-icon social-twitter icon-twitter"
-                                target="_blank"
-                                title="Twitter"
-                              />
-                              <a
-                                href="#"
-                                className="social-icon social-linkedin fab fa-linkedin-in"
-                                target="_blank"
-                                title="Linkedin"
-                              />
-                              <a
-                                href="#"
-                                className="social-icon social-gplus fab fa-google-plus-g"
-                                target="_blank"
-                                title="Google +"
-                              />
-                              <a
-                                href="#"
-                                className="social-icon social-mail icon-mail-alt"
-                                target="_blank"
-                                title="Mail"
-                              />
+                            <div className="ratings-container">
+                              <div className="product-ratings">
+                                <span
+                                  className="ratings"
+                                  style={{ width: "60%" }}
+                                />
+                                {/* End .ratings */}
+                                <span className="tooltiptext tooltip-top" />
+                              </div>
+                              {/* End .product-ratings */}
+                              <a href="#" className="rating-link">
+                                ( 6 Reviews )
+                              </a>
                             </div>
-                            {/* End .social-icons */}
-                            {/* <a
+                            {/* End .ratings-container */}
+                            <hr className="short-divider" />
+                            <div className="price-box">
+                              <span className="old-price">
+                                ₹{itemData[0]?.mrp}
+                              </span>
+                              <span className="new-price">
+                                ₹{itemData[0]?.salePrice}
+                              </span>
+                            </div>
+                            {/* End .price-box */}
+                            <div className="product-desc">
+                              <p>{itemData[0]?.description}</p>
+                            </div>
+                            {/* End .product-desc */}
+                            <ul className="single-info-list">
+                              <li>
+                                SKU: <strong>{itemData[0]?.sku}</strong>
+                              </li>
+                              <li>
+                                CATEGORY:{" "}
+                                <strong>
+                                  <a href="#" className="product-category">
+                                    SHOES
+                                  </a>
+                                </strong>
+                              </li>
+                              <li>
+                                TAGs:{" "}
+                                <strong>
+                                  <a href="#" className="product-category">
+                                    CLOTHES
+                                  </a>
+                                </strong>
+                                ,
+                                <strong>
+                                  <a href="#" className="product-category">
+                                    SWEATER
+                                  </a>
+                                </strong>
+                              </li>
+                            </ul>
+                            <div className="product-action">
+                              <div className="product-single-qty">
+                                <div className="input-group bootstrap-touchspin bootstrap-touchspin-injected">
+                                  <span className="input-group-btn input-group-prepend">
+                                    <button
+                                      className="btn btn-outline btn-down-icon bootstrap-touchspin-down bootstrap-touchspin-injected"
+                                      type="button"
+                                    />
+                                  </span>
+                                  <input
+                                    id="cartqty"
+                                    value={1}
+                                    className="horizontal-quantity form-control"
+                                    type="text"
+                                  />
+                                  <span className="input-group-btn input-group-append">
+                                    <button
+                                      className="btn btn-outline btn-up-icon bootstrap-touchspin-up bootstrap-touchspin-injected"
+                                      type="button"
+                                    />
+                                  </span>
+                                </div>
+                              </div>
+                              {/* End .product-single-qty */}
+                              <a
+                                onClick={(e) => {
+                                  if (
+                                    localStorage.getItem("userId") == "null"
+                                  ) {
+                                    navigate(RoutePath.login);
+                                  } else if (
+                                    localStorage.getItem("userCmpReg") == "0"
+                                  ) {
+                                    navigate(RoutePath.complete_profile);
+                                  } else {
+                                    getUserCart(e);
+                                  }
+                                }}
+                                className="btn btn-dark add-cart mr-2"
+                                title="Add to Cart"
+                              >
+                                Add to Cart
+                              </a>
+                              <a
+                                href="cart.html"
+                                className="btn btn-gray view-cart d-none"
+                              >
+                                View cart
+                              </a>
+                            </div>
+                            {/* End .product-action */}
+                            <hr className="divider mb-0 mt-0" />
+                            <div className="product-single-share mb-3">
+                              <label className="sr-only">Share:</label>
+                              <div className="social-icons mr-2">
+                                <a
+                                  href="#"
+                                  className="social-icon social-facebook icon-facebook"
+                                  target="_blank"
+                                  title="Facebook"
+                                />
+                                <a
+                                  href="#"
+                                  className="social-icon social-twitter icon-twitter"
+                                  target="_blank"
+                                  title="Twitter"
+                                />
+                                <a
+                                  href="#"
+                                  className="social-icon social-linkedin fab fa-linkedin-in"
+                                  target="_blank"
+                                  title="Linkedin"
+                                />
+                                <a
+                                  href="#"
+                                  className="social-icon social-gplus fab fa-google-plus-g"
+                                  target="_blank"
+                                  title="Google +"
+                                />
+                                <a
+                                  href="#"
+                                  className="social-icon social-mail icon-mail-alt"
+                                  target="_blank"
+                                  title="Mail"
+                                />
+                              </div>
+                              {/* End .social-icons */}
+                              {/* <a
                               href="wishlist.html"
                               className="btn-icon-wish add-wishlist"
                               title="Add to Wishlist"
@@ -796,8 +809,9 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                               <i className="icon-wishlist-2" />
                               <span>Add to Wishlist</span>
                             </a> */}
+                            </div>
+                            {/* End .product single-share */}
                           </div>
-                          {/* End .product single-share */}
                         </div>
                       </div>
                     </div>
@@ -1041,7 +1055,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                     </div>
                     {/* End .collapse */}
                   </div>
-                  {/* End .widget */}       
+                  {/* End .widget */}
                   {/* <div className="widget widget-block">
                     <h3 className="widget-title">Custom HTML Block</h3>
                     <h5>This is a custom sub-title.</h5>

@@ -17,7 +17,6 @@ const Header: React.FC<any> = () => {
     getUserCart();
   }, []);
 
-
   const logOut = () => {
     authStore.signOut(
       localStorage.getItem("userToken"),
@@ -70,13 +69,13 @@ const Header: React.FC<any> = () => {
         limit: 10,
         page: 1,
       };
-      console.log(data)
+      console.log(data);
       setSearchText("");
-      setCurrentCategory("") // because affect second header selection result
-      productStore.onSearch(data, (callback: any) => {   
+      setCurrentCategory(""); // because affect second header selection result
+      productStore.onSearch(data, (callback: any) => {
         if (callback.status) {
           navigate(RoutePath.shop, {
-            state: { data: callback.data,searchQuery:data },
+            state: { data: callback.data, searchQuery: data },
           });
         }
       });
@@ -94,14 +93,10 @@ const Header: React.FC<any> = () => {
               </button>
               <a
                 onClick={() => navigate(RoutePath.home)}
-                style={{ cursor: "pointer"}}
+                style={{ cursor: "pointer" }}
                 className="logo"
               >
-                <img
-                  src="../../assets/images/logo.png"
-                  alt="Porto Logo"
-                 style={{height:"45px"}}
-                />
+                <img src="../../assets/images/logo.png" alt="Porto Logo" />
               </a>
             </div>
 
@@ -159,22 +154,56 @@ const Header: React.FC<any> = () => {
                   style={{ cursor: "pointer" }}
                   className="header-contact d-none d-lg-flex align-items-center pr-xl-5 mr-5 mr-xl-3 ml-5"
                 >
-                  <i className="icon-user-2"></i>
-                  <h6 className="pt-1 line-height-1">
-                    My
+                  <div className="dropdown">
                     <a
-                      // onClick={() => logOut()}
-                      href={
-                        "https://qriocty.com/auto-login/" +
-                        localStorage.getItem("userToken")
-                      }
-                      target={"_blank"}
-                      style={{ cursor: "pointer" }}
                       className="d-block text-dark ls-10 pt-1"
+                      type="button"
+                      data-toggle="dropdown"
+                      aria-expanded="false"
                     >
-                      Account
+                      <i className="icon-user-2"></i> Account
                     </a>
-                  </h6>
+                    <div className="dropdown-menu">
+                      <ul>
+                        <li></li>
+                        <li>
+                          <a
+                            // onClick={() => logOut()}
+                            href={
+                              "https://qriocty.com/auto-login/" +
+                              localStorage.getItem("userToken")
+                            }
+                            target={"_blank"}
+                            style={{ cursor: "pointer" }}
+                            className="d-block text-dark ls-10 pt-1 dropdown-item"
+                          >
+                            My Account
+                          </a>
+                        </li>
+                        <li>
+                          <a className="dropdown-item" href="#">
+                            My Orders
+                          </a>
+                        </li>
+                        <li>
+                          <a className="dropdown-item" href="#">
+                            Wislist
+                          </a>
+                        </li>
+                        <li>
+                          {localStorage.getItem("userId") != "null" && (
+                            <a
+                              style={{ cursor: "pointer" }}
+                              onClick={() => logOut()}
+                              className="dropdown-item"
+                            >
+                              Logout
+                            </a>
+                          )}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -266,25 +295,41 @@ const Header: React.FC<any> = () => {
                     </li>
                   </ul>
                 </li> */}
-                {localStorage.getItem("userId") != "null" && (
-                  <li className="float-right">
-                    <a
-                      style={{ cursor: "pointer" }}
-                      onClick={() => logOut()}
-                      className="pl-5"
+              </ul>
+            </nav>
+            <nav className="main-nav w-100 bg-light">
+              <ul className="menu">
+                <li>
+                  <div className="dropdown">
+                    <button
+                      className="btn btn-primary dropdown-toggle btn-flex"
+                      type="button"
+                      data-toggle="dropdown"
+                      aria-expanded="false"
                     >
-                      Logout
-                    </a>
-                    {/* <ul>
+                      Shop by Category <i className="fas fa-angle-down"></i>
+                    </button>
+                    <div className="dropdown-menu">
+                      {proCategory?.map((item: any) => (
+                        <a className="dropdown-item" href="value={item.id}">
+                          {item.categoryname}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </li>
+                {proCategory
+                  ?.filter((item, index) => index < 7)
+                  .map((item: any) => (
                     <li>
-                      <a href="# ">USD</a>
+                      <a
+                        style={{ cursor: "pointer" }}
+                        onClick={() => onSearch(item.id)}
+                      >
+                        {item.categoryname}
+                      </a>
                     </li>
-                    <li>
-                      <a href="# ">INR</a>
-                    </li>
-                  </ul> */}
-                  </li>
-                )}
+                  ))}
               </ul>
             </nav>
           </div>

@@ -33,7 +33,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   };
   const getQuotedRfq = () => {
     productStore.getQuotedRfq((res: any) => {
-      console.log(res)
+      console.log(res);
       setQuotedRfqsData(res?.data);
       getRfqsDetailsbyID();
     });
@@ -95,7 +95,187 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
             </ol>
           </nav>
           <div className="row">
-            <div className="col-lg-9">
+            <div className="col-12">
+              <div className="widget top-widet d-none">
+                {/* <h3 className="widget-title">
+                  {" "}
+                  <a
+                    data-toggle="collapse"
+                    href="#widget-body-2"
+                    role="button"
+                    aria-expanded="true"
+                    aria-controls="widget-body-2"
+                  >
+                    Categories
+                  </a>{" "}
+                </h3> */}
+                <div className="collapse show" id="widget-body-2">
+                  <div className="widget-body">
+                    <ul className="cat-list">
+                      <li>
+                        {" "}
+                        <a
+                          href="#widget-category-1"
+                          data-toggle="collapse"
+                          className="collapsed"
+                          role="button"
+                          aria-expanded="false"
+                          aria-controls="widget-category-1"
+                        >
+                          Accessories
+                          <span className="products-count">(3)</span>{" "}
+                          <span className="toggle" />{" "}
+                        </a>
+                        <div className="collapse" id="widget-category-1">
+                          <ul className="cat-sublist">
+                            <li>
+                              Caps
+                              <span className="products-count">
+                                <label className="switch">
+                                  <input className="d-none" type="checkbox" />
+                                  <span className="slider round" />
+                                </label>
+                              </span>
+                            </li>
+                            <li>
+                              Watches
+                              <span className="products-count">
+                                <label className="switch">
+                                  <input className="d-none" type="checkbox" />
+                                  <span className="slider round" />
+                                </label>
+                              </span>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                      <li>
+                        {" "}
+                        <a
+                          href="#widget-category-2"
+                          className="collapsed"
+                          data-toggle="collapse"
+                          role="button"
+                          aria-expanded="false"
+                          aria-controls="widget-category-2"
+                        >
+                          {" "}
+                          Dress<span className="products-count">(4)</span>{" "}
+                          <span className="toggle" />
+                        </a>
+                        <div className="collapse" id="widget-category-2">
+                          <ul className="cat-sublist">
+                            <li>
+                              Clothing
+                              <span className="products-count">
+                                <label className="switch">
+                                  <input className="d-none" type="checkbox" />
+                                  <span className="slider round" />
+                                </label>
+                              </span>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                      <li>
+                        {" "}
+                        <a
+                          href="#widget-category-3"
+                          className="collapsed"
+                          data-toggle="collapse"
+                          role="button"
+                          aria-expanded="false"
+                          aria-controls="widget-category-3"
+                        >
+                          {" "}
+                          Electronics
+                          <span className="products-count">(2)</span>{" "}
+                          <span className="toggle" />
+                        </a>
+                        <div className="collapse" id="widget-category-3">
+                          <ul className="cat-sublist">
+                            <li>
+                              <span className="pull-left">Headphone</span>
+                              <label className="switch pull-right">
+                                <input className="d-none" type="checkbox" />
+                                <span className="slider round" />
+                              </label>
+                            </li>
+                            <li>
+                              Watch
+                              <span className="products-count">
+                                <label className="switch">
+                                  <input className="d-none" type="checkbox" />
+                                  <span className="slider round" />
+                                </label>
+                              </span>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                      <li>
+                        {" "}
+                        <a
+                          href="#widget-category-4"
+                          className="collapsed"
+                          data-toggle="collapse"
+                          role="button"
+                          aria-expanded="false"
+                          aria-controls="widget-category-4"
+                        >
+                          {" "}
+                          Fashion
+                          <span className="products-count">(6)</span>{" "}
+                          <span className="toggle" />
+                        </a>
+                        <div className="collapse" id="widget-category-4">
+                          <ul className="cat-sublist">
+                            <li>
+                              Shoes
+                              <span className="products-count">
+                                <label className="switch">
+                                  <input className="d-none" type="checkbox" />
+                                  <span className="slider round" />
+                                </label>
+                              </span>
+                            </li>
+                            <li>
+                              Bag
+                              <span className="products-count">
+                                <label className="switch">
+                                  <input className="d-none" type="checkbox" />
+                                  <span className="slider round" />
+                                </label>
+                              </span>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                      <li>
+                        {" "}
+                        <a
+                          href="#widget-category-4"
+                          className="collapsed no-dropdown"
+                          // data-toggle="collapse"
+                          role="button"
+                          aria-expanded="false"
+                          aria-controls="widget-category-4"
+                        >
+                          {" "}
+                          Music
+                          <span className="products-count">(2)</span>{" "}
+                          {/* <span className="toggle" /> */}
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  {/* End .widget-body */}
+                </div>
+                {/* End .collapse */}
+              </div>
+            </div>
+
+            <div className="col-lg-12">
               <div
                 className="category-banner banner text-uppercase"
                 style={{
@@ -127,13 +307,6 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                   <table className="table table-wishlist mb-0 mt-5 border">
                     <thead>
                       <tr>
-                        <th className="action">
-                          <a href="#">Select All</a>{" "}
-                          {/* <input
-                          type="checkbox"
-                          className="form-control checkbox"
-                        /> */}
-                        </th>
                         <th className="">Item Code</th>
                         <th className="">Item Name</th>
                         <th className="l">Quantity</th>
@@ -156,24 +329,8 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                               ? "#e9ecef"
                               : "",
                           }}
-                          className="product-row"
+                          className="product-row quote-product-row"
                         >
-                          <td className="action d-flex align-items-center justify-content-center">
-                            <input
-                              disabled={
-                                QuotedRfqsData.some(function (element: any) {
-                                  return (
-                                    element.rfq_perticular_id ===
-                                    item.perticularId
-                                  );
-                                })
-                                  ? true
-                                  : false
-                              }
-                              type="checkbox"
-                              className="form-control checkbox"
-                            />
-                          </td>
                           <td>
                             <span className="stock-status">#{index + 1}</span>
                           </td>
@@ -219,22 +376,22 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                               />
                             </Form.Item>
                           </td>
+                          <td className="text-right d-flex justify-content-end">
+                            <a
+                              onClick={() => submitRfqQuote()}
+                              className="btn btn-sm btn-primary"
+                            >
+                              Submit
+                            </a>
+                            <a
+                              className="btn btn-sm btn-primary mr-2 btn-quickview"
+                              title="Quick View"
+                            >
+                              <i className="fas fa-eye"></i>
+                            </a>
+                          </td>
                         </tr>
                       ))}
-
-                      <tr>
-                        <td colSpan={7} className="text-right">
-                          <a href="#" className="btn btn-sm btn-danger">
-                            Cancel
-                          </a>
-                          <a
-                            onClick={() => submitRfqQuote()}
-                            className="btn btn-sm btn-success"
-                          >
-                            Submit
-                          </a>
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
                 </Form>
@@ -242,7 +399,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
             </div>
             {/* End .col-lg-9 */}
             <div className="sidebar-overlay" />
-            <aside className="sidebar-shop col-lg-3 order-lg-first mobile-sidebar">
+            <aside className="sidebar-shop col-lg-12 order-lg-first mobile-sidebar">
               <div className="sidebar-wrapper">
                 <div className="widget">
                   <h3 className="widget-title">
@@ -250,14 +407,15 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                     <a
                       data-toggle="collapse"
                       href="#widget-body-2"
+                      className="collapsed"
                       role="button"
-                      aria-expanded="true"
+                      aria-expanded="false"
                       aria-controls="widget-body-2"
                     >
                       Categories
                     </a>{" "}
                   </h3>
-                  <div className="collapse show" id="widget-body-2">
+                  <div className="collapse" id="widget-body-2">
                     <div className="widget-body">
                       <ul className="cat-list">
                         <li>

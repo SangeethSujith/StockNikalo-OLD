@@ -7,7 +7,6 @@ import productStore from "../../store/product-store";
 import settingsStore from "../../store/settings-store";
 import HomeBestSelling from "./home-bestSelling";
 
-
 const Home: React.FC<any> = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -22,7 +21,7 @@ const Home: React.FC<any> = () => {
     // document.body.append(script);
     getProductsData();
     getNewArrivals();
-    getHomeBanner()
+    getHomeBanner();
   }, []);
 
   useEffect(() => {
@@ -40,30 +39,30 @@ const Home: React.FC<any> = () => {
     });
     productStore.getBestSellingProduct((values: any) => {
       setBestSelling(values.data);
-      if(values.data.length > 0 ){setBestSellingSelectTab(values.data[0])}
+      if (values.data.length > 0) {
+        setBestSellingSelectTab(values.data[0]);
+      }
     });
-
   };
   const getNewArrivals = () => {
     productStore.getNewArrivals((values: any) => {
       setNewArrivals(values.data);
-     
     });
   };
   const getHomeBanner = () => {
     settingsStore.getSettings((values: any) => {
       setNewBannerDetails(values.data);
-      console.log("=>",NewBannerDetails)
+      console.log("=>", NewBannerDetails);
     });
   };
 
-  const bestSellingTab=(index:number)=>{
-    console.log(index)
-    setBestSellingSelectTab(BestSelling[index])
-    console.log(BestSellingSelectTab)
-  }
-  console.log("=>",NewBannerDetails)
-  useScript("/assets/js/main.min.js","")
+  const bestSellingTab = (index: number) => {
+    console.log(index);
+    setBestSellingSelectTab(BestSelling[index]);
+    console.log(BestSellingSelectTab);
+  };
+  console.log("=>", NewBannerDetails);
+  useScript("/assets/js/main.min.js", "");
   return (
     <>
       <main className="main home">
@@ -71,102 +70,110 @@ const Home: React.FC<any> = () => {
           <div className="container">
             <div className="row">
               <div className="col-lg-9 col-md-12 mb-2">
-                {
-                  NewBannerDetails &&  NewBannerDetails.length > 0 &&
-                <div
-                  className="home-slider owl-carousel owl-theme owl-carousel-lazy h-100 slide-animate"
-                  data-owl-options="{
+                {NewBannerDetails && NewBannerDetails.length > 0 && (
+                  <div
+                    className="home-slider owl-carousel owl-theme owl-carousel-lazy h-100 slide-animate"
+                    data-owl-options="{
 								'dots': true,
 								'nav': false,
 								'loop': false
 							}"
-                >
-                  
-                  <div className="home-slide home-slide1 banner banner-md-vw h-100">
-                    <figure>
-                      {" "}
-                      <img
-                        className="slide-bg"
-                        src={`https://qriocty.com/public/images/${NewBannerDetails[0]?.image}`}
-                        style={{ backgroundColor: "#555" }}
-                        alt="slider image"
-                        width={835}
-                        height={445}
-                      />{" "}
-                    </figure>
-                    <div className="banner-layer banner-layer-middle intro-banner">
-                      <div
-                        className="appear-animate"
-                        data-animation-name="fadeInLeftShorter"
-                        data-animation-delay={200}
-                      >
-                        <h4 className="">{NewBannerDetails && NewBannerDetails[0]?.banner}</h4>
-                        <h2 className="m-b-1">{NewBannerDetails && NewBannerDetails[0]?.description}</h2>
-                        <h3 className="text-uppercase m-b-3">{NewBannerDetails && NewBannerDetails[0]?.slug}</h3>
-                        {/* <h5 className="text-uppercase d-inline-block mb-1 pb-1 ls-n-20 align-text-bottom">
+                  >
+                    <div className="home-slide home-slide1 banner banner-md-vw h-100">
+                      <figure>
+                        {" "}
+                        <img
+                          className="slide-bg"
+                          src={`https://qriocty.com/public/images/${NewBannerDetails[0]?.image}`}
+                          style={{ backgroundColor: "#555" }}
+                          alt="slider image"
+                          width={835}
+                          height={445}
+                        />{" "}
+                      </figure>
+                      <div className="banner-layer banner-layer-middle intro-banner">
+                        <div
+                          className="appear-animate"
+                          data-animation-name="fadeInLeftShorter"
+                          data-animation-delay={200}
+                        >
+                          {NewBannerDetails[0]?.banner.length > 0 && (
+                            <h4 className="">
+                              {NewBannerDetails && NewBannerDetails[0]?.banner}
+                            </h4>
+                          )}
+                          <h2 className="m-b-1">
+                            {NewBannerDetails &&
+                              NewBannerDetails[0]?.description}
+                          </h2>
+                          <h1 className="text-uppercase m-b-3">
+                            {NewBannerDetails && NewBannerDetails[0]?.slug}
+                          </h1>
+                          {/* <h5 className="text-uppercase d-inline-block mb-1 pb-1 ls-n-20 align-text-bottom">
                           {" "}
                           Starting At{" "}
                           <b className="coupon-sale-text bg-secondary text-white d-inline-block">
                             $ <em>199</em>99
                           </b>{" "}
                         </h5> */}
-                        <a
-                          href={NewBannerDetails && NewBannerDetails[0]?.link}
-                          className="btn btn-dark btn-md ls-10 align-bottom"
-                        >
-                          Shop Now!
-                        </a>{" "}
+                          <a
+                            href={NewBannerDetails && NewBannerDetails[0]?.link}
+                            className="btn btn-dark btn-md ls-10 align-bottom"
+                          >
+                            Shop Now!
+                          </a>{" "}
+                        </div>
                       </div>
+                      {/* End .banner-layer */}
                     </div>
-                    {/* End .banner-layer */}
-                  </div>
-                
-                  {/* End .home-slide */}
-                  
-                
-                 
-                        <div className="home-slide home-slide2 banner banner-md-vw h-100">
-                          <figure>
-                            {" "}
-                            <img
-                              className="slide-bg"
-                              src={`https://qriocty.com/public/images/${NewBannerDetails[1]?.image}`}
-                              style={{ backgroundColor: "#555" }}
-                              alt="slider image"
-                              width={835}
-                              height={445}
-                            />{" "}
-                          </figure>
-                          <div className="banner-layer banner-layer-middle intro-banner">
-                            <div
-                              className="appear-animate"
-                              data-animation-name="fadeInLeftShorter"
-                              data-animation-delay={200}
-                            >
-                              <h4 className="">{NewBannerDetails[1]?.banner}</h4>
-                              <h2 className="m-b-1">{NewBannerDetails[1]?.description}</h2>
-                              <h3 className="text-uppercase m-b-3">{NewBannerDetails[1]?.slug}</h3>
-                              {/* <h5 className="text-uppercase d-inline-block mb-1 pb-1 ls-n-20 align-text-bottom">
+
+                    {/* End .home-slide */}
+
+                    <div className="home-slide home-slide2 banner banner-md-vw h-100">
+                      <figure>
+                        {" "}
+                        <img
+                          className="slide-bg"
+                          src={`https://qriocty.com/public/images/${NewBannerDetails[1]?.image}`}
+                          style={{ backgroundColor: "#555" }}
+                          alt="slider image"
+                          width={835}
+                          height={445}
+                        />{" "}
+                      </figure>
+                      <div className="banner-layer banner-layer-middle intro-banner">
+                        <div
+                          className="appear-animate"
+                          data-animation-name="fadeInLeftShorter"
+                          data-animation-delay={200}
+                        >
+                          <h4 className="">{NewBannerDetails[1]?.banner}</h4>
+                          <h2 className="m-b-1">
+                            {NewBannerDetails[1]?.description}
+                          </h2>
+                          <h3 className="text-uppercase m-b-3">
+                            {NewBannerDetails[1]?.slug}
+                          </h3>
+                          {/* <h5 className="text-uppercase d-inline-block mb-1 pb-1 ls-n-20 align-text-bottom">
                                 {" "}
                                 Starting At{" "}
                                 <b className="coupon-sale-text bg-secondary text-white d-inline-block">
                                   $ <em>199</em>99
                                 </b>{" "}
                               </h5> */}
-                              <a
-                                 href={NewBannerDetails[1].link}
-                                className="btn btn-dark btn-md ls-10 align-bottom"
-                              >
-                                Shop Now!
-                              </a>{" "}
-                            </div>
-                          </div>
-                        </div> 
+                          <a
+                            href={NewBannerDetails[1].link}
+                            className="btn btn-dark btn-md ls-10 align-bottom"
+                          >
+                            Shop Now!
+                          </a>{" "}
+                        </div>
+                      </div>
+                    </div>
 
-                  
-                  {/* End .home-slide */}
-                </div>
-        }
+                    {/* End .home-slide */}
+                  </div>
+                )}
                 {/* End .home-slider */}
               </div>
               {/* End .col-lg-9 */}
@@ -320,17 +327,15 @@ const Home: React.FC<any> = () => {
                           <p>Auction Single - 6' Experiment</p>
                           {/* End .product-container */}
                           <div className="info-boxes-container row row-joined mb-2 font2 w-100">
-                            
                             {/* <div className="info-box info-box-icon-left col-lg-4 p-0">
                               <div className="info-box-content">
                                 <h4>9</h4>
                                 <p className="text-body">Lots</p>
                               </div> */}
-                              {/* End .info-box-content */}
+                            {/* End .info-box-content */}
                             {/* </div> */}
                             {/* End .info-box */}
 
-                            
                             {/* <div className="info-box info-box-icon-left col-lg-4 p-0">
                               <div className="info-box-content">
                                 {" "}
@@ -338,7 +343,7 @@ const Home: React.FC<any> = () => {
                                 <h4>1K</h4>
                                 <p className="text-body">Visiters</p>
                               </div> */}
-                              {/* End .info-box-content */}
+                            {/* End .info-box-content */}
                             {/* </div> */}
                             {/* End .info-box */}
 
@@ -481,35 +486,30 @@ const Home: React.FC<any> = () => {
         <section className="simple-section mt-5">
           <div className="container">
             <h3>Our Best Selling Global Industrial® Products</h3>
-            <div className="tabs tabs-simple">
-              <ul
-                className="nav nav-tabs justify-content-center"
-                role="tablist"
-              >
-                {
-                  BestSelling.map((item:any,index:number)=>(
-                    <li className="nav-item">
-                      {" "}
-                      <a
-                        className={`nav-link ${index == 0 ?"active":" "}` }
-                        id="tab-customer"
-                        data-toggle="tab"
-                        href="#customer-content"
-                        role="tab"
-                        aria-controls="customer-content"
-                        aria-selected="true"
-                        onClick={()=>bestSellingTab(index)}
-                      >
-                       {item.category}
-                      </a>{" "}
-                    </li>
-                  ))
-                }
+            <div className="tabs tabs-default">
+              <ul className="nav nav-tabs" role="tablist">
+                {BestSelling.map((item: any, index: number) => (
+                  <li className="nav-item">
+                    {" "}
+                    <a
+                      className={`nav-link ${index == 0 ? "active" : " "}`}
+                      id="tab-customer"
+                      data-toggle="tab"
+                      href="#customer-content"
+                      role="tab"
+                      aria-controls="customer-content"
+                      aria-selected="true"
+                      onClick={() => bestSellingTab(index)}
+                    >
+                      {item.category}
+                    </a>{" "}
+                  </li>
+                ))}
               </ul>
               <div className="tab-content">
-              {
-               BestSellingSelectTab && <HomeBestSelling data={BestSellingSelectTab}/>
-             }
+                {BestSellingSelectTab && (
+                  <HomeBestSelling data={BestSellingSelectTab} />
+                )}
               </div>
             </div>
           </div>
