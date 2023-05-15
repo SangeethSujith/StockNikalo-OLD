@@ -161,5 +161,14 @@ class productStore {
         });
       });
   };
+
+  getCommission = async(id :any,callback:any)=>{
+    let url = Constant.getcommission + id;
+    productService.getCommission(url).then((res:any)=>{
+      res&&callback(res?.data);
+    }).catch((error)=>{
+      console.log("error");
+    })
+  }
 }
 export default new productStore();

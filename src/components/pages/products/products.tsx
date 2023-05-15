@@ -35,7 +35,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
   const [pid, setPid] = useState("");
   const [price, setPrice] = useState("");
   const [proCategory, setproCategory] = useState([]);
-
+  const [productQuantity, setproductQantity] = useState<number>(1)
   const [isspinner, setisSpinner] = useState(false);
   const [productview, setProductview] = useState("grid");
   const [NewBannerDetails, setNewBannerDetails] = useState<any>([]);
@@ -47,7 +47,6 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
   useEffect(() => {
     const search = location.state?.data;
     const searchQuery: SearchQueryProps = location.state?.searchQuery;
-    console.log("===>", search);
     setisSpinner(true);
     if (search != undefined) {
       setSearchResult(search);
@@ -75,10 +74,9 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
     });
   };
   const removeCart = () => {
-    userStore.removeCart((res: any) => {});
+    userStore.removeCart((res: any) => { });
   };
   const addtoCart = () => {
-    console.log(itemData, "itemData");
     let qty: any = document.getElementById("cartqty");
     qty = qty.value;
     const data = {
@@ -165,40 +163,58 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
     userStore.getUserCart((res: any) => {
       console.log(res);
       if (res.status) {
-        if (res?.data?.length > 0) {
-          swal({
-            title: "Are you sure?",
-            text: "You have items from another seller added to the cart. Do you want to clear the cart and add this item?",
-            icon: "warning",
-            buttons: ["No, cancel it!", "Yes, I am sure!"],
-            dangerMode: true,
-          }).then(function (isConfirm) {
-            if (isConfirm) {
-              removeCart();
-              addtoCart();
+        //  if (res?.data?.length > 0) {
+        //     swal({
+        //       title: "Are you sure?",
+        //       text: "You have items from another seller added to the cart. Do you want to clear the cart and add this item?",
+        //       icon: "warning",
+        //       buttons: ["No, cancel it!", "Yes, I am sure!"],
+        //       dangerMode: true,
+        //     }).then(function (isConfirm) {
+        //       if (isConfirm) {
+        //         removeCart();
+        //         addtoCart();
 
-              e.target.classList.add("added-to-cart");
-              swal({
-                title: "Added to cart",
-                text: "Product added to cart successfully!",
-                icon: "success",
-              }).then(function () {
-                // form.submit(); // <--- submit form programmatically
-              });
-            } else {
-              // swal("Cancelled", "Your imaginary file is safe :)", "error");
-            }
-          });
+        //         e.target.classList.add("added-to-cart");
+        //         swal({
+        //           title: "Added to cart",
+        //           text: "Product added to cart successfully!",
+        //           icon: "success",
+        //         }).then(function () {
+        //           // form.submit(); // <--- submit form programmatically
+        //         });
+        //       } else {
+        //         // swal("Cancelled", "Your imaginary file is safe :)", "error");
+        //       }
+        //     });
+        //   }
+        // } else {
+        if (res?.data?.length > 0) {
+          console.log("inside product add", res?.data);
+          let itemExit: any = res?.data?.find((product: any) =>
+            product?.productId == pid);
+          console.log("testing product id", itemExit, pid)
+          if (itemExit) {
+            //udate cart item
+            swal({
+              title: "Item exist",
+              text: "This item is already in your cart!",
+              icon: "warning",
+            }).then(function () {
+              // form.submit(); // <--- submit form programmatically
+            });
+
+          } else {
+            addtoCart();
+            swal({
+              title: "Added to cart",
+              text: "Product added to cart successfully!",
+              icon: "success",
+            }).then(function () {
+              // form.submit(); // <--- submit form programmatically
+            });
+          }
         }
-      } else {
-        addtoCart();
-        swal({
-          title: "Added to cart",
-          text: "Product added to cart successfully!",
-          icon: "success",
-        }).then(function () {
-          // form.submit(); // <--- submit form programmatically
-        });
       }
     });
   };
@@ -385,9 +401,8 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                       {" "}
                       <a
                         href="#"
-                        className={`layout-btn btn-grid ${
-                          productview == "grid" ? "active" : ""
-                        }`}
+                        className={`layout-btn btn-grid ${productview == "grid" ? "active" : ""
+                          }`}
                         title="Grid"
                         onClick={() => setProductview("grid")}
                       >
@@ -396,9 +411,8 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                       </a>{" "}
                       <a
                         href="#"
-                        className={`layout-btn btn-list ${
-                          productview == "list" ? "active" : ""
-                        }`}
+                        className={`layout-btn btn-list ${productview == "list" ? "active" : ""
+                          }`}
                         title="List"
                         onClick={() => setProductview("list")}
                       >
@@ -453,7 +467,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                     <div className="quick-view-inner">
                       <div className="row pt-4">
                         <div className="col-sm-8">
-                          <ul
+                          {/* <ul
                             className="nav nav-tabs product-single-tabs"
                             role="tablist"
                           >
@@ -538,7 +552,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                                 </div>
                               </div>
                             </div>
-                          </ul>
+                          </ul> */}
                           <ul className="nav nav-tabs" role="tablist">
                             <div className="container w-100">
                               <div className="row">
@@ -566,62 +580,14 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                               </div>
                             </div>
                           </ul>
-                          {/*  <div className="col-sm-12">
-                          <table className="table table-size">
-                            <thead>
-                              <tr>
-                                <th>SIZE</th>
-                                <th>CHEST (in.)</th>
-                                <th>WAIST (in.)</th>
-                                <th>HIPS (in.)</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>XS</td>
-                                <td>34-36</td>
-                                <td>27-29</td>
-                                <td>34.5-36.5</td>
-                              </tr>
-                              <tr>
-                                <td>S</td>
-                                <td>36-38</td>
-                                <td>29-31</td>
-                                <td>36.5-38.5</td>
-                              </tr>
-                              <tr>
-                                <td>M</td>
-                                <td>38-40</td>
-                                <td>31-33</td>
-                                <td>38.5-40.5</td>
-                              </tr>
-                              <tr>
-                                <td>L</td>
-                                <td>40-42</td>
-                                <td>33-36</td>
-                                <td>40.5-43.5</td>
-                              </tr>
-                              <tr>
-                                <td>XL</td>
-                                <td>42-45</td>
-                                <td>36-40</td>
-                                <td>43.5-47.5</td>
-                              </tr>
-                              <tr>
-                                <td>XLL</td>
-                                <td>45-48</td>
-                                <td>40-44</td>
-                                <td>47.5-51.5</td>
-                              </tr>
-                            </tbody>
-                          </table> 
-                        </div> */}
                         </div>
-                        <div className="col-sm-4">
+                        <div className="col-sm-12">
                           <div className="col-lg-7 col-md-6 product-single-details">
                             <h4 className="product-title">
                               {itemData[0]?.productName}
                             </h4>
+                            <p>{itemData[0]?.description}</p>
+
                             <div className="product-nav">
                               <div className="product-prev">
                                 <a href="#">
@@ -658,20 +624,20 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                                 </a>
                               </div>
                             </div>
-                            <div className="ratings-container">
+                            {/* <div className="ratings-container">
                               <div className="product-ratings">
                                 <span
                                   className="ratings"
                                   style={{ width: "60%" }}
                                 />
                                 {/* End .ratings */}
-                                <span className="tooltiptext tooltip-top" />
-                              </div>
+                                {/* <span className="tooltiptext tooltip-top" />
+                              </div> */}
                               {/* End .product-ratings */}
-                              <a href="#" className="rating-link">
+                              {/* <a href="#" className="rating-link">
                                 ( 6 Reviews )
-                              </a>
-                            </div>
+                              </a> */}
+                            {/*</div> */}
                             {/* End .ratings-container */}
                             <hr className="short-divider" />
                             <div className="price-box">
@@ -682,11 +648,6 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                                 ₹{itemData[0]?.salePrice}
                               </span>
                             </div>
-                            {/* End .price-box */}
-                            <div className="product-desc">
-                              <p>{itemData[0]?.description}</p>
-                            </div>
-                            {/* End .product-desc */}
                             <ul className="single-info-list">
                               <li>
                                 SKU: <strong>{itemData[0]?.sku}</strong>
@@ -695,7 +656,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                                 CATEGORY:{" "}
                                 <strong>
                                   <a href="#" className="product-category">
-                                    SHOES
+                                    {itemData[0]?.category}
                                   </a>
                                 </strong>
                               </li>
@@ -713,19 +674,33 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                                   </a>
                                 </strong>
                               </li>
+                              <li>
+                                Seller location : {" "}
+                                <strong>
+                                  <a href="#" className="product-category">
+                                    Pune
+                                  </a>
+                                </strong>,
+                                <strong>
+                                  <a href="#" className="product-category">
+                                    782390
+                                  </a>
+                                </strong>
+                              </li>
                             </ul>
-                            <div className="product-action">
+                            {itemData[0]?.created_by != localStorage.getItem('userId') && (<div className="product-action">
                               <div className="product-single-qty">
                                 <div className="input-group bootstrap-touchspin bootstrap-touchspin-injected">
                                   <span className="input-group-btn input-group-prepend">
                                     <button
                                       className="btn btn-outline btn-down-icon bootstrap-touchspin-down bootstrap-touchspin-injected"
                                       type="button"
+                                      onClick={() => setproductQantity(productQuantity - 1)}
                                     />
                                   </span>
                                   <input
                                     id="cartqty"
-                                    value={1}
+                                    value={productQuantity}
                                     className="horizontal-quantity form-control"
                                     type="text"
                                   />
@@ -733,6 +708,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                                     <button
                                       className="btn btn-outline btn-up-icon bootstrap-touchspin-up bootstrap-touchspin-injected"
                                       type="button"
+                                      onClick={() => setproductQantity(productQuantity + 1)}
                                     />
                                   </span>
                                 </div>
@@ -763,8 +739,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                               >
                                 View cart
                               </a>
-                            </div>
-                            {/* End .product-action */}
+                            </div>)}
                             <hr className="divider mb-0 mt-0" />
                             <div className="product-single-share mb-3">
                               <label className="sr-only">Share:</label>
@@ -800,17 +775,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                                   title="Mail"
                                 />
                               </div>
-                              {/* End .social-icons */}
-                              {/* <a
-                              href="wishlist.html"
-                              className="btn-icon-wish add-wishlist"
-                              title="Add to Wishlist"
-                            >
-                              <i className="icon-wishlist-2" />
-                              <span>Add to Wishlist</span>
-                            </a> */}
                             </div>
-                            {/* End .product single-share */}
                           </div>
                         </div>
                       </div>

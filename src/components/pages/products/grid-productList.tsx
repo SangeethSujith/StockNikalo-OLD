@@ -33,10 +33,10 @@ const GridProductList: React.FC<any> = (props: any) => {
               alt="product"
             />{" "}
           </a>
-          <div className="label-group">
+          {/* <div className="label-group">
             <div className="product-label label-hot">HOT</div>
             <div className="product-label label-sale">-20%</div>
-          </div>
+          </div> */}
         </figure>
         <div className="product-details">
           <div className="category-wrap">
@@ -51,15 +51,15 @@ const GridProductList: React.FC<any> = (props: any) => {
             {" "}
             <a href="# ">{item.productName}</a>{" "}
           </h3>
-          <div className="ratings-container">
+          {/* <div className="ratings-container">
             <div className="product-ratings">
               {" "}
-              <span className="ratings" style={{ width: "100%" }} />
+              <span className="ratings" style={{ width: "100%" }} /> */}
               {/* End .ratings */}
-              <span className="tooltiptext tooltip-top" />
-            </div>
+              {/* <span className="tooltiptext tooltip-top" />
+            </div> */}
             {/* End .product-ratings */}
-          </div>
+          {/* </div> */}
           {/* End .product-container */}
           <div className="price-box">
             {" "}
@@ -81,7 +81,7 @@ const GridProductList: React.FC<any> = (props: any) => {
           </a>{" "} */}
             <a href="#" className="btn-icon btn-add-cart">
               <i className="fas fa-shopping-cart"></i>
-              <span>details</span>
+              <span>Details</span>
             </a>
             <a
               className="btn-quickview"

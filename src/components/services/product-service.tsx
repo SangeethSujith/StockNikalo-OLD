@@ -97,6 +97,18 @@ class productService {
         });
     });
   };
+
+  getCommission = (url:string) =>{
+    return new Promise((resolve,reject)=>{
+      api.get(url).then((response:any)=>{
+        response && resolve(response)
+      }).catch((err:any)=>{
+        reject(err);
+      })
+    })
+  }
 }
+
+
 
 export default new productService();

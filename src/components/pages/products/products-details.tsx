@@ -13,7 +13,7 @@ type ProductsProps = {};
 const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
   const navigate = useNavigate();
   const [CartQty, setCartQty] = useState();
-  const [ProductsData, setProductsData] = useState([]);
+  const [ProductsData, setProductsData] = useState<any>([]);
   const [ProductsImg, setProductsImg] = useState(Array);
   const [RelatedProductsData, setRelatedProductsData] = useState(Array);
   const [isaddtosucc, setisaddtosucc] = useState(true);
@@ -39,7 +39,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
     productStore.addtocart(data, (res: any) => {
       if (res.status) {
         setisaddtosucc(false);
-        userStore.getUserCart((res: any) => {});
+        userStore.getUserCart((res: any) => { });
       }
     });
   };
@@ -63,9 +63,9 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
       if (res?.status) {
         console.log(res?.data)
         setRelatedProductsData(["kkk"])
-        console.log("related",RelatedProductsData)
+        console.log("related", RelatedProductsData)
         setRelatedProductsData(res?.data)
-        console.log("related",RelatedProductsData)
+        console.log("related", RelatedProductsData)
       }
     });
   };
@@ -77,35 +77,30 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
 
   const getUserCart = (e: any) => {
     userStore.getUserCart((res: any) => {
-      console.log(res);
       if (res.status) {
         if (res?.data?.length > 0) {
-          swal({
-            title: "Are you sure?",
-            text: "You have items from another seller added to the cart. Do you want to clear the cart and add this item?",
-            icon: "warning",
-            buttons: ["No, cancel it!", "Yes, I am sure!"],
-            dangerMode: true,
-          }).then(function (isConfirm) {
-            if (isConfirm) {
-              removeCart();
-
-              e.target.classList.add("added-to-cart");
-              swal({
-                title: "Added to cart",
-                text: "Product added to cart successfully!",
-                icon: "success",
-              }).then(function () {
-                // form.submit(); // <--- submit form programmatically
-              });
-            } else {
-              // swal("Cancelled", "Your imaginary file is safe :)", "error");
-            }
-          });
-        }
+        let itemExit:any = res?.data?.find((item:any)=>item?.productId == product);
+      if(itemExit){
+        //udate cart item
+        swal({
+          title: "Item exist",
+          text: "This item is already in your cart!",
+          icon: "warning",
+        }).then(function () {
+          // form.submit(); // <--- submit form programmatically
+        });
       } else {
         addtoCart();
+        swal({
+          title: "Added to cart",
+          text: "Product added to cart successfully!",
+          icon: "success",
+        }).then(function () {
+          // form.submit(); // <--- submit form programmatically
+        });
       }
+      }
+    }
     });
   };
 
@@ -117,7 +112,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
     getRelatedProductDetails();
   }, [product]);
 
-  useScript("/assets/js/main.min.js","")
+  useScript("/assets/js/main.min.js", "")
   return (
     <>
       <main className="main">
@@ -142,10 +137,10 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
             </div>
             <div className="row">
               <div className="col-lg-5 col-md-6 product-single-gallery">
-                  <div className="product-item">
-                    <div className="inner">
-                      {" "}
-                {/* {ProductsImg?.map((item: any) => (
+                <div className="product-item">
+                  <div className="inner">
+                    {" "}
+                    {/* {ProductsImg?.map((item: any) => (
                           <img
                             src={
                               item?.image
@@ -162,18 +157,18 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                             alt="proudct-img"
                           />
                       ))} */}
-                      <ImageCarousel 
-                      imageArr={ProductsImg} 
+                    <ImageCarousel
+                      imageArr={ProductsImg}
                       defaultimage={"/assets/images/products/product-1.jpg"}
-                      />
+                    />
+                    {" "}
+                    <span className="prod-full-screen">
                       {" "}
-                      <span className="prod-full-screen">
-                        {" "}
-                        <i className="icon-plus" />{" "}
-                      </span>{" "}
-                    </div>
+                      <i className="icon-plus" />{" "}
+                    </span>{" "}
                   </div>
-                
+                </div>
+
                 {/* End .product-item */}
 
                 {/* End .product-item */}
@@ -235,22 +230,22 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                       <div className="product-ratings">
                         {" "}
                         <span className="ratings" style={{ width: "60%" }} /> */}
-                        {/* End .ratings */}
-                        {/* <span className="tooltiptext tooltip-top" />{" "} */}
-                      {/* </div> */}
-                      {/* End .product-ratings */}
-                      {/* <a href="#" className="rating-link"> */}
-                        {/* ( 6 Reviews ) */}
-                      {/* </a>{" "} */}
+                    {/* End .ratings */}
+                    {/* <span className="tooltiptext tooltip-top" />{" "} */}
+                    {/* </div> */}
+                    {/* End .product-ratings */}
+                    {/* <a href="#" className="rating-link"> */}
+                    {/* ( 6 Reviews ) */}
+                    {/* </a>{" "} */}
                     {/* </div> */}
                     {/* End .ratings-container */}
                     <hr className="short-divider" />
                     <div className="price-box">
                       {" "}
-                      {ProductsData[0]?.["mrp"] <= ProductsData[0]?.["salePrice"] ? "":
-                      <span className="old-price">
-                        ₹{ProductsData[0]?.["mrp"]}
-                      </span>}
+                      {ProductsData[0]?.["mrp"] <= ProductsData[0]?.["salePrice"] ? "" :
+                        <span className="old-price">
+                          ₹{ProductsData[0]?.["mrp"]}
+                        </span>}
                       {" "}
                       <span className="new-price">
                         ₹{ProductsData[0]?.["salePrice"]}
@@ -277,8 +272,21 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                           </a>{" "}
                         </strong>{" "}
                       </li>
+                      <li>
+                        Seller location : {" "}
+                        <strong>
+                          <a href="#" className="product-category">
+                            Pune
+                          </a>
+                        </strong>,
+                        <strong>
+                          <a href="#" className="product-category">
+                            782390
+                          </a>
+                        </strong>
+                      </li>
                     </ul>
-                    <div className="product-action">
+                    {ProductsData[0]?.created_by != localStorage.getItem('userId') && (<div className="product-action">
                       {/* <div className="price-box product-filtered-price">
                         {" "}
                         <del className="old-price">
@@ -325,7 +333,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                       >
                         View cart
                       </a>{" "}
-                    </div>
+                    </div>)}
                     {/* End .product-action */}
                     <hr className="divider mb-0 mt-0" />
                     {/* <a
@@ -343,7 +351,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
               {/* End .col-md-7 */}
             </div>
             <div className="row align-items-start">
-              <div className="widget widget-info col-md-9 col-xl-6 pb-4 pb-md-0">
+              {/* <div className="widget widget-info col-md-9 col-xl-6 pb-4 pb-md-0">
                 <ul className="promote">
                   <li>
                     {" "}
@@ -373,9 +381,9 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                     </h4>
                   </li>
                 </ul>
-              </div>
+              </div> */}
               {/* End .widget */}
-              <div className="product-single-share col-md-3 col-xl-6 align-items-start justify-content-md-end mt-0">
+              <div className="product-single-share col-md-4 col-xl-6 align-items-start justify-content-md-end mt-0">
                 <label className="sr-only">Share:</label>
                 <div className="social-icons mt-0 pb-5 pb-md-0">
                   {" "}
@@ -473,27 +481,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                 aria-labelledby="product-tab-desc"
               >
                 <div className="product-desc-content">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, nostrud ipsum consectetur
-                    sed do, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur. Excepteur sint occaecat.
-                  </p>
-                  <ul>
-                    <li>
-                      Any Product types that You want - Simple, Configurable{" "}
-                    </li>
-                    <li>Downloadable/Digital Products, Virtual Products </li>
-                    <li>Inventory Management with Backordered items </li>
-                  </ul>
-                  <p>
-                    Sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.{" "}
-                  </p>
+                  {ProductsData[0]?.description}
                 </div>
                 {/* End .product-desc-content */}
               </div>
@@ -677,12 +665,12 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
             >
               Related Products
             </h2>
-         {
+            {
 
-        RelatedProductsData.length > 0 && < ProductImage productList={RelatedProductsData.slice(0, 5)}/>
-         }
-       
-                 
+              RelatedProductsData.length > 0 && < ProductImage productList={RelatedProductsData.slice(0, 5)} />
+            }
+
+
           </div>
         </section>
         <GoToTop />

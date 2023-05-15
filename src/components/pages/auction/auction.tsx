@@ -295,10 +295,10 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                               alt="product"
                             />{" "}
                           </a>
-                          <div className="label-group">
+                          {/* <div className="label-group">
                             <div className="product-label label-hot">HOT</div>
                             <div className="product-label label-sale">-20%</div>
-                          </div>
+                          </div> */}
                         </figure>
                         <div className="product-head">
                           <div className="category-wrap">
