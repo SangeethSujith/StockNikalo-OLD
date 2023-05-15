@@ -167,18 +167,19 @@ const Header: React.FC<any> = () => {
                       <ul>
                         <li></li>
                         <li>
-                          <a
-                            // onClick={() => logOut()}
-                            href={
-                              "https://qriocty.com/auto-login/" +
-                              localStorage.getItem("userToken")
-                            }
-                            target={"_blank"}
-                            style={{ cursor: "pointer" }}
-                            className="d-block text-dark ls-10 pt-1 dropdown-item"
-                          >
-                            My Account
-                          </a>
+                            <a
+                              onClick={() =>navigate( "https://demoaccount.stocknikalo.com/auto-login/" +
+                              localStorage.getItem("userToken"))}
+                              // href={
+                              //   "https://demoaccount.stocknikalo.com/auto-login/" +
+                              //   localStorage.getItem("userToken")
+                              // }
+                              target={"_blank"}
+                              style={{ cursor: "pointer" }}
+                              className="d-block text-dark ls-10 pt-1 dropdown-item"
+                            >
+                              My Account
+                            </a>
                         </li>
                         <li>
                           <a className="dropdown-item" href="#">
