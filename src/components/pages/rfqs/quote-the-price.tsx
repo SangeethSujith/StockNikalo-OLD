@@ -15,7 +15,9 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   const [form] = useForm();
   const [RfqsData, setRfqsData] = useState([]);
   const [QuotedRfqsData, setQuotedRfqsData] = useState([]);
-  console.log(QuotedRfqsData, "res");
+  const [rfqDetailsPopup, setRfqDetailsPopup] = useState(true);
+  const [popupData, setPopdata] = useState<any>([]);
+
   useEffect(() => {
     const rfqid = location.state?.id;
     // if (rfqid != undefined) {
@@ -28,6 +30,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
 
   const getRfqsDetailsbyID = () => {
     productStore.getRfqsDetailsByID((res: any) => {
+      console.log("rfq data iss", res.data);
       setRfqsData(res.data);
     });
   };
@@ -48,8 +51,10 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
           user_id: localStorage.getItem("userId"),
           rfq_id: item.rfqid,
           rfq_perticular_id: item.perticularId,
+          quantity_raised: form.getFieldValue("qnty-" + index) ? form.getFieldValue("qnty-" + index) : item?.quantity,
           amount_raised: form.getFieldValue("price-" + index),
         };
+        console.log("final data iss", data);
         arr.push(data);
       }
     });
@@ -74,6 +79,21 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
       });
     }
   };
+  const handleRfqdetails = (id: string | number) => {
+    console.log("tesing idd", id);
+    if (id) {
+      let popDetails: any = RfqsData.find((data: any) => (data?.rfqid
+        == id));
+      if (popDetails) {
+        setPopdata(popDetails);
+        setRfqDetailsPopup(false);
+      }
+      console.log("pop details", popDetails);
+    }
+  }
+  const handleClose = () => {
+    setRfqDetailsPopup(true);
+  }
 
   return (
     <>
@@ -309,6 +329,8 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                       <tr>
                         <th className="">Item Code</th>
                         <th className="">Item Name</th>
+                        <th className="">Brand</th>
+                        <th>Sku</th>
                         <th className="l">Quantity</th>
                         {/* <th className="">Size</th> */}
                         {/* <th className="">Target Price </th> */}
@@ -332,26 +354,27 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                           className="product-row quote-product-row"
                         >
                           <td>
-                            <span className="stock-status">#{index + 1}</span>
+                            <span className="stock-status">{item?.item_code}</span>
                           </td>
-                          <td className="">{item.name}</td>
+                          <td className="">{item?.product_name}</td>
                           <td>
                             <span className="stock-status">
-                              {item.quantity}
+                              {item?.brand}
                             </span>
                           </td>
-                          {/* <td>
-                            <span className="stock-status">50-75</span>
-                          </td> */}
+                          <td>
+                            <span className="stock-status">{item.sku}</span>
+                          </td>
                           {/* <td>
                             <span className="stock-status">
                               {item.target_price}
                             </span>
                           </td> */}
                           <td>
-                            <Form.Item name={"price-" + index}>
+                            <Form.Item name={"qnty-" + index}>
                               <Input
                                 className="form-control"
+                                type="Number"
                                 placeholder={
                                   QuotedRfqsData.some(function (element: any) {
                                     return (
@@ -360,8 +383,9 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                     );
                                   })
                                     ? "submitted"
-                                    : "0"
+                                    : "1"
                                 }
+                                style={{ width: '60px' }}
                                 required
                                 disabled={
                                   QuotedRfqsData.some(function (element: any) {
@@ -376,6 +400,14 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                               />
                             </Form.Item>
                           </td>
+                          <td>
+                            <Form.Item name={"price-" + index}>
+                              <Input className="form-control"
+                                style={{ width: '80px' }}
+                                required
+                              />
+                            </Form.Item>
+                          </td>
                           <td className="text-right d-flex justify-content-end">
                             <a
                               onClick={() => submitRfqQuote()}
@@ -387,7 +419,8 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                               className="btn btn-sm btn-primary mr-2 btn-quickview"
                               title="Quick View"
                             >
-                              <i className="fas fa-eye"></i>
+                              <i className="fas fa-eye" onClick={(e) => handleRfqdetails(item?.rfqid
+                              )}></i>
                             </a>
                           </td>
                         </tr>
@@ -395,6 +428,127 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                     </tbody>
                   </table>
                 </Form>
+              </div>
+            </div>
+            <div
+              className="product-slide quick-view-popup w-100 Shadows p-4 alert"
+              style={{ boxShadow: "0 0 8px rgba(0, 0, 0, 0.6)" }}
+              hidden={rfqDetailsPopup}
+            >
+              <button
+                onClick={handleClose}
+                type="button"
+                className="close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+              <div className="quick-view-inner">
+                <div className="row pt-4">
+                  <div className="col-sm-12">
+                    <div className="col-lg-7 col-md-6 product-single-details">
+                      <h4 className="product-title">
+                        Details
+                      </h4>
+                      <hr className="short-divider" />
+                      <div className="price-box">
+                        <span className="new-price">
+                         {popupData?.product_name}
+                        </span>
+                      </div>
+                      <div>
+                        <p>{popupData?.note}</p>
+                      </div>
+                      <ul className="single-info-list">
+                        <li>
+                         Brand :{" "}
+                        <strong>
+                            <a href="#" className="product-category">
+                              {popupData?.brand}
+                            </a>
+                          </strong>
+                        </li>
+                        <li>
+                         Quantity :{" "}
+                        <strong>
+                            <a href="#" className="product-category">
+                              {popupData?.quantity}
+                            </a>
+                          </strong>
+                        </li>
+                        <li>
+                          CATEGORY:{" "}
+                          <strong>
+                            <a href="#" className="product-category">
+                              {popupData?.category}
+                            </a>
+                          </strong>
+                        </li>
+                        <li>
+                          Buyer Name:{" "}
+                          <strong>
+                            <a href="#" className="product-category">
+                              {popupData?.name}
+                            </a>
+                          </strong>
+                        </li>
+                        <li>
+                          Buyer location : {" "}
+                          <strong>
+                            <a href="#" className="product-category">
+                              {popupData?.buyer_state ? popupData?.buyer_state : ""}
+                            </a>
+                          </strong>,
+                          <strong>
+                            <a href="#" className="product-category">
+                              {popupData?.buyer_district ? popupData?.buyer_district : ""}
+                            </a>
+                          </strong>,
+                          <strong>
+                          <a href="#" className="product-category">
+                            {popupData?.buyer_pincode ? popupData?.buyer_pincode : ""}
+                          </a>
+                          </strong>
+                        </li>
+                      </ul>
+                      <hr className="divider mb-0 mt-0" />
+                      <div className="product-single-share mb-3">
+                        <label className="sr-only">Share:</label>
+                        <div className="social-icons mr-2">
+                          <a
+                            href="#"
+                            className="social-icon social-facebook icon-facebook"
+                            target="_blank"
+                            title="Facebook"
+                          />
+                          <a
+                            href="#"
+                            className="social-icon social-twitter icon-twitter"
+                            target="_blank"
+                            title="Twitter"
+                          />
+                          <a
+                            href="#"
+                            className="social-icon social-linkedin fab fa-linkedin-in"
+                            target="_blank"
+                            title="Linkedin"
+                          />
+                          <a
+                            href="#"
+                            className="social-icon social-gplus fab fa-google-plus-g"
+                            target="_blank"
+                            title="Google +"
+                          />
+                          <a
+                            href="#"
+                            className="social-icon social-mail icon-mail-alt"
+                            target="_blank"
+                            title="Mail"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             {/* End .col-lg-9 */}
