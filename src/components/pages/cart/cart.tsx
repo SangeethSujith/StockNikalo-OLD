@@ -4,16 +4,17 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
 import GoToTop from "../../gototop";
 import useScript from "../../hooks/useScript";
+import productStore from "../../store/product-store";
 type CartProps = {};
 
 const CartComponent: React.FC<any> = (props: CartProps) => {
   const navigate = useNavigate();
-  const [CartQty, setCartQty] = useState("");
-  const [CartData, setCartData] = useState([]);
+  const [CartQty, setCartQty] = useState<any>("");
+  const [CartData, setCartData] = useState<any>([]);
   const [subTotal, setsubTotal] = useState(Number);
   const [ProductInv, setProductInv] = useState();
-  useScript("/assets/js/main.min.js","")
-  
+  useScript("/assets/js/main.min.js", "")
+
   useEffect(() => {
     // const script = document.createElement("script");
     // script.src = "/assets/js/main.min.js";
@@ -40,6 +41,7 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
           )
         );
         setsubTotal(tot);
+        setCartQty(res.data[0].qty);
       }
     });
   };
@@ -98,6 +100,39 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
   //   event.stopPropagation();
   //   inv();
   // });
+  const addtoCart = () => {
+    let qty: any = document.getElementById("cartqty");
+    qty = qty.value;
+    console.log("cart data isss", CartData, qty);
+    const data = {
+      userId: parseInt(localStorage.getItem("userId")!),
+      cartType: 1,
+      cartItems: [
+        {
+          productId: parseInt(CartData[0]?.productId),
+          qty: parseInt(qty),
+          productPrice: parseInt(CartData[0]?.productPrice),
+        },
+      ],
+    };
+    console.log("product price isss", data);
+    productStore.addtocart(data, (res: any) => {
+      if (res.status) {
+        //setisaddtosucc(false);
+        userStore.getUserCart((res: any) => {
+          if (res) {
+            navigate(RoutePath.checkout);
+          }
+        });
+      }
+    })
+  }
+
+  const handleProceedtocheckOut = () => {
+    console.log("hanlde proceed to check out");
+    addtoCart();
+
+  };
 
   return (
     <>
@@ -175,14 +210,39 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
                           </td>
                           <td>₹{item.productPrice}</td>
                           <td>
-                            <div className="product-single-qty1">
-                              <input
+                            {/* <div className="product-action"> */}
+                              <div className="product-single-qty">
+                                {/* <input
                                 className="horizontal-quantity form-control"
                                 type="text"
                                 value={item.qty}
                                 id="cartqty"
-                              />
-                            </div>
+                              /> */}
+                                <div className="input-group bootstrap-touchspin bootstrap-touchspin-injected">
+                                  <span className="input-group-btn input-group-prepend">
+                                    <button
+                                      className="btn btn-outline btn-down-icon bootstrap-touchspin-down bootstrap-touchspin-injected"
+                                      type="button"
+                                      onClick={(e:any)=>{setCartQty(parseInt(CartQty) - 1)}}
+                                    />
+                                  </span>
+                                  <input
+                                    className="horizontal-quantity form-control"
+                                    type="text"
+                                    id="cartqty"
+                                    value={CartQty}
+                                    onChange={(val: any) => setCartQty(val)}
+                                  />
+                                  <span className="input-group-btn input-group-append">
+                                    <button
+                                      className="btn btn-outline btn-up-icon bootstrap-touchspin-up bootstrap-touchspin-injected"
+                                      type="button"
+                                      onClick={(e:any)=>{setCartQty(parseInt(CartQty) + 1)}}
+                                    />
+                                  </span>
+                                </div>
+                              </div>
+                            {/* </div> */}
                             {/* End .product-single-qty */}
                           </td>
                           <td className="text-right">
@@ -258,7 +318,7 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
                   <div className="checkout-methods">
                     {" "}
                     <a
-                      onClick={() => navigate(RoutePath.checkout)}
+                      onClick={handleProceedtocheckOut}
                       style={{ cursor: "pointer" }}
                       className="btn btn-block btn-dark"
                     >
