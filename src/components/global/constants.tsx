@@ -35,6 +35,7 @@ const Constant = {
   cartincrement: "api/cartincrement",
   cartdecrement: "api/cartdecrement",
   deletecart: "api/deletecart",
+  getcommission : "api/get-commission/"
 };
 
 export default Constant;

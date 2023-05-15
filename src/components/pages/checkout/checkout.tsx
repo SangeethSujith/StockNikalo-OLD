@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button, Input, message, Select } from "antd";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Form, Button, Input, Modal } from "antd";
+import { useNavigate } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
 import userStore from "../../store/user-store";
 import { Country, State, City } from "country-state-city";
 import swal from "sweetalert";
 import "./style.css";
 import GoToTop from "../../gototop";
+import axios from "axios";
+import Constant from "../../global/constants";
+import productService from "../../services/product-service";
+import productStore from "../../store/product-store";
 type CartProps = {};
 
 const CheckoutComponent: React.FC<any> = (props: CartProps) => {
   const navigate = useNavigate();
-  const { useForm } = Form;
-  const [form] = useForm();
+  const [form] = Form.useForm();
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("IN");
   const [selectedState, setSelectedState] = useState("");
   const [CartData, setCartData] = useState([]);
   const [BillingAddress, setBillingAddress] = useState([]);
@@ -23,6 +26,8 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
   const [subTotal, setsubTotal] = useState(Number);
   const [TotalQty, setTotalQty] = useState(Number);
   const [CartId, setCartId] = useState([]);
+  const [modalVisible, setModalvisible] = useState(false);
+  const [commisionData,setCommisionData] = useState<any>([]);
 
   useEffect(() => {
     getUserCart();
@@ -37,13 +42,12 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
           isoCode,
           name,
         }));
-        //const [{ isoCode: firstCountry } = {}] = allCountries;
         console.log(allCountries);
-        const [{ isoCode: firstCountry = "IN" } = {}] = allCountries;
+        const [{ isoCode: firstCountry = "IN" } = {}] = allCountries
         setCountries(allCountries);
-        setSelectedCountry(firstCountry);
+        setSelectedCountry("IN");
         form.setFieldsValue({
-          country: firstCountry,
+          country: "IN",
         });
       } catch (error) {
         setCountries([]);
@@ -74,6 +78,14 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
     getStates();
   }, [selectedCountry]);
 
+  useEffect(()=>{
+    productStore.getCommission(localStorage.getItem("userId"),(response:any)=>{
+      console.log("response",response);
+      if(response)
+      setCommisionData(response)
+    })
+  },[]);
+
   const getUserAddress = () => {
     userStore.getUserAddress((res: any) => {
       if (res.status) {
@@ -81,6 +93,10 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
       }
     });
   };
+  const handleCancel = () => {
+    console.log("hello");
+    setModalvisible(false);
+  }
   const handleClick = (e: any, index: any) => {
     let element = document.getElementsByClassName("billing-col");
     for (var i = 0; i < element.length; i++) {
@@ -133,8 +149,8 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
       .then((values) => {
         const data = {
           user_id: parseInt(localStorage.getItem("userId")!),
-          total: subTotal,
-          paid_amount: subTotal,
+          total: subTotal + commisionData?.total_commission,
+          paid_amount: subTotal + commisionData?.total_commission,
           total_items: CartData.length,
           total_quantity: TotalQty,
           is_new_billing_address: BillingAddressId,
@@ -262,7 +278,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
             </div>
           </div>
           <div className="checkout-discount">
-            <h4>
+            <h3>
               Select your delivery address
               {/* <button
                 data-toggle="collapse"
@@ -273,7 +289,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
               >
                 ENTER YOUR CODE
               </button> */}
-            </h4>
+            </h3>
             <div id="collapseTwo" className="collapse">
               <div className="feature-box">
                 <div className="feature-box-content">
@@ -299,12 +315,31 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
           {BillingAddress?.length > 0 &&
             BillingAddress?.map((item: any, index: any) => (
               <div className="row">
-                <div className="col-lg-5">
+                <div className="col-lg-5" style={{ cursor: "pointer" }}>
                   <div
                     className="order-summary billing-col"
                     onClick={(e) => handleClick(e, index)}
                   >
-                    <h3>Address {index + 1}</h3>
+                    <h3>Address {index + 1}<span className="ml-3" aria-hidden="true"><button type="button" className="btn btn-outline-secondary btn-sm">edit</button></span></h3>
+                    <div className="paymsents-methods">
+                      <p className="">
+                        Name : {item.first_name} {item.last_name}
+                      </p>
+                      <p className="">Street : {item.street}</p>
+                      <p className="">Town : {item.town}</p>
+                      <p className="">Apartment : {item.appartment}</p>
+                      <p className="">Country : {item.country}</p>
+                      <p className="">Zip : {item.zip}</p>
+                      <p className="">Contact Number : {item.phone}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-5" style={{ cursor: "pointer" }}>
+                  <div
+                    className="order-summary billing-col"
+                    onClick={(e) => handleClick(e, index)}
+                  >
+                    <h3>Address 2 <span className="ml-3" aria-hidden="true"><button type="button" className="btn btn-outline-secondary btn-sm">edit</button></span></h3>
                     <div className="paymsents-methods">
                       <p className="">
                         Name : {item.first_name} {item.last_name}
@@ -320,7 +355,12 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                 </div>
               </div>
             ))}
-
+          {/* <div className="row align-items-start"> */}
+          <div className="mb-4">
+            {/* <button type="button" className="btn btn-dark" onClick={(e)=>handleClick(e, 1)}>select address</button> */}
+            <button type="button" className="btn btn-dark btn-sm" onClick={() => setModalvisible(true)}>add Address</button>
+          </div>
+          {/* </div> */}
           <div className="row">
             <div className="col-lg-7">
               <ul className="checkout-steps">
@@ -443,6 +483,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                           name="orderby"
                           className="form-control"
                           value={selectedCountry}
+                          defaultValue={'IN'}
                           onChange={(event) =>
                             setSelectedCountry(event.target.value)
                           }
@@ -456,6 +497,10 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                             </option>
                           ))}
                         </select>
+
+                        {/* <Select>
+
+                        </Select> */}
                       </Form.Item>
                     </div>
 
@@ -783,9 +828,9 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                         <span>₹{subTotal}</span>
                       </td>
                     </tr>
-                    <tr className="order-shipping">
-                      <td className="text-left" colSpan={2}>
-                        <h4 className="m-b-sm">Shipping</h4>
+                    <tr className="cart-subtotal">
+                      <td className="text-left">
+                        {/*   <h4 className="m-b-sm">Shipping</h4>
                         <div className="form-group form-group-custom-control">
                           <div className="custom-control custom-radio d-flex">
                             <input
@@ -797,9 +842,9 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                             <label className="custom-control-label">
                               Standard
                             </label>
-                          </div>
+                          </div> */}
                           {/* End .custom-checkbox */}
-                        </div>
+                        {/* </div> */}
                         {/* End .form-group */}
                         {/* <div className="form-group form-group-custom-control mb-0">
                           <div className="custom-control custom-radio d-flex mb-0">
@@ -814,6 +859,10 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                           </div>
                         </div> */}
                         {/* End .form-group */}
+                        <h4 className="m-b-sm">Service charge</h4>
+                        </td>
+                        <td className="price-col">
+                          <span>{commisionData?.total_commission}</span>
                       </td>
                     </tr>
                     <tr className="order-total">
@@ -822,7 +871,7 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                       </td>
                       <td>
                         <b className="total-price">
-                          <span>₹{subTotal}</span>
+                          <span>₹{subTotal + commisionData?.total_commission}</span>
                         </b>
                       </td>
                     </tr>
@@ -845,6 +894,226 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                   Place order
                 </button>
               </div>
+              <Modal
+                title="Add Address"
+                centered
+                open={modalVisible}
+                destroyOnClose={true}
+                onCancel={()=>{
+                   handleCancel()}}
+
+                footer={[
+                  <div>
+                    <Button
+                      key="cancelBtn"
+                      onClick={()=>handleCancel}>
+                      Cancel
+                    </Button>
+                    <Button
+                      type="primary"
+                      form="addressForm"
+                      key="submit"
+                      htmlType="submit"
+                    >Save</Button>
+                  </div>
+                ]}
+              >
+                <Form
+                  id="addressForm"
+                  form={form}
+                  key="addressFrom"
+                  preserve={false}
+                ><div>
+                    <div className="form-group">
+                      <label>Company name (optional)</label>
+                      <Form.Item name="company_name">
+                        <Input maxLength={70} className="form-control" />
+                      </Form.Item>
+                    </div>
+
+                    <div className="form-group mb-1 pb-2">
+                      <label>
+                        Street address
+                        <abbr className="required" title="required">
+                          *
+                        </abbr>
+                      </label>
+                      <Form.Item
+                        name="street"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your street name",
+                          },
+                        ]}
+                      >
+                        <Input
+                          maxLength={70}
+                          placeholder="House number and street name"
+                          className="form-control"
+                        />
+                      </Form.Item>
+                    </div>
+                    <div className="form-group">
+                      <Form.Item
+                        name="appartment"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your apartment name",
+                          },
+                        ]}
+                      >
+                        <Input
+                          maxLength={70}
+                          placeholder="Apartment, suite, unite, etc. (optional)"
+                          className="form-control"
+                        />
+                      </Form.Item>
+                    </div>
+                    <div className="select-custom">
+                      <label>
+                        Country / Region
+                        <abbr className="required" title="required">
+                          *
+                        </abbr>
+                      </label>
+                      <Form.Item
+                        name="country"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your country",
+                          },
+                        ]}
+                      >
+                        <select
+                          name="orderby"
+                          className="form-control"
+                          value={selectedCountry}
+                          defaultValue={'IN'}
+                          onChange={(event) =>
+                            setSelectedCountry(event.target.value)
+                          }
+                        >
+                          <option value="0" selected>
+                            Select
+                          </option>
+                          {countries.map(({ isoCode, name }) => (
+                            <option value={isoCode} key={isoCode}>
+                              {name}
+                            </option>
+                          ))}
+                        </select>
+
+                        {/* <Select>
+
+                        </Select> */}
+                      </Form.Item>
+                    </div>
+
+                    <div className="select-custom">
+                      <label>
+                        State / County{" "}
+                        <abbr className="required" title="required">
+                          *
+                        </abbr>
+                      </label>
+                      <Form.Item
+                        name="state"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please select state",
+                          },
+                        ]}
+                      >
+                        <select
+                          name="orderby"
+                          className="form-control"
+                          value={selectedState}
+                          onChange={(event) =>
+                            setSelectedState(event.target.value)
+                          }
+                        >
+                          {states.length > 0 ? (
+                            states.map(({ isoCode, name }) => (
+                              <option value={isoCode} key={isoCode}>
+                                {name}
+                              </option>
+                            ))
+                          ) : (
+                            <option value="0" key="">
+                              No state found
+                            </option>
+                          )}
+                        </select>
+                      </Form.Item>
+                    </div>
+                    <div className="form-group">
+                      <label>
+                        Town / City
+                        <abbr className="required" title="required">
+                          *
+                        </abbr>
+                      </label>
+                      <Form.Item
+                        name="town"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your town name",
+                          },
+                        ]}
+                      >
+                        <Input maxLength={70} className="form-control" />
+                      </Form.Item>
+                    </div>
+                    <div className="form-group">
+                      <label>
+                        Postcode / Zip
+                        <abbr className="required" title="required">
+                          *
+                        </abbr>
+                      </label>
+                      <Form.Item
+                        name="zip"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your zip code",
+                          },
+                        ]}
+                      >
+                        <Input maxLength={70} className="form-control" />
+                      </Form.Item>
+                    </div>
+                    <div className="form-group">
+                      <label>
+                        Phone{" "}
+                        <abbr className="required" title="required">
+                          *
+                        </abbr>
+                      </label>
+                      <Form.Item
+                        name="phone"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your phone number",
+                          },
+                        ]}
+                      >
+                        <Input
+                          type="tel"
+                          maxLength={70}
+                          className="form-control"
+                        />
+                      </Form.Item>
+                    </div>
+                 </div>
+                </Form>
+              </Modal>
               {/* End .cart-summary */}
             </div>
             {/* End .col-lg-4 */}
