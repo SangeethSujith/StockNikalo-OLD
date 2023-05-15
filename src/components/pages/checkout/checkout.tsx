@@ -899,14 +899,13 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
                 centered
                 open={modalVisible}
                 destroyOnClose={true}
-                onCancel={()=>{
-                   handleCancel()}}
+                onCancel={()=>handleCancel()}
 
                 footer={[
                   <div>
                     <Button
                       key="cancelBtn"
-                      onClick={()=>handleCancel}>
+                      onClick={()=>handleCancel()}>
                       Cancel
                     </Button>
                     <Button
