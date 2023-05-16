@@ -81,7 +81,8 @@ const Header: React.FC<any> = () => {
       });
     }
   };
-
+  {console.log("testing url", "https://demoaccount.stocknikalo.com/auto-login/" ,
+  localStorage.getItem("userToken"))}
   return (
     <>
       <header className="header home">
@@ -168,12 +169,10 @@ const Header: React.FC<any> = () => {
                         <li></li>
                         <li>
                             <a
-                              onClick={() =>navigate( "https://demoaccount.stocknikalo.com/auto-login/" +
-                              localStorage.getItem("userToken"))}
-                              // href={
-                              //   "https://demoaccount.stocknikalo.com/auto-login/" +
-                              //   localStorage.getItem("userToken")
-                              // }
+                              href={
+                                "https://demoaccount.stocknikalo.com/auto-login/" +
+                                localStorage.getItem("userToken")
+                              }
                               target={"_blank"}
                               style={{ cursor: "pointer" }}
                               className="d-block text-dark ls-10 pt-1 dropdown-item"
