@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 import RoutePath from "../global/route-paths";
 import authStore from "../store/auth-store";
 import productStore from "../store/product-store";
@@ -81,8 +82,6 @@ const Header: React.FC<any> = () => {
       });
     }
   };
-  {console.log("testing url", "https://demoaccount.stocknikalo.com/auto-login/" ,
-  localStorage.getItem("userToken"))}
   return (
     <>
       <header className="header home">
@@ -151,7 +150,6 @@ const Header: React.FC<any> = () => {
                 </div>
               ) : (
                 <div
-                  onClick={() => navigate(RoutePath.edit_profile)}
                   style={{ cursor: "pointer" }}
                   className="header-contact d-none d-lg-flex align-items-center pr-xl-5 mr-5 mr-xl-3 ml-5"
                 >
@@ -166,7 +164,6 @@ const Header: React.FC<any> = () => {
                     </a>
                     <div className="dropdown-menu">
                       <ul>
-                        <li></li>
                         <li>
                             <a
                               href={
@@ -179,6 +176,9 @@ const Header: React.FC<any> = () => {
                             >
                               My Account
                             </a>
+                        </li>
+                        <li>
+                          <a className="dropdown-item" onClick={() => navigate(RoutePath.edit_profile)}>My Profile</a>
                         </li>
                         <li>
                           <a className="dropdown-item" href="#">
@@ -339,4 +339,4 @@ const Header: React.FC<any> = () => {
   );
 };
 
-export default Header;
+export default observer(Header);

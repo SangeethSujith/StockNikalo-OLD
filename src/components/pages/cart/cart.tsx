@@ -3,8 +3,12 @@ import userStore from "../../store/user-store";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
 import GoToTop from "../../gototop";
+import swal from "sweetalert";
 import useScript from "../../hooks/useScript";
 import productStore from "../../store/product-store";
+import { Button, message } from "antd";
+import cartService from "../../services/cart-service";
+import CartItemFlatlist from "./cartItem-flatlist";
 type CartProps = {};
 
 const CartComponent: React.FC<any> = (props: CartProps) => {
@@ -47,12 +51,35 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
   };
 
   const deleteCart = (id: any) => {
-    userStore.deleteCart(id, (res: any) => {
-      console.log(res);
-      if (res.status) {
-        setCartData([]);
-      }
-    });
+    // userStore.deleteCart(id, (res: any) => {
+    //   console.log(res);
+    //   if (res.status) {
+    //     setCartData([]);
+    //   }
+    // });
+    if(id){
+      cartService.removeCartItem(id).then((response)=>{
+        if(response){
+          userStore.getUserCart((res:any)=>{
+            console.log("haiiiii got response")
+            if (res.status) {
+              setCartData(res.data);
+              incUserCart(res.data[0]?.["productId"]);
+              var tot = 0;
+              var price = 0;
+              res?.data?.map(
+                (item: any) => (
+                  (price = item.qty * item.productPrice), (tot = tot + price)
+                )
+              );
+              setsubTotal(tot);
+              setCartQty(res.data[0].qty);
+            }});
+        }
+      }).catch((error)=>{
+        console.log("error occured",error);
+      })
+    }
   };
 
   const handleChange = () => {
@@ -134,6 +161,37 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
 
   };
 
+  const hanlderemove = ()=> {
+    swal({
+      title: "Clear cart",
+      text: "Are you sure you want remove all items from the cart",
+      icon: "warning",
+    }).then(function () {
+      cartService.removeAllCartItem(localStorage.getItem('userId')||1).then((response)=>{
+        if(response){
+          userStore.getUserCart((res:any)=>{
+            console.log("haiiiii got response")
+            if (res.status) {
+              setCartData(res.data);
+              incUserCart(res.data[0]?.["productId"]);
+              var tot = 0;
+              var price = 0;
+              res?.data?.map(
+                (item: any) => (
+                  (price = item.qty * item.productPrice), (tot = tot + price)
+                )
+              );
+              setsubTotal(tot);
+              setCartQty(res.data[0].qty);
+            }});
+          message.success("Cart Cleared")
+        }
+      }).catch((error)=>{
+        console.log("error");
+      })
+    });
+  }
+
   return (
     <>
       <link rel="stylesheet" href="/assets/css/style.min.css"></link>
@@ -165,6 +223,7 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
                 <a href="#">Order Complete</a>{" "}
               </li>
             </ul>
+            <Button onClick={()=>{hanlderemove()}} style={{background:"#000",color:"white"}}>Remove all items</Button>
             <div className="row">
               <div className="col-lg-8">
                 <div className="cart-table-container">
@@ -179,78 +238,8 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {CartData?.map((item: any) => (
-                        <tr className="product-row">
-                          <td>
-                            <figure className="product-image-container">
-                              {" "}
-                              <a href="#" className="product-image">
-                                {" "}
-                                <img
-                                  src={
-                                    CartData[0]?.["images"]
-                                      ? CartData[0]?.["images"][0]?.["image"]
-                                      : "/assets/images/products/product-1.jpg"
-                                  }
-                                  alt="product"
-                                />{" "}
-                              </a>{" "}
-                              <a
-                                onClick={() => deleteCart(CartData[0]?.["id"])}
-                                className="btn-remove icon-cancel"
-                                title="Remove Product"
-                              />{" "}
-                            </figure>
-                          </td>
-                          <td className="product-col">
-                            <h5 className="product-title">
-                              {" "}
-                              <a href="#">{item.productName} </a>{" "}
-                            </h5>
-                          </td>
-                          <td>₹{item.productPrice}</td>
-                          <td>
-                            {/* <div className="product-action"> */}
-                              <div className="product-single-qty">
-                                {/* <input
-                                className="horizontal-quantity form-control"
-                                type="text"
-                                value={item.qty}
-                                id="cartqty"
-                              /> */}
-                                <div className="input-group bootstrap-touchspin bootstrap-touchspin-injected">
-                                  <span className="input-group-btn input-group-prepend">
-                                    <button
-                                      className="btn btn-outline btn-down-icon bootstrap-touchspin-down bootstrap-touchspin-injected"
-                                      type="button"
-                                      onClick={(e:any)=>{setCartQty(parseInt(CartQty) - 1)}}
-                                    />
-                                  </span>
-                                  <input
-                                    className="horizontal-quantity form-control"
-                                    type="text"
-                                    id="cartqty"
-                                    value={CartQty}
-                                    onChange={(val: any) => setCartQty(val)}
-                                  />
-                                  <span className="input-group-btn input-group-append">
-                                    <button
-                                      className="btn btn-outline btn-up-icon bootstrap-touchspin-up bootstrap-touchspin-injected"
-                                      type="button"
-                                      onClick={(e:any)=>{setCartQty(parseInt(CartQty) + 1)}}
-                                    />
-                                  </span>
-                                </div>
-                              </div>
-                            {/* </div> */}
-                            {/* End .product-single-qty */}
-                          </td>
-                          <td className="text-right">
-                            <span className="subtotal-price">
-                              ₹{item.qty * item.productPrice}
-                            </span>
-                          </td>
-                        </tr>
+                      {CartData?.map((item: any,index :number) => (
+                        <CartItemFlatlist data={item} deleteCart={deleteCart} key={index}/>
                       ))}
                     </tbody>
                     <tfoot>

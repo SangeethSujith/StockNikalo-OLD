@@ -5,6 +5,7 @@ import authStore from "../store/auth-store";
 import productStore from "../store/product-store";
 import userStore from "../store/user-store";
 import { observer } from "mobx-react-lite";
+import cartService from "../services/cart-service";
 const Minicart: React.FC<any> = () => {
   const navigate = useNavigate();
   const [proCategory, setproCategory] = useState([]);
@@ -72,6 +73,19 @@ const Minicart: React.FC<any> = () => {
     }
   };
 
+  const handleItemremove = (item:any) =>{
+    console.log("item iss",item,item.id);
+    if(item){
+      cartService.removeCartItem(item?.id).then((response)=>{
+        if(response){
+          userStore.getUserCart(()=>{console.log("haiiiii got response")});
+        }
+      }).catch((error)=>{
+        console.log("error occured",error);
+      })
+    }
+  }
+
   return (
     <>
       <div className="dropdown cart-dropdown akhil">
@@ -130,6 +144,7 @@ const Minicart: React.FC<any> = () => {
                           href="# "
                           className="btn-remove"
                           title="Remove Product"
+                          onClick={()=>handleItemremove(item)}
                         >
                           <span>×</span>
                         </a>

@@ -5,6 +5,7 @@ import RoutePath from "../../global/route-paths";
 const RowProductList: React.FC<any> = (props: any) => {
   const navigate = useNavigate();
   const { item, handleClick } = props;
+  console.log("props is ",props);
   return (
     <div className="col-lg-12 mx-auto">
       <ul className="list-group shadow">
@@ -16,7 +17,7 @@ const RowProductList: React.FC<any> = (props: any) => {
                   <div className="category-list">
                     {" "}
                     <a href="#" className="product-category">
-                      category
+                       {item?.category}
                     </a>{" "}
                   </div>
                 </div>
@@ -37,6 +38,12 @@ const RowProductList: React.FC<any> = (props: any) => {
                 {/* </div> */}
 
                 {/* End .product-container */}
+                <div style={{padding :'5px'}}>
+                  <h5>{item?.brand}</h5>
+                </div>
+                <div style={{padding:'5px'}}>
+                  <h5>{item?.sku}</h5>
+                </div>
                 <div className="price-box">
                   {" "}
                   {item.mrp <= item.salePrice ? (
@@ -48,6 +55,11 @@ const RowProductList: React.FC<any> = (props: any) => {
                 </div>
 
                 {/* End .price-box */}
+                {/* <div className="product-action">
+                <button>
+                    Add to cart
+                 </button>
+                </div> */}
                 <div className="product-action">
                   {/* <a
                                                 href="#"
@@ -86,8 +98,8 @@ const RowProductList: React.FC<any> = (props: any) => {
                           ? item?.images[0]?.image
                           : "/assets/images/products/product-1.jpg"
                       }
-                      width={280}
-                      height={280}
+                      width={180}
+                      height={180}
                       alt="product"
                     />{" "}
                     <img

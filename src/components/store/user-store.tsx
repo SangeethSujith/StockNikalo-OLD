@@ -118,6 +118,7 @@ class userStore {
     userService
       .getUserCart(url)
       .then((res: any) => {
+        console.log("user cart reponse",res);
         this.cartItem = toJS(res?.data?.data);
         callback(res?.data);
       })

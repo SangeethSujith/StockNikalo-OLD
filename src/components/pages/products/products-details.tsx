@@ -37,6 +37,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
       ],
     };
     productStore.addtocart(data, (res: any) => {
+      console.log("testing",res);
       if (res.status) {
         setisaddtosucc(false);
         userStore.getUserCart((res: any) => { });

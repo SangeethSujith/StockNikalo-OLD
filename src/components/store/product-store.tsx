@@ -10,6 +10,7 @@ import { message } from "antd";
 import Constant from "../global/constants";
 import productService from "../services/product-service";
 import swal from "sweetalert";
+import cartService from "../services/cart-service";
 
 class productStore {
   currentuserId: number | null = JSON.parse(localStorage.getItem("userId")!);
@@ -145,6 +146,13 @@ class productStore {
       })
       .catch((err) => {});
   };
+
+  updateCart = async(data:any,callback :any)=>{
+    let url =Constant.updateCart;
+    cartService.updateUserCart(url,data).then((res:any)=>{
+      res && callback(res.data);
+    }).catch((err)=>{});
+  }
 
   submitRfqsQuote = async (data: any, callback: any) => {
     let url = Constant.submitrfq;

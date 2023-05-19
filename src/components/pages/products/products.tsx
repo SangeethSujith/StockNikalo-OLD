@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 import productStore from "../../store/product-store";
 import userStore from "../../store/user-store";
 import RoutePath from "../../global/route-paths";
@@ -93,6 +94,8 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
     productStore.addtocart(data, (res: any) => {
       if (res.status) {
         setisaddtosucc(false);
+        console.log("testing",res);
+        userStore.getUserCart((res: any) => { });
       }
     });
   };
@@ -159,10 +162,8 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
   };
 
   const getUserCart = (e: any) => {
-    console.log("add to");
     userStore.getUserCart((res: any) => {
-      console.log(res);
-      if (res.status) {
+      // if (res) {
         //  if (res?.data?.length > 0) {
         //     swal({
         //       title: "Are you sure?",
@@ -189,11 +190,11 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
         //     });
         //   }
         // } else {
-        if (res?.data?.length > 0) {
-          console.log("inside product add", res?.data);
+        if (res?.status) {
+         
+          if (res?.data?.length > 0) {
           let itemExit: any = res?.data?.find((product: any) =>
             product?.productId == pid);
-          console.log("testing product id", itemExit, pid)
           if (itemExit) {
             //udate cart item
             swal({
@@ -214,9 +215,21 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
               // form.submit(); // <--- submit form programmatically
             });
           }
-        }
+         }else{
+          addtoCart();
+          swal({
+            title: "Added to cart",
+            text: "Product added to cart successfully!",
+            icon: "success",
+          }).then(function () {
+            // form.submit(); // <--- submit form programmatically
+          });
+
+         }
+       }
       }
-    });
+    //  }
+    );
   };
 
   const handleClick = (id: any, price: any) => {
@@ -1048,4 +1061,4 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
   );
 };
 
-export default ProductsComponent;
+export default observer(ProductsComponent);

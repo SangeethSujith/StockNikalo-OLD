@@ -409,19 +409,22 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                             </Form.Item>
                           </td>
                           <td className="text-right d-flex justify-content-end">
-                            <a
+                             {/* <a
+                              
                               onClick={() => submitRfqQuote()}
-                              className="btn btn-sm btn-primary"
+                              className={"btn btn-sm btn-primary"}
+                              
                             >
                               Submit
-                            </a>
+                            </a> */}
+                            <Button type="text" style={{background : "#08c"}} disabled={item?.submited == 1 ? true : false} onClick={(e) =>submitRfqQuote()}>Submit</Button>
                             <a
                               className="btn btn-sm btn-primary mr-2 btn-quickview"
                               title="Quick View"
                             >
                               <i className="fas fa-eye" onClick={(e) => handleRfqdetails(item?.rfqid
                               )}></i>
-                            </a>
+                            </a> 
                           </td>
                         </tr>
                       ))}
