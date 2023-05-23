@@ -43,7 +43,7 @@ const GridProductList: React.FC<any> = (props: any) => {
             <div className="category-list">
               {" "}
               <a href="#" className="product-category">
-                category
+                {item?.category}
               </a>{" "}
             </div>
           </div>

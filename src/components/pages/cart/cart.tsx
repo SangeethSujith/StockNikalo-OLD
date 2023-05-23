@@ -157,7 +157,8 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
 
   const handleProceedtocheckOut = () => {
     console.log("hanlde proceed to check out");
-    addtoCart();
+    navigate(RoutePath.checkout);
+    //addtoCart();
 
   };
 

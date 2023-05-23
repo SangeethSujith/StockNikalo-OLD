@@ -64,11 +64,12 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
           isoCode,
           name,
         }));
-        const [{ isoCode: firstState = "" } = {}] = allStates;
+        const [{ isoCode: firstState = "KL" } = {}] = allStates;
         setStates(allStates);
-        setSelectedState(firstState);
+        setSelectedState("KL");
+        
         form.setFieldsValue({
-          state: firstState,
+          state: "KL",
         });
       } catch (error) {
         setStates([]);
@@ -80,7 +81,6 @@ const CheckoutComponent: React.FC<any> = (props: CartProps) => {
 
   useEffect(()=>{
     productStore.getCommission(localStorage.getItem("userId"),(response:any)=>{
-      console.log("response",response);
       if(response)
       setCommisionData(response)
     })
