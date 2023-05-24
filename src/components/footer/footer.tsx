@@ -4,7 +4,7 @@ class Footer extends Component {
     return (
       <>
         <>
-          <footer className="footer bg-dark position-relative">
+          <footer className="footer bg-dark position-relative" id="footerSection">
             <div className="footer-middle">
               <div className="container position-static">
                 <div className="row">

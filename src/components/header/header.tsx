@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import RoutePath from "../global/route-paths";
 import authStore from "../store/auth-store";
@@ -70,7 +70,6 @@ const Header: React.FC<any> = () => {
         limit: 10,
         page: 1,
       };
-      console.log(data);
       setSearchText("");
       setCurrentCategory(""); // because affect second header selection result
       productStore.onSearch(data, (callback: any) => {
@@ -82,6 +81,13 @@ const Header: React.FC<any> = () => {
       });
     }
   };
+ const handleClick = ()=>{
+  const element = document.getElementById('footerSection');
+  console.log("element isss",element);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+ }
   return (
     <>
       <header className="header home">
@@ -105,7 +111,6 @@ const Header: React.FC<any> = () => {
                 <a href="# " className="search-toggle" role="button">
                   <i className="icon-search-3"></i>
                 </a>
-                {/* <form action="# " method="get"> */}
                 <div className="header-search-wrapper">
                   <div className="select-custom">
                     <select id="cat" name="cat" onChange={handleCategorySelect}>
@@ -132,7 +137,6 @@ const Header: React.FC<any> = () => {
                     onClick={() => onSearch(null)}
                   ></button>
                 </div>
-                {/* </form> */}
               </div>
               {localStorage.getItem("userId") == "null" ? (
                 <div
@@ -165,17 +169,17 @@ const Header: React.FC<any> = () => {
                     <div className="dropdown-menu">
                       <ul>
                         <li>
-                            <a
-                              href={
-                                "https://demoaccount.stocknikalo.com/auto-login/" +
-                                localStorage.getItem("userToken")
-                              }
-                              target={"_blank"}
-                              style={{ cursor: "pointer" }}
-                              className="d-block text-dark ls-10 pt-1 dropdown-item"
-                            >
-                              My Account
-                            </a>
+                          <a
+                            href={
+                              "https://demoaccount.stocknikalo.com/auto-login/" +
+                              localStorage.getItem("userToken")
+                            }
+                            target={"_blank"}
+                            style={{ cursor: "pointer" }}
+                            className="d-block text-dark ls-10 pt-1 dropdown-item"
+                          >
+                            My Account
+                          </a>
                         </li>
                         <li>
                           <a className="dropdown-item" onClick={() => navigate(RoutePath.edit_profile)}>My Profile</a>
@@ -187,7 +191,7 @@ const Header: React.FC<any> = () => {
                         </li>
                         <li>
                           <a className="dropdown-item" href="#">
-                            Wislist
+                            Wishlist
                           </a>
                         </li>
                         <li>
@@ -206,14 +210,6 @@ const Header: React.FC<any> = () => {
                   </div>
                 </div>
               )}
-
-              {/* <a href="# " className="header-icon header-icon-user">
-                <i className="fa fa-print"></i>
-              </a>
-              <a href="# " className="header-icon position-relative">
-                <i className="fa fa-envelope"></i>
-                <span className="cart-count badge-circle top-adj">3</span>
-              </a> */}
               <Minicart />
             </div>
           </div>
@@ -226,75 +222,27 @@ const Header: React.FC<any> = () => {
           <div className="container">
             <nav className="main-nav w-100">
               <ul className="menu">
-                {/* <li>
-                  <a href="# ">
-                    <i className="fas fa-bars"></i> &nbsp;Ready To Ship
-                  </a>
-                  <ul>
-                    <li>
-                      <a href="# ">Ready To Ship 01</a>
-                    </li>
-                    <li>
-                      <a href="# ">Ready To Ship 02</a>
-                    </li>
-                    <li>
-                      <a href="# ">Ready To Ship 03</a>
-                    </li>
-                  </ul>
-                </li> */}
-
-                {proCategory
-                  ?.filter((item, index) => index < 7)
-                  .map((item: any) => (
-                    <li>
-                      <a
-                        style={{ cursor: "pointer" }}
-                        onClick={() => onSearch(item.id)}
-                      >
-                        {item.categoryname}
-                      </a>
-                    </li>
-                  ))}
-
-                {/* <li>
-                  <a href="# ">Trade Show</a>
+                <li>
+                  <a href="# " onClick={()=>navigate(RoutePath.home)}>Home</a>
                 </li>
                 <li>
-                  <a href="# ">Personal Protectieve Equipment</a>
+                  <a href="# ">Relsol Group</a>
                 </li>
                 <li>
-                  <a href="# ">Services</a>
-                  <ul>
-                    <li>
-                      <a href="# ">Services 01</a>
-                    </li>
-                    <li>
-                      <a href="# ">Services 02</a>
-                    </li>
-                    <li>
-                      <a href="# ">Services 03</a>
-                    </li>
-                  </ul>
+                  <a href="# " onClick={()=>navigate(RoutePath.rfqs)}>RFQs</a>
                 </li>
                 <li>
-                  <a href="# ">Sell On Stocknikalo</a>
-                  <ul>
-                    <li>
-                      <a href="# ">Sell On Stocknikalo 01</a>
-                    </li>
-                    <li>
-                      <a href="# ">Sell On Stocknikalo 02</a>
-                    </li>
-                  </ul>
+                  <a href="# " onClick={()=>navigate(RoutePath.auction)}>Auctions</a>
                 </li>
                 <li>
-                  <a href="# ">Help</a>
-                  <ul>
-                    <li>
-                      <a href="# ">Help</a>
-                    </li>
-                  </ul>
-                </li> */}
+                  <a href="# ">Contacts</a>
+                </li>
+                <li>
+                <Link to="#" onClick={ handleClick}>
+              About
+            </Link>
+                  {/* <a href="# "onClick={handleClick}>About</a> */}
+                </li>
               </ul>
             </nav>
             <nav className="main-nav w-100 bg-light">
@@ -311,25 +259,15 @@ const Header: React.FC<any> = () => {
                     </button>
                     <div className="dropdown-menu">
                       {proCategory?.map((item: any) => (
-                        <a className="dropdown-item" href="value={item.id}">
+                        <a className="dropdown-item" 
+                       // href="value={item.id}" 
+                        onClick={() => onSearch(item.id)}>
                           {item.categoryname}
                         </a>
                       ))}
                     </div>
                   </div>
                 </li>
-                {proCategory
-                  ?.filter((item, index) => index < 7)
-                  .map((item: any) => (
-                    <li>
-                      <a
-                        style={{ cursor: "pointer" }}
-                        onClick={() => onSearch(item.id)}
-                      >
-                        {item.categoryname}
-                      </a>
-                    </li>
-                  ))}
               </ul>
             </nav>
           </div>

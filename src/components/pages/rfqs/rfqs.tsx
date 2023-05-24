@@ -85,21 +85,22 @@ const RfqsComponent: React.FC<any> = (props: RfqsProps) => {
                     </tr>
                   </thead>
                   <tbody className="">
-                    {rfqs?.map((item: any, index: number) => (
+                    {rfqs?.map((item: any, index: number) => {
+                    return (
                       <tr className="product-row">
                         <td>
                           <span className="rfq-serial">#{index + 1}</span>
                         </td>
-                        <td className="">{item.name}</td>
+                        <td className="">{item?.name}</td>
                         <td>
                           <span className="rfq-date">
-                            {new Date(item.created_at)
+                            {item?.created_at && new Date(item?.created_at)
                               .toISOString()
                               .slice(0, 10)}
                           </span>
                         </td>
                         <td>
-                          <span className="rfq-qty">{item.product_count}</span>
+                          <span className="rfq-qty">{item?.product_count}</span>
                         </td>
                         <td>
                           <span className="rfq-btn">
@@ -117,7 +118,7 @@ const RfqsComponent: React.FC<any> = (props: RfqsProps) => {
                           </span>
                         </td>
                       </tr>
-                    ))}
+                    )})}
                   </tbody>
                 </table>
               </div>
