@@ -150,3 +150,32 @@
 color: #fff  !important;
 margin-left: 10px;
 }
+.product-row{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.product-row:last-child  .pcol{
+    border-bottom: 1px solid #ccc;
+}
+.product-row .pcol{
+    flex: 1;
+    border-color: #ccc;
+    border-top: 1px solid;
+    border-left: 1px solid;
+    border-right: 0;
+    align-self: normal;
+    padding: 10px;
+    flex: 0 0 calc(100% / 7);
+    max-width: calc(100% / 7);
+}
+.product-row .pcol:last-child{
+    border-right: 1px solid;
+}
+.product-row .pcol *{
+    font-size: 1.5rem;
+}
+.product-row .ptoduct-image img{
+    max-width: 150px;
+    height: auto;
+}

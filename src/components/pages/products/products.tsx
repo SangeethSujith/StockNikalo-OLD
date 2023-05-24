@@ -36,7 +36,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
   const [pid, setPid] = useState("");
   const [price, setPrice] = useState("");
   const [proCategory, setproCategory] = useState([]);
-  const [productQuantity, setproductQantity] = useState<number>(1)
+  const [productQuantity, setproductQantity] = useState<number>(1);
   const [isspinner, setisSpinner] = useState(false);
   const [productview, setProductview] = useState("grid");
   const [NewBannerDetails, setNewBannerDetails] = useState<any>([]);
@@ -75,7 +75,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
     });
   };
   const removeCart = () => {
-    userStore.removeCart((res: any) => { });
+    userStore.removeCart((res: any) => {});
   };
   const addtoCart = () => {
     let qty: any = document.getElementById("cartqty");
@@ -94,8 +94,8 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
     productStore.addtocart(data, (res: any) => {
       if (res.status) {
         setisaddtosucc(false);
-        console.log("testing",res);
-        userStore.getUserCart((res: any) => { });
+        console.log("testing", res);
+        userStore.getUserCart((res: any) => {});
       }
     });
   };
@@ -162,8 +162,9 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
   };
 
   const getUserCart = (e: any) => {
-    userStore.getUserCart((res: any) => {
-      // if (res) {
+    userStore.getUserCart(
+      (res: any) => {
+        // if (res) {
         //  if (res?.data?.length > 0) {
         //     swal({
         //       title: "Are you sure?",
@@ -191,20 +192,29 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
         //   }
         // } else {
         if (res?.status) {
-         
           if (res?.data?.length > 0) {
-          let itemExit: any = res?.data?.find((product: any) =>
-            product?.productId == pid);
-          if (itemExit) {
-            //udate cart item
-            swal({
-              title: "Item exist",
-              text: "This item is already in your cart!",
-              icon: "warning",
-            }).then(function () {
-              // form.submit(); // <--- submit form programmatically
-            });
-
+            let itemExit: any = res?.data?.find(
+              (product: any) => product?.productId == pid
+            );
+            if (itemExit) {
+              //udate cart item
+              swal({
+                title: "Item exist",
+                text: "This item is already in your cart!",
+                icon: "warning",
+              }).then(function () {
+                // form.submit(); // <--- submit form programmatically
+              });
+            } else {
+              addtoCart();
+              swal({
+                title: "Added to cart",
+                text: "Product added to cart successfully!",
+                icon: "success",
+              }).then(function () {
+                // form.submit(); // <--- submit form programmatically
+              });
+            }
           } else {
             addtoCart();
             swal({
@@ -215,20 +225,9 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
               // form.submit(); // <--- submit form programmatically
             });
           }
-         }else{
-          addtoCart();
-          swal({
-            title: "Added to cart",
-            text: "Product added to cart successfully!",
-            icon: "success",
-          }).then(function () {
-            // form.submit(); // <--- submit form programmatically
-          });
-
-         }
-       }
+        }
       }
-    //  }
+      //  }
     );
   };
 
@@ -414,8 +413,9 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                       {" "}
                       <a
                         href="#"
-                        className={`layout-btn btn-grid ${productview == "grid" ? "active" : ""
-                          }`}
+                        className={`layout-btn btn-grid ${
+                          productview == "grid" ? "active" : ""
+                        }`}
                         title="Grid"
                         onClick={() => setProductview("grid")}
                       >
@@ -424,8 +424,9 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                       </a>{" "}
                       <a
                         href="#"
-                        className={`layout-btn btn-list ${productview == "list" ? "active" : ""
-                          }`}
+                        className={`layout-btn btn-list ${
+                          productview == "list" ? "active" : ""
+                        }`}
                         title="List"
                         onClick={() => setProductview("list")}
                       >
@@ -644,10 +645,10 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                                   style={{ width: "60%" }}
                                 />
                                 {/* End .ratings */}
-                                {/* <span className="tooltiptext tooltip-top" />
+                            {/* <span className="tooltiptext tooltip-top" />
                               </div> */}
-                              {/* End .product-ratings */}
-                              {/* <a href="#" className="rating-link">
+                            {/* End .product-ratings */}
+                            {/* <a href="#" className="rating-link">
                                 ( 6 Reviews )
                               </a> */}
                             {/*</div> */}
@@ -688,12 +689,13 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                                 </strong>
                               </li>
                               <li>
-                                Seller location : {" "}
+                                Seller location :{" "}
                                 <strong>
                                   <a href="#" className="product-category">
                                     Pune
                                   </a>
-                                </strong>,
+                                </strong>
+                                ,
                                 <strong>
                                   <a href="#" className="product-category">
                                     782390
@@ -701,58 +703,65 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                                 </strong>
                               </li>
                             </ul>
-                            {itemData[0]?.created_by != localStorage.getItem('userId') && (<div className="product-action">
-                              <div className="product-single-qty">
-                                <div className="input-group bootstrap-touchspin bootstrap-touchspin-injected">
-                                  <span className="input-group-btn input-group-prepend">
-                                    <button
-                                      className="btn btn-outline btn-down-icon bootstrap-touchspin-down bootstrap-touchspin-injected"
-                                      type="button"
-                                      onClick={() => setproductQantity(productQuantity - 1)}
+                            {itemData[0]?.created_by !=
+                              localStorage.getItem("userId") && (
+                              <div className="product-action">
+                                <div className="product-single-qty">
+                                  <div className="input-group bootstrap-touchspin bootstrap-touchspin-injected">
+                                    <span className="input-group-btn input-group-prepend">
+                                      <button
+                                        className="btn btn-outline btn-down-icon bootstrap-touchspin-down bootstrap-touchspin-injected"
+                                        type="button"
+                                        onClick={() =>
+                                          setproductQantity(productQuantity - 1)
+                                        }
+                                      />
+                                    </span>
+                                    <input
+                                      id="cartqty"
+                                      value={productQuantity}
+                                      className="horizontal-quantity form-control"
+                                      type="text"
                                     />
-                                  </span>
-                                  <input
-                                    id="cartqty"
-                                    value={productQuantity}
-                                    className="horizontal-quantity form-control"
-                                    type="text"
-                                  />
-                                  <span className="input-group-btn input-group-append">
-                                    <button
-                                      className="btn btn-outline btn-up-icon bootstrap-touchspin-up bootstrap-touchspin-injected"
-                                      type="button"
-                                      onClick={() => setproductQantity(productQuantity + 1)}
-                                    />
-                                  </span>
+                                    <span className="input-group-btn input-group-append">
+                                      <button
+                                        className="btn btn-outline btn-up-icon bootstrap-touchspin-up bootstrap-touchspin-injected"
+                                        type="button"
+                                        onClick={() =>
+                                          setproductQantity(productQuantity + 1)
+                                        }
+                                      />
+                                    </span>
+                                  </div>
                                 </div>
+                                {/* End .product-single-qty */}
+                                <a
+                                  onClick={(e) => {
+                                    if (
+                                      localStorage.getItem("userId") == "null"
+                                    ) {
+                                      navigate(RoutePath.login);
+                                    } else if (
+                                      localStorage.getItem("userCmpReg") == "0"
+                                    ) {
+                                      navigate(RoutePath.complete_profile);
+                                    } else {
+                                      getUserCart(e);
+                                    }
+                                  }}
+                                  className="btn btn-dark add-cart mr-2"
+                                  title="Add to Cart"
+                                >
+                                  Add to Cart
+                                </a>
+                                <a
+                                  href="cart.html"
+                                  className="btn btn-gray view-cart d-none"
+                                >
+                                  View cart
+                                </a>
                               </div>
-                              {/* End .product-single-qty */}
-                              <a
-                                onClick={(e) => {
-                                  if (
-                                    localStorage.getItem("userId") == "null"
-                                  ) {
-                                    navigate(RoutePath.login);
-                                  } else if (
-                                    localStorage.getItem("userCmpReg") == "0"
-                                  ) {
-                                    navigate(RoutePath.complete_profile);
-                                  } else {
-                                    getUserCart(e);
-                                  }
-                                }}
-                                className="btn btn-dark add-cart mr-2"
-                                title="Add to Cart"
-                              >
-                                Add to Cart
-                              </a>
-                              <a
-                                href="cart.html"
-                                className="btn btn-gray view-cart d-none"
-                              >
-                                View cart
-                              </a>
-                            </div>)}
+                            )}
                             <hr className="divider mb-0 mt-0" />
                             <div className="product-single-share mb-3">
                               <label className="sr-only">Share:</label>
