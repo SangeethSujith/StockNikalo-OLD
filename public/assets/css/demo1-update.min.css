@@ -150,6 +150,14 @@
 color: #fff  !important;
 margin-left: 10px;
 }
+.quick-view-popup .product-action,
+.checkout-methods,
+.dropdown-cart-action{
+    color: #fff;
+}
+.dropdown-cart-action a.view-cart{
+    color: #000;
+}
 .product-row{
     width: 100%;
     display: flex;
@@ -157,6 +165,9 @@ margin-left: 10px;
 }
 .product-row:last-child  .pcol{
     border-bottom: 1px solid #ccc;
+}
+.product-row.title{
+    font-weight: bold;
 }
 .product-row .pcol{
     flex: 1;

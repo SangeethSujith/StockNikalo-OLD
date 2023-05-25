@@ -454,11 +454,29 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                     )
                   ) : (
                     Array.isArray(SearchResult) &&
-                    SearchResult.length > 0 &&
-                    SearchResult?.filter((item, index) => index < 6).map(
-                      (item: any) => (
-                        <RowProductList item={item} handleClick={handleClick} />
-                      )
+                    SearchResult.length > 0 && (
+                      <div>
+                        {" "}
+                        <div className="col-12 mx-auto">
+                          <div className="product-row title bg-light">
+                            <div className="pcol product-img">Image</div>
+                            <div className="pcol product-cat"> Category </div>
+                            <div className="pcol product-name">Name </div>
+                            <div className="pcol product-brand">Brand</div>
+                            <div className="pcol product-sku">SKU</div>
+                            <div className="pcol product-prices"> price </div>
+                            <div className="pcol product-action">Actions</div>
+                          </div>
+                        </div>
+                        {SearchResult?.filter((item, index) => index < 6).map(
+                          (item: any) => (
+                            <RowProductList
+                              item={item}
+                              handleClick={handleClick}
+                            />
+                          )
+                        )}
+                      </div>
                     )
                   )}
                 </div>
@@ -749,7 +767,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                                       getUserCart(e);
                                     }
                                   }}
-                                  className="btn btn-dark add-cart mr-2"
+                                  className="btn btn-primary add-cart mr-2"
                                   title="Add to Cart"
                                 >
                                   Add to Cart

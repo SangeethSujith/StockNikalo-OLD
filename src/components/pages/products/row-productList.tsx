@@ -67,7 +67,7 @@ const RowProductList: React.FC<any> = (props: any) => {
         )}
         <span className="product-price">₹{item.salePrice}</span>{" "}
       </div>
-      <div className="pcol product-action">
+      <div className="pcol product-action text-center">
         <a
           className="btn-quickview d-block"
           onClick={(e) => handleClick(item.productId, item.salePrice)}
