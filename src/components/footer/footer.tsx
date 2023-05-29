@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-class Footer extends Component {
-  render() {
+import { useRef} from "react";
+const Footer:React.FC<any> = ()  => {
+  const footerRef = useRef(null);
     return (
       <>
         <>
-          <footer className="footer bg-dark position-relative" id="footerSection">
+          <footer className="footer bg-dark position-relative" id="footerSection" ref={footerRef}>
             <div className="footer-middle">
               <div className="container position-static">
                 <div className="row">
@@ -273,6 +273,5 @@ class Footer extends Component {
       </>
     );
   }
-}
 
 export default Footer;

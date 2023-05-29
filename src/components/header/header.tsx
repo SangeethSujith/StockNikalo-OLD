@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, useEffect, useRef, useState } from "react";
 import { Routes, Route, useNavigate, Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import RoutePath from "../global/route-paths";
@@ -13,6 +13,7 @@ const Header: React.FC<any> = () => {
   const [searchText, setSearchText] = useState("");
   const [CartData, setCartData] = useState([]);
   const [subTotal, setsubTotal] = useState(Number);
+  const footerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     getProductCategory();
     getUserCart();
@@ -54,6 +55,7 @@ const Header: React.FC<any> = () => {
 
   const handleCategorySelect = (e: any) => {
     setCurrentCategory(e.target.value);
+     onSearch(e.target.value);
   };
 
   const onSearch = (id: any) => {
@@ -82,10 +84,15 @@ const Header: React.FC<any> = () => {
     }
   };
  const handleClick = ()=>{
-  const element = document.getElementById('footerSection');
-  console.log("element isss",element);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
+ // const element = document.getElementById('footerSection');
+  //console.log("element isss",element);
+  // if (element) {
+    console.log("haiii");
+  //   element.scrollIntoView({ behavior: 'smooth' });
+  // }
+  if(footerRef){
+    console.log("inside");
+    footerRef.current?.scrollIntoView({ behavior: 'smooth' });
   }
  }
   return (

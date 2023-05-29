@@ -158,6 +158,11 @@ margin-left: 10px;
 .dropdown-cart-action a.view-cart{
     color: #000;
 }
+
+.sk-product-row{
+    width: 100%;
+    align-items: center;
+}
 .product-row{
     width: 100%;
     display: flex;

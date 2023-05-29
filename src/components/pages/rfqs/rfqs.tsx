@@ -87,7 +87,7 @@ const RfqsComponent: React.FC<any> = (props: RfqsProps) => {
                   <tbody className="">
                     {rfqs?.map((item: any, index: number) => {
                     return (
-                      <tr className="product-row">
+                      <tr className="sk-product-row">
                         <td>
                           <span className="rfq-serial">#{index + 1}</span>
                         </td>

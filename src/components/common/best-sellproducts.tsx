@@ -13,7 +13,7 @@ const BestSellProducts: React.FC<any> = (props: BestSellProductsProps) => {
     //     document.body.appendChild(script);
     //   }, [props])
     const navigate = useNavigate();
-    useScript("/assets/js/main.min.js","")
+    useScript("/assets/js/main.min.js", "")
 
     const { productList } = props;
     return (
@@ -40,9 +40,9 @@ const BestSellProducts: React.FC<any> = (props: BestSellProductsProps) => {
                     <div className="product-default inner-quickview inner-icon">
                         <figure>
                             {" "}
-                            <a href="#"  onClick={() =>
-                            navigate(`${RoutePath.product}/${product.id}`)
-                          }>
+                            <a href="#" onClick={() =>
+                                navigate(`${RoutePath.product}/${product.id}`)
+                            }>
                                 {" "}
                                 <img
                                     src={
@@ -81,11 +81,11 @@ const BestSellProducts: React.FC<any> = (props: BestSellProductsProps) => {
                             {/* End .product-container */}
                             <div className="price-box">
                                 {" "}
-                                <span className="product-price">${product.salePrice}</span>{" "}
-                                {product.salePrice >= product.mrp ? "" :<del className="old-price">${product.mrp}</del>}
+                                <span className="product-price">₹{product.salePrice}</span>{" "}
+                                {product.salePrice >= product.mrp ? "" : <del className="old-price">${product.mrp}</del>}
                                 <div className="category-list">
                                     {" "}
-                                    <a href="#">{product.sku}% OFF</a>{" "}
+                                    <a href="#">{product?.sku}% OFF</a>{" "}
                                 </div>
                             </div>
                             {/* End .price-box */}

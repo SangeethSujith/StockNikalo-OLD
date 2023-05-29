@@ -351,7 +351,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                               ? "#e9ecef"
                               : "",
                           }}
-                          className="product-row quote-product-row"
+                          className="sk-product-row quote-product-row"
                         >
                           <td>
                             <span className="stock-status">{item?.item_code}</span>

@@ -255,11 +255,33 @@ const Home: React.FC<any> = () => {
         </div>
         <section className=" mb-2 mt-3 bg-grey pt-5">
           <div className="container">
+            <h3>Auctions</h3>
+            <div className="tabs tabs-default">
+              <ul className="nav nav-tabs" role="tablist">
+                {auction && auction?.map((item: any, index: number) => (
+                  <li className="nav-item">
+                    {" "}
+                    <a
+                      className={`nav-link ${index == 0 ? "active" : " "}`}
+                      id="tab-customer"
+                      data-toggle="tab"
+                      href="#customer-content"
+                      role="tab"
+                      aria-controls="customer-content"
+                      aria-selected="true"
+                      onClick={() => bestSellingTab(index)}
+                    >
+                      {item.category}
+                    </a>{" "}
+                  </li>
+                ))}
+              </ul>
+            </div>
             <div className="row">
-              <div className="col-lg-12">
+              <div className="product-section1 mt-3">
                 {/* End .home-slider */}
 
-                {auction.length > 0 && (
+                {auction?.length > 0 && (
                   <div
                     className="products-slider owl-carousel owl-theme dots-top dots-small m-b-1 pb-1 appear-animate mt-3 mb-3 p-3 pl-0 pr-0"
                     data-animation-name="fadeInUpShorter"
@@ -292,7 +314,7 @@ const Home: React.FC<any> = () => {
                           >
                             {" "}
                             <img
-                              src="../../assets/images/products/product-1.jpg"
+                              src="/assets/images/products/product-1.jpg"
                               width={205}
                               height={205}
                               alt="product"
@@ -314,7 +336,7 @@ const Home: React.FC<any> = () => {
                         <div className="product-details">
                           <h3 className="product-title">
                             {" "}
-                            <a href="# ">{item.title}</a>{" "}
+                            <a href="# ">{item?.title}</a>{" "}
                           </h3>
                           <div className="category-wrap">
                             <div className="category-list">
@@ -326,34 +348,13 @@ const Home: React.FC<any> = () => {
                           </div>
                           <p>Auction Single - 6' Experiment</p>
                           {/* End .product-container */}
-                          <div className="info-boxes-container row row-joined mb-2 font2 w-100">
-                            {/* <div className="info-box info-box-icon-left col-lg-4 p-0">
-                              <div className="info-box-content">
-                                <h4>9</h4>
-                                <p className="text-body">Lots</p>
-                              </div> */}
-                            {/* End .info-box-content */}
-                            {/* </div> */}
-                            {/* End .info-box */}
-
-                            {/* <div className="info-box info-box-icon-left col-lg-4 p-0">
-                              <div className="info-box-content">
-                                {" "}
-                                <i className="fa fa-eye" />
-                                <h4>1K</h4>
-                                <p className="text-body">Visiters</p>
-                              </div> */}
-                            {/* End .info-box-content */}
-                            {/* </div> */}
-                            {/* End .info-box */}
-
                             <div className="info-box info-box-icon-left col-lg-4 p-0">
                               <div className="info-box-content">
                                 {" "}
                                 <i className="icon-support" />
                                 <h4>21 Jan 2022</h4>
                                 <p className="text-body">End On</p>
-                              </div>
+                                <h4>{item?.auctionEnd ? item?.auctionEnd : ""}</h4>
                               {/* End .info-box-content */}
                             </div>
                             {/* End .info-box */}
@@ -383,7 +384,7 @@ const Home: React.FC<any> = () => {
             </div>
           </div>
         </section>
-        <section
+        {/* <section
           className="product-section1"
           style={{ backgroundColor: "#FFF" }}
         >
@@ -462,7 +463,7 @@ const Home: React.FC<any> = () => {
                           <a href="# ">{item.productName}</a>{" "}
                         </h3>
                         {/* End .product-container */}
-                        <div className="price-box">
+                        {/* <div className="price-box">
                           {" "}
                           <span className="product-price">
                             ₹{item.salePrice}
@@ -472,17 +473,17 @@ const Home: React.FC<any> = () => {
                             {" "}
                             <a href="# ">50% OFF</a>{" "}
                           </div>
-                        </div>
+                        </div> */}
                         {/* End .price-box */}
-                      </div>
+                      {/* </div> */}
                       {/* End .product-details */}
-                    </div>
+                    {/* </div>
                   ))}
                 </div>
               )}
             </>
-          </div>
-        </section>
+          </div> */}
+        {/* </section>  */}
         <section className="simple-section mt-5">
           <div className="container">
             <h3>Our Best Selling Global Industrial® Products</h3>

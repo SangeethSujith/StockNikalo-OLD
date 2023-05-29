@@ -10,7 +10,7 @@ const CartItemFlatlist : React.FC<any> = (props : cartItemflatlist) => {
    const [CartQty, setCartQty] = useState<any>(0);
   const [CartData, setCartData] = useState<any>([]);
     return (
-            <tr className="product-row" key={key}>
+            <tr className="sk-product-row" key={key}>
                 <td>
                     <figure className="product-image-container">
                         {" "}
