@@ -84,16 +84,14 @@ const Header: React.FC<any> = () => {
     }
   };
  const handleClick = ()=>{
- // const element = document.getElementById('footerSection');
-  //console.log("element isss",element);
-  // if (element) {
-    console.log("haiii");
-  //   element.scrollIntoView({ behavior: 'smooth' });
-  // }
-  if(footerRef){
-    console.log("inside");
-    footerRef.current?.scrollIntoView({ behavior: 'smooth' });
+ const element = document.getElementById('footerSection');
+   if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
   }
+  // if(footerRef){
+  //   console.log("inside");
+  //   footerRef.current?.scrollIntoView({ behavior: 'smooth' });
+  // }
  }
   return (
     <>
@@ -239,7 +237,7 @@ const Header: React.FC<any> = () => {
                   <a href="# " onClick={()=>navigate(RoutePath.rfqs)}>RFQs</a>
                 </li>
                 <li>
-                  <a href="# " onClick={()=>navigate(RoutePath.auction)}>Auctions</a>
+                  <a href="# " onClick={()=>navigate(RoutePath.auctionpage)}>Auctions</a>
                 </li>
                 <li>
                   <a href="# ">Contacts</a>

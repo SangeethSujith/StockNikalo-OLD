@@ -5,12 +5,14 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import userStore from "../../store/user-store";
 import swal from "sweetalert";
 import useScript from "../../hooks/useScript";
+import AuctionSerive from "../../services/auction-service";
+import { message } from "antd";
 type AuctionProps = {};
 
 const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
   const navigate = useNavigate();
   const [CartQty, setCartQty] = useState();
-  const [ProductsData, setProductsData] = useState([]);
+  const [ProductsData, setProductsData] = useState<any>([]);
   const [isaddtosucc, setisaddtosucc] = useState(true);
   const [ProductName, setProductName] = useState("Product");
   const urlParams = useParams();
@@ -41,6 +43,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
     productStore.getAuctionDetails(product, (res: any) => {
       if (res?.status) {
         setProductsData(res?.data);
+        console.log("response",res.data);
         setProductName(res?.data[0]?.productName);
       } else {
         navigate(RoutePath.home);
@@ -52,40 +55,26 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
     userStore.removeCart((res: any) => {});
   };
 
-  const getUserCart = (e: any) => {
-    userStore.getUserCart((res: any) => {
-      console.log(res);
-      if (res.status) {
-        if (res?.data?.length > 0) {
-          swal({
-            title: "Are you sure?",
-            text: "You have items from another seller added to the cart. Do you want to clear the cart and add this item?",
-            icon: "warning",
-            buttons: ["No, cancel it!", "Yes, I am sure!"],
-            dangerMode: true,
-          }).then(function (isConfirm) {
-            if (isConfirm) {
-              removeCart();
-              addtoCart();
+  const handleSubmit = () => {
+    let price:any = document.getElementById('bid-price');
+    console.log("bid price",price.value);
+    const date = new Date();
+    let data :any = {
+      userId : localStorage.getItem('userId'),
+      auctionId : ProductsData[0]?.id,
+      bidPrice : price.value ,
+      bidDate : date
+    }
+    console.log("data iaaa",data)
 
-              e.target.classList.add("added-to-cart");
-              swal({
-                title: "Added to cart",
-                text: "Product added to cart successfully!",
-                icon: "success",
-              }).then(function () {
-                // form.submit(); // <--- submit form programmatically
-              });
-            } else {
-              // swal("Cancelled", "Your imaginary file is safe :)", "error");
-            }
-          });
-        }
-      } else {
-        addtoCart();
+    AuctionSerive.submitAuction(data).then((res:any)=>{
+      console.log("auction response",res);
+      if(res.data){
+        message.success("successfull")
       }
-    });
-  };
+    }).catch((error)=>{console.log("eror iss",error)});
+
+  }
 
   useScript("/assets/js/main.min.js","")
   
@@ -311,13 +300,14 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                       <form className="offer">
                         <input
                           className="w-100"
+                          id="bid-price"
                           type="text"
                           placeholder="INR ₹ Your Offer"
                         />
                       </form>
                     </div>
                     <div className="col">
-                      <button type="button" className="btn btn-primary submit">
+                      <button type="button" className="btn btn-primary submit" onClick={handleSubmit}>
                         submit
                       </button>
                     </div>

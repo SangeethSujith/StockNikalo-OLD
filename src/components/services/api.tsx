@@ -78,6 +78,7 @@ class API {
     };
 
     const url: string = Constant.SNBaseUrl + requestUrl;
+    console.log("url isss",url);
     return this.api.post(url, config);
   }
 

@@ -4,8 +4,8 @@ const Footer:React.FC<any> = ()  => {
     return (
       <>
         <>
-          <footer className="footer bg-dark position-relative" id="footerSection" ref={footerRef}>
-            <div className="footer-middle">
+          <footer className="footer bg-dark position-relative"  ref={footerRef}>
+            <div className="footer-middle" id="footerSection">
               <div className="container position-static">
                 <div className="row">
                   <div className="col-lg-3 col-sm-6 pb-2 pb-sm-0">

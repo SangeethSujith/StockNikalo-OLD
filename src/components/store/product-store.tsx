@@ -57,7 +57,7 @@ class productStore {
   };
 
   getRfqsDetails = async (callback: any) => {
-    let url = Constant.getrfq;
+    let url = Constant.getrfquser + localStorage.getItem("userId");
     productService
       .getRfqsDetails(url)
       .then((res: any) => {
@@ -67,7 +67,7 @@ class productStore {
   };
 
   getRfqsDetailsByID = async (callback: any) => {
-    let url = Constant.getrfq;
+    let url = Constant.getrfquser + localStorage.getItem("userId");
     productService
       .getQuotedRfq(url)
       .then((res: any) => {

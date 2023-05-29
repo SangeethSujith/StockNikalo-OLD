@@ -22,6 +22,7 @@ const Constant = {
   create_order: "api/create-order",
   user_address: "api/get-user-address",
   getrfq: "api/getrfq",
+  getrfquser: "api/get_rfq/",
   submitrfq: "api/submitrfq",
   logout: "api/logout",
   quotedrfq: "api/quoted-rfq",
@@ -39,6 +40,7 @@ const Constant = {
   updateCart : "api/updatecart",
   removeCartitem : "api/deletecart/",
   clearAllCartitems: "api/clearcart/",
+  auction : "api/auctions"
 };
 
 export default Constant;

@@ -78,6 +78,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
 
   const getUserCart = (e: any) => {
     userStore.getUserCart((res: any) => {
+      console.log("inside add to cart")
       if (res.status) {
         if (res?.data?.length > 0) {
         let itemExit:any = res?.data?.find((item:any)=>item?.productId == product);
@@ -100,8 +101,17 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
           // form.submit(); // <--- submit form programmatically
         });
       }
+      }else{
+          addtoCart();
+          swal({
+            title: "Added to cart",
+            text: "Product added to cart successfully!",
+            icon: "success",
+          }).then(function () {
+            // form.submit(); // <--- submit form programmatically
+          });
+        }
       }
-    }
     });
   };
 

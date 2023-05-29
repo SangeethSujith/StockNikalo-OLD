@@ -8988,7 +8988,7 @@ display:flex
 }
 .sticky-header.fixed {
 	display:flex;
-	position:fixed;
+/* position:fixed; */
 	right:0;
 	left:0;
 	width:100%;

@@ -198,10 +198,15 @@ const EditProfileComponent: React.FC<any> = (
   }
 
   const formfinalsubmit = () => {
+    alert("haii");
     form3
       .validateFields()
       .then((values) => {
         const data = {
+          first_name: form1.getFieldValue("firstname"),
+          last_name: form1.getFieldValue("lastname"),
+          country : form2.getFieldValue("country"),
+          state : form2.getFieldValue("state"),
           userId: localStorage.getItem("userId"),
           telephone: form1.getFieldValue("telephone"),
           mobile_number: form1.getFieldValue("mobile_number"),
@@ -258,6 +263,7 @@ const EditProfileComponent: React.FC<any> = (
       .validateFields()
       .then((values) => {
         if (status == 3) {
+          alert("haii helo");
           formfinalsubmit()
         } else {
           document.getElementById("v-pills-messages-tab2")?.click();
@@ -272,11 +278,13 @@ const EditProfileComponent: React.FC<any> = (
   }
 
   const CompleteSignupSession = (status: number) => {
+    console.log("status isss",status);
     if (status == 1 || status == 3) {
       form1
         .validateFields()
         .then((values) => {
           if (status == 3) {
+            alert("hello");
             formtwosubmit(status)
           } else {
             document.getElementById("v-pills-profile-tab1")?.click();

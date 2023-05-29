@@ -192,6 +192,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
         //   }
         // } else {
         if (res?.status) {
+          console.log("cart response",res)
           if (res?.data?.length > 0) {
             let itemExit: any = res?.data?.find(
               (product: any) => product?.productId == pid

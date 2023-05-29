@@ -342,19 +342,20 @@ const Home: React.FC<any> = () => {
                             <div className="category-list">
                               {" "}
                               <a href="# " className="product-category">
-                                Construction
+                                {item?.category}
                               </a>{" "}
                             </div>
                           </div>
-                          <p>Auction Single - 6' Experiment</p>
+                          {/* <p>Auction Single - 6' Experiment</p> */}
                           {/* End .product-container */}
                             <div className="info-box info-box-icon-left col-lg-4 p-0">
                               <div className="info-box-content">
                                 {" "}
                                 <i className="icon-support" />
-                                <h4>21 Jan 2022</h4>
+                                <p className="text-body">Starts On</p>
+                                <h4>{item?.start_date ? item?.start_date : "" }</h4>
                                 <p className="text-body">End On</p>
-                                <h4>{item?.auctionEnd ? item?.auctionEnd : ""}</h4>
+                                <h4>{item?.end_date ? item?.end_date : ""}</h4>
                               {/* End .info-box-content */}
                             </div>
                             {/* End .info-box */}

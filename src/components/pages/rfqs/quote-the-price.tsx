@@ -338,7 +338,9 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                       </tr>
                     </thead>
                     <tbody className="">
-                      {RfqsData?.map((item: any, index: number) => (
+                      {RfqsData?.map((item: any, index: number) => {
+                        console.log("testing",item?.submited == 1);
+                        return(
                         <tr
                           style={{
                             background: QuotedRfqsData.some(function (
@@ -427,7 +429,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                             </a> 
                           </td>
                         </tr>
-                      ))}
+                      )})}
                     </tbody>
                   </table>
                 </Form>
