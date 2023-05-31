@@ -119,50 +119,50 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                       <div className="product-item">
                         <img
                           className="product-single-image"
-                          src="/assets/images/products/product-1.jpg"
+                          src="/assets/images/img1.png"
                           data-zoom-image="/assets/images/products/zoom/product-1-big.jpg"
-                          width={468}
-                          height={468}
+                          width={300}
+                          height={300}
                           alt="product"
                         />
                       </div>
                       <div className="product-item">
                         <img
                           className="product-single-image"
-                          src="/assets/images/products/product-1.jpg"
+                          src="/assets/images/img1.png"
                           data-zoom-image="/assets/images/products/zoom/product-2-big.jpg"
-                          width={468}
-                          height={468}
+                          width={300}
+                          height={300}
                           alt="product"
                         />
                       </div>
                       <div className="product-item">
                         <img
                           className="product-single-image"
-                          src="/assets/images/products/product-1.jpg"
+                          src="/assets/images/img1.png"
                           data-zoom-image="/assets/images/products/zoom/product-3-big.jpg"
-                          width={468}
-                          height={468}
+                          width={300}
+                          height={300}
                           alt="product"
                         />
                       </div>
                       <div className="product-item">
                         <img
                           className="product-single-image"
-                          src="/assets/images/products/product-1.jpg"
+                          src="/assets/images/img1.png"
                           data-zoom-image="/assets/images/products/zoom/product-4-big.jpg"
-                          width={468}
-                          height={468}
+                          width={300}
+                          height={300}
                           alt="product"
                         />
                       </div>
                       <div className="product-item">
                         <img
                           className="product-single-image"
-                          src="/assets/images/products/product-1.jpg"
+                          src="/assets/images/img1.png"
                           data-zoom-image="/assets/images/products/zoom/product-5-big.jpg"
-                          width={468}
-                          height={468}
+                          width={300}
+                          height={300}
                           alt="product"
                         />
                       </div>
@@ -172,7 +172,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                   <div className="prod-thumbnail owl-dots">
                     <div className="owl-dot">
                       <img
-                        src="/assets/images/products/product-2.jpg"
+                        src="/assets/images/img1.png"
                         width={110}
                         height={110}
                         alt="product-thumbnail"
@@ -180,7 +180,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                     </div>
                     <div className="owl-dot">
                       <img
-                        src="/assets/images/products/product-2.jpg"
+                        src="/assets/images/img1.png"
                         width={110}
                         height={110}
                         alt="product-thumbnail"
@@ -188,7 +188,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                     </div>
                     <div className="owl-dot">
                       <img
-                        src="/assets/images/products/product-2.jpg"
+                        src="/assets/images/img1.png"
                         width={110}
                         height={110}
                         alt="product-thumbnail"
@@ -196,7 +196,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                     </div>
                     <div className="owl-dot">
                       <img
-                        src="/assets/images/products/product-2.jpg"
+                        src="/assets/images/img1.png"
                         width={110}
                         height={110}
                         alt="product-thumbnail"
@@ -204,7 +204,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                     </div>
                     <div className="owl-dot">
                       <img
-                        src="/assets/images/products/product-2.jpg"
+                        src="/assets/images/img1.png"
                         width={110}
                         height={110}
                         alt="product-thumbnail"

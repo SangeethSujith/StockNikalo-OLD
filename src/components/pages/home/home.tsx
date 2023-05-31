@@ -14,6 +14,7 @@ const Home: React.FC<any> = () => {
   const [NewBannerDetails, setNewBannerDetails] = useState<any>([]);
   const [NewArrivals, setNewArrivals] = useState([]);
   const [BestSelling, setBestSelling] = useState([]);
+  const [auctionData,setAuctionData] = useState<any>([]);
   const [BestSellingSelectTab, setBestSellingSelectTab] = useState();
   useEffect(() => {
     // const script = document.createElement("script");
@@ -36,6 +37,7 @@ const Home: React.FC<any> = () => {
     });
     productStore.getAuction((values: any) => {
       setAuction(values.data);
+      setAuctionData([values?.data[0]]);
     });
     productStore.getBestSellingProduct((values: any) => {
       setBestSelling(values.data);
@@ -56,6 +58,14 @@ const Home: React.FC<any> = () => {
     });
   };
 
+  const onActionsTabClick = (auctionData:any) =>{
+    if(auctionData){
+      setAuctionData([auctionData]);
+    }else{
+      setAuctionData([auction[0]]);
+    }
+  }
+  
   const bestSellingTab = (index: number) => {
     console.log(index);
     setBestSellingSelectTab(BestSelling[index]);
@@ -63,6 +73,7 @@ const Home: React.FC<any> = () => {
   };
   console.log("=>", NewBannerDetails);
   useScript("/assets/js/main.min.js", "");
+  {console.log("auction DAta isss",auctionData)}
   return (
     <>
       <main className="main home">
@@ -269,7 +280,7 @@ const Home: React.FC<any> = () => {
                       role="tab"
                       aria-controls="customer-content"
                       aria-selected="true"
-                      onClick={() => bestSellingTab(index)}
+                      onClick={() => onActionsTabClick(item)}
                     >
                       {item.category}
                     </a>{" "}
@@ -279,8 +290,6 @@ const Home: React.FC<any> = () => {
             </div>
             <div className="row">
               <div className="product-section1 mt-3">
-                {/* End .home-slider */}
-
                 {auction?.length > 0 && (
                   <div
                     className="products-slider owl-carousel owl-theme dots-top dots-small m-b-1 pb-1 appear-animate mt-3 mb-3 p-3 pl-0 pr-0"
@@ -303,7 +312,8 @@ const Home: React.FC<any> = () => {
               }
           }"
                   >
-                    {auction?.map((item: any) => (
+                    {auctionData && auctionData?.map((item: any) => {
+                      return(
                       <div className="product-default inner-quickview inner-icon bg-white p-3">
                         <figure className="img-effect">
                           {" "}
@@ -314,17 +324,17 @@ const Home: React.FC<any> = () => {
                           >
                             {" "}
                             <img
-                              src="/assets/images/products/product-1.jpg"
+                              src="../../assets/images/img1.png"
                               width={205}
                               height={205}
                               alt="product"
                             />{" "}
-                            <img
+                            {/* <img
                               src="../../assets/images/products/product-2.jpg"
                               width={205}
                               height={205}
                               alt="product"
-                            />{" "}
+                            />{" "} */}
                           </a>
                           <div className="label-group">
                             <div className="product-label label-hot">
@@ -376,7 +386,7 @@ const Home: React.FC<any> = () => {
                         </div>
                         {/* End .product-details */}
                       </div>
-                    ))}
+                    )})}
                   </div>
                 )}
 
