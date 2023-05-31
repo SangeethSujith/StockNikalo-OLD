@@ -14,7 +14,7 @@ const Home: React.FC<any> = () => {
   const [NewBannerDetails, setNewBannerDetails] = useState<any>([]);
   const [NewArrivals, setNewArrivals] = useState([]);
   const [BestSelling, setBestSelling] = useState([]);
-  const [auctionData,setAuctionData] = useState<any>([]);
+  const [auctionData, setAuctionData] = useState<any>([]);
   const [BestSellingSelectTab, setBestSellingSelectTab] = useState();
   useEffect(() => {
     // const script = document.createElement("script");
@@ -58,14 +58,14 @@ const Home: React.FC<any> = () => {
     });
   };
 
-  const onActionsTabClick = (auctionData:any) =>{
-    if(auctionData){
+  const onActionsTabClick = (auctionData: any) => {
+    if (auctionData) {
       setAuctionData([auctionData]);
-    }else{
+    } else {
       setAuctionData([auction[0]]);
     }
-  }
-  
+  };
+
   const bestSellingTab = (index: number) => {
     console.log(index);
     setBestSellingSelectTab(BestSelling[index]);
@@ -73,7 +73,9 @@ const Home: React.FC<any> = () => {
   };
   console.log("=>", NewBannerDetails);
   useScript("/assets/js/main.min.js", "");
-  {console.log("auction DAta isss",auctionData)}
+  {
+    console.log("auction DAta isss", auctionData);
+  }
   return (
     <>
       <main className="main home">
@@ -269,27 +271,28 @@ const Home: React.FC<any> = () => {
             <h3>Auctions</h3>
             <div className="tabs tabs-default">
               <ul className="nav nav-tabs" role="tablist">
-                {auction && auction?.map((item: any, index: number) => (
-                  <li className="nav-item">
-                    {" "}
-                    <a
-                      className={`nav-link ${index == 0 ? "active" : " "}`}
-                      id="tab-customer"
-                      data-toggle="tab"
-                      href="#customer-content"
-                      role="tab"
-                      aria-controls="customer-content"
-                      aria-selected="true"
-                      onClick={() => onActionsTabClick(item)}
-                    >
-                      {item.category}
-                    </a>{" "}
-                  </li>
-                ))}
+                {auction &&
+                  auction?.map((item: any, index: number) => (
+                    <li className="nav-item">
+                      {" "}
+                      <a
+                        className={`nav-link ${index == 0 ? "active" : " "}`}
+                        id="tab-customer"
+                        data-toggle="tab"
+                        href="#customer-content"
+                        role="tab"
+                        aria-controls="customer-content"
+                        aria-selected="true"
+                        onClick={() => onActionsTabClick(item)}
+                      >
+                        {item.category}
+                      </a>{" "}
+                    </li>
+                  ))}
               </ul>
             </div>
             <div className="row">
-              <div className="product-section1 mt-3">
+              <div className="product-section1 mt-3 w-100">
                 {auction?.length > 0 && (
                   <div
                     className="products-slider owl-carousel owl-theme dots-top dots-small m-b-1 pb-1 appear-animate mt-3 mb-3 p-3 pl-0 pr-0"
@@ -312,81 +315,87 @@ const Home: React.FC<any> = () => {
               }
           }"
                   >
-                    {auctionData && auctionData?.map((item: any) => {
-                      return(
-                      <div className="product-default inner-quickview inner-icon bg-white p-3">
-                        <figure className="img-effect">
-                          {" "}
-                          <a
-                            onClick={() =>
-                              navigate(`${RoutePath.auction}/${item.id}`)
-                            }
-                          >
-                            {" "}
-                            <img
-                              src="../../assets/images/img1.png"
-                              width={205}
-                              height={205}
-                              alt="product"
-                            />{" "}
-                            {/* <img
+                    {auctionData &&
+                      auctionData?.map((item: any) => {
+                        return (
+                          <div className="product-default inner-quickview inner-icon bg-white p-3">
+                            <figure className="img-effect">
+                              {" "}
+                              <a
+                                onClick={() =>
+                                  navigate(`${RoutePath.auction}/${item.id}`)
+                                }
+                              >
+                                {" "}
+                                <img
+                                  src="../../assets/images/img1.png"
+                                  width={205}
+                                  height={205}
+                                  alt="product"
+                                />{" "}
+                                {/* <img
                               src="../../assets/images/products/product-2.jpg"
                               width={205}
                               height={205}
                               alt="product"
                             />{" "} */}
-                          </a>
-                          <div className="label-group">
-                            <div className="product-label label-hot">
-                              Auction {item.id}
-                            </div>
-                          </div>
-                          {/* End .product-countdown-container */}
-                        </figure>
-                        <div className="product-details">
-                          <h3 className="product-title">
-                            {" "}
-                            <a href="# ">{item?.title}</a>{" "}
-                          </h3>
-                          <div className="category-wrap">
-                            <div className="category-list">
-                              {" "}
-                              <a href="# " className="product-category">
-                                {item?.category}
-                              </a>{" "}
-                            </div>
-                          </div>
-                          {/* <p>Auction Single - 6' Experiment</p> */}
-                          {/* End .product-container */}
-                            <div className="info-box info-box-icon-left col-lg-4 p-0">
-                              <div className="info-box-content">
+                              </a>
+                              <div className="label-group">
+                                <div className="product-label label-hot">
+                                  Auction {item.id}
+                                </div>
+                              </div>
+                              {/* End .product-countdown-container */}
+                            </figure>
+                            <div className="product-details">
+                              <h3 className="product-title">
                                 {" "}
-                                <i className="icon-support" />
-                                <p className="text-body">Starts On</p>
-                                <h4>{item?.start_date ? item?.start_date : "" }</h4>
-                                <p className="text-body">End On</p>
-                                <h4>{item?.end_date ? item?.end_date : ""}</h4>
-                              {/* End .info-box-content */}
+                                <a href="# ">{item?.title}</a>{" "}
+                              </h3>
+                              <div className="category-wrap">
+                                <div className="category-list">
+                                  {" "}
+                                  <a href="# " className="product-category">
+                                    {item?.category}
+                                  </a>{" "}
+                                </div>
+                              </div>
+                              {/* <p>Auction Single - 6' Experiment</p> */}
+                              {/* End .product-container */}
+                              <div className="info-box info-box-icon-left col-lg-4 p-0">
+                                <div className="info-box-content">
+                                  {" "}
+                                  <i className="icon-support" />
+                                  <p className="text-body">Starts On</p>
+                                  <h4>
+                                    {item?.start_date ? item?.start_date : ""}
+                                  </h4>
+                                  <p className="text-body">End On</p>
+                                  <h4>
+                                    {item?.end_date ? item?.end_date : ""}
+                                  </h4>
+                                  {/* End .info-box-content */}
+                                </div>
+                                {/* End .info-box */}
+                              </div>
+                              <div className="price-box w-100">
+                                {" "}
+                                <a
+                                  onClick={() =>
+                                    navigate(`${RoutePath.auction}/${item.id}`)
+                                  }
+                                  className="btn btn-primary btn-md text-white w-100"
+                                  title="Bid Now"
+                                >
+                                  Bid Now
+                                </a>{" "}
+                              </div>
+                              {/* End .price-box */}
                             </div>
-                            {/* End .info-box */}
+                            {/* End .product-details */}
                           </div>
-                          <div className="price-box w-100">
-                            {" "}
-                            <a
-                              onClick={() =>
-                                navigate(`${RoutePath.auction}/${item.id}`)
-                              }
-                              className="btn btn-primary btn-md text-white w-100"
-                              title="Bid Now"
-                            >
-                              Bid Now
-                            </a>{" "}
-                          </div>
-                          {/* End .price-box */}
-                        </div>
-                        {/* End .product-details */}
-                      </div>
-                    )})}
+                        );
+                      })}
                   </div>
                 )}
 
@@ -474,7 +483,7 @@ const Home: React.FC<any> = () => {
                           <a href="# ">{item.productName}</a>{" "}
                         </h3>
                         {/* End .product-container */}
-                        {/* <div className="price-box">
+        {/* <div className="price-box">
                           {" "}
                           <span className="product-price">
                             ₹{item.salePrice}
@@ -485,10 +494,10 @@ const Home: React.FC<any> = () => {
                             <a href="# ">50% OFF</a>{" "}
                           </div>
                         </div> */}
-                        {/* End .price-box */}
-                      {/* </div> */}
-                      {/* End .product-details */}
-                    {/* </div>
+        {/* End .price-box */}
+        {/* </div> */}
+        {/* End .product-details */}
+        {/* </div>
                   ))}
                 </div>
               )}
