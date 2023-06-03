@@ -662,7 +662,11 @@ const Home: React.FC<any> = () => {
                           Need used 5KL to 9KL 316 prefable....{" "}
                           <small>20-07-2022 01:04 PM</small>
                         </li>
-                        <button className="btn btn-primary bg-dark border-0 text-capitalize">
+                        <button
+                          className="btn btn-primary bg-dark border-0 text-capitalize"
+                          data-toggle="modal"
+                          data-target="#addEquipmentModal"
+                        >
                           + Add Wanted Equipment
                         </button>
                       </ul>
@@ -755,6 +759,85 @@ const Home: React.FC<any> = () => {
             </div>
           </div>
         </section>
+
+        <div
+          className="modal fade"
+          id="addEquipmentModal"
+          aria-labelledby="addEquipmentModal"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Add Wanted Equipment</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <div className="form-check mb-1">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="defaultCheck1"
+                  />
+                  <label
+                    className="form-check-label ml-3"
+                    htmlFor="defaultCheck1"
+                  >
+                    5KL to 9KL 316 prefable
+                  </label>
+                </div>
+                <div className="form-check mb-1">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="defaultCheck2"
+                  />
+                  <label
+                    className="form-check-label  ml-3"
+                    htmlFor="defaultCheck2"
+                  >
+                    5KL to 9KL 316 prefable
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="defaultCheck3"
+                  />
+                  <label
+                    className="form-check-label ml-3"
+                    htmlFor="defaultCheck3"
+                  >
+                    5KL to 9KL 316 prefable
+                  </label>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="button" className="btn btn-primary">
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* End .container */}
         <GoToTop />
       </main>

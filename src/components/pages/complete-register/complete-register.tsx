@@ -45,10 +45,12 @@ const CompleteRegistrationComponent: React.FC<any> = (
         }));
         //const [{ isoCode: firstCountry } = {}] = allCountries;
         // const [{ isoCode: firstCountry = "IN" } = {}] = allCountries;
-        let currentCountry ={"isoCode": "IN","name":"India"}
-        const newCountrylist = allCountries.filter((el:any) => el.name != "India")
-        newCountrylist.unshift(currentCountry)
-        console.log(newCountrylist)
+        let currentCountry = { isoCode: "IN", name: "India" };
+        const newCountrylist = allCountries.filter(
+          (el: any) => el.name != "India"
+        );
+        newCountrylist.unshift(currentCountry);
+        console.log(newCountrylist);
         setCountries(newCountrylist);
         setSelectedCountry("IN");
         // form2.setFieldsValue({
@@ -468,7 +470,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                         <hr />
                         <div className="form-footer-right">
                           <Button
-                            className="btn btn-primary py-4"
+                            className="btn btn-primary"
                             form="InfoForm1"
                             key="submit"
                             htmlType="submit"
@@ -863,14 +865,11 @@ const CompleteRegistrationComponent: React.FC<any> = (
                         </ul>
                         <hr />
                         <div className="form-footer-right">
-                          <button
-                            type="submit"
-                            className="btn btn-primary py-4"
-                          >
+                          <button type="submit" className="btn btn-primary">
                             Back
                           </button>
                           <Button
-                            className="btn btn-primary py-4"
+                            className="btn btn-primary"
                             form="InfoForm2"
                             key="submit"
                             htmlType="submit"
@@ -980,14 +979,11 @@ const CompleteRegistrationComponent: React.FC<any> = (
                         </ul>
                         <hr />
                         <div className="form-footer-right">
-                          <button
-                            type="submit"
-                            className="btn btn-primary py-4"
-                          >
+                          <button type="submit" className="btn btn-primary">
                             Back
                           </button>
                           <Button
-                            className="btn btn-primary py-4"
+                            className="btn btn-primary"
                             form="InfoForm3"
                             key="submit"
                             htmlType="submit"
