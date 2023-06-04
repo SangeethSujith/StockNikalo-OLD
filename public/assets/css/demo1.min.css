@@ -4304,9 +4304,9 @@ form h2 {
 	height:4.6rem;
 	padding:0.8rem 1.2rem
 }
-select.form-control:not([size]):not([multiple]) {
+/* select.form-control:not([size]):not([multiple]) {
 height:6rem
-}
+} */
 select.form-control-sm:not([size]):not([multiple]) {
 padding:0;
 padding-left:1.2rem;

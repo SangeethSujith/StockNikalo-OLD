@@ -195,3 +195,25 @@ margin-left: 10px;
     max-width: 150px;
     height: auto;
 }
+
+.wishlist-toggle {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    cursor: pointer;
+    background-color: #fff;
+}
+.wishlist-toggle:hover i,
+.wishlist-toggle:focus i,
+.wishlist-toggle.active i {
+    color: #08c;
+}
+.product-default figure img{
+    max-height: 250px;
+}
