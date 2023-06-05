@@ -9,9 +9,7 @@ import "./style.css";
 import { Country, State, City } from "country-state-city";
 import { Console } from "console";
 type EditProfileProps = {};
-const EditProfileComponent: React.FC<any> = (
-  props: EditProfileProps
-) => {
+const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
   const { useForm } = Form;
   const [form1] = useForm();
   const [status, setStatus] = useState(true);
@@ -55,7 +53,7 @@ const EditProfileComponent: React.FC<any> = (
         setCountries([]);
       }
     };
-    getprofileData()
+    getprofileData();
     getCountries();
     getTypeofCompany();
     getBusinesSegment();
@@ -119,7 +117,7 @@ const EditProfileComponent: React.FC<any> = (
     });
   };
   const getprofileData = () => {
-    let data = { "userId": localStorage.getItem("userId") }
+    let data = { userId: localStorage.getItem("userId") };
     userStore.editprofile(data, (res: any) => {
       if (res.status) {
         const { email, name, company_name, last_name,
@@ -143,8 +141,8 @@ const EditProfileComponent: React.FC<any> = (
           email: email,
           company_name: company_name,
           telephone: mobile_number,
-          mobile_number: telephone
-        }
+          mobile_number: telephone,
+        };
 
         let formTwoData = {
           address_1: company_address,
@@ -158,22 +156,20 @@ const EditProfileComponent: React.FC<any> = (
           gst: company_gst,
           company_type: company_type,
           company_short_decp: company_short_desc,
-          business_segment: company_business_segment
-        }
+          business_segment: company_business_segment,
+        };
         //    setSelectedCountry()
-        setSelectedState(company_state)
-        setSelectedCity(company_district)
+        setSelectedState(company_state);
+        setSelectedCity(company_district);
 
         let formThreeData = {
           ifsc: ifsc_code,
           account_number: bank_account_number,
-          bank: bank
-        }
-        form1.setFieldsValue({ ...formOneData })
-        form2.setFieldsValue({ ...formTwoData })
-        form3.setFieldsValue({ ...formThreeData })
-
-
+          bank: bank,
+        };
+        form1.setFieldsValue({ ...formOneData });
+        form2.setFieldsValue({ ...formTwoData });
+        form3.setFieldsValue({ ...formThreeData });
       }
     });
   };
@@ -193,9 +189,9 @@ const EditProfileComponent: React.FC<any> = (
   };
 
   const handlebackClick = (idName: string) => {
-    console.log(document.getElementById(idName))
-    document.getElementById(idName)?.click()
-  }
+    console.log(document.getElementById(idName));
+    document.getElementById(idName)?.click();
+  };
 
   const formfinalsubmit = () => {
     form3
@@ -204,8 +200,8 @@ const EditProfileComponent: React.FC<any> = (
         const data = {
           first_name: form1.getFieldValue("firstname"),
           last_name: form1.getFieldValue("lastname"),
-          country : form2.getFieldValue("country"),
-          state : form2.getFieldValue("state"),
+          country: form2.getFieldValue("country"),
+          state: form2.getFieldValue("state"),
           userId: localStorage.getItem("userId"),
           telephone: form1.getFieldValue("telephone"),
           mobile_number: form1.getFieldValue("mobile_number"),
@@ -255,7 +251,7 @@ const EditProfileComponent: React.FC<any> = (
       .catch((errorinfo) => {
         console.log(errorinfo);
       });
-  }
+  };
 
   const formtwosubmit = (status: number) => {
     form2
@@ -273,17 +269,17 @@ const EditProfileComponent: React.FC<any> = (
           document.getElementById("v-pills-profile-tab1")?.click();
         }
       });
-  }
+  };
 
   const CompleteSignupSession = (status: number) => {
-    console.log("status isss",status);
+    console.log("status isss", status);
     if (status == 1 || status == 3) {
       form1
         .validateFields()
         .then((values) => {
           if (status == 3) {
             alert("hello");
-            formtwosubmit(status)
+            formtwosubmit(status);
           } else {
             document.getElementById("v-pills-profile-tab1")?.click();
           }
@@ -295,7 +291,7 @@ const EditProfileComponent: React.FC<any> = (
           }
         });
     } else if (status == 2 || status == 3) {
-      formtwosubmit(status)
+      formtwosubmit(status);
     }
   };
   return (
@@ -556,7 +552,7 @@ const EditProfileComponent: React.FC<any> = (
                         <hr />
                         <div className="form-footer-right">
                           <Button
-                            className="btn btn-primary py-4"
+                            className="btn btn-primary"
                             form="InfoForm1"
                             key="submit"
                             htmlType="submit"
@@ -953,13 +949,15 @@ const EditProfileComponent: React.FC<any> = (
                         <div className="form-footer-right">
                           <button
                             type="submit"
-                            className="btn btn-primary py-4"
-                            onClick={() => { handlebackClick("v-pills-home-tab") }}
+                            className="btn btn-primary"
+                            onClick={() => {
+                              handlebackClick("v-pills-home-tab");
+                            }}
                           >
                             Back
                           </button>
                           <Button
-                            className="btn btn-primary py-4"
+                            className="btn btn-primary ml-4"
                             form="InfoForm2"
                             key="submit"
                             htmlType="submit"
@@ -1071,13 +1069,15 @@ const EditProfileComponent: React.FC<any> = (
                         <div className="form-footer-right">
                           <button
                             type="submit"
-                            className="btn btn-primary py-4"
-                            onClick={() => { handlebackClick("v-pills-profile-tab1") }}
+                            className="btn btn-primary"
+                            onClick={() => {
+                              handlebackClick("v-pills-profile-tab1");
+                            }}
                           >
                             Back
                           </button>
                           <Button
-                            className="btn btn-primary py-4"
+                            className="btn btn-primary ml-4"
                             form="InfoForm3"
                             key="submit"
                             htmlType="submit"

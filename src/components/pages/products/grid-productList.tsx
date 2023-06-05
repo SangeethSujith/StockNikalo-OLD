@@ -8,6 +8,9 @@ const GridProductList: React.FC<any> = (props: any) => {
   return (
     <div className="col-6 col-sm-4">
       <div className="product-default">
+        <div className="wishlist-toggle">
+          <i className="fas fa-heart"></i>
+        </div>
         <figure>
           {" "}
           <a onClick={() => navigate(`${RoutePath.product}/${item.productId}`)}>
@@ -55,10 +58,10 @@ const GridProductList: React.FC<any> = (props: any) => {
             <div className="product-ratings">
               {" "}
               <span className="ratings" style={{ width: "100%" }} /> */}
-              {/* End .ratings */}
-              {/* <span className="tooltiptext tooltip-top" />
+          {/* End .ratings */}
+          {/* <span className="tooltiptext tooltip-top" />
             </div> */}
-            {/* End .product-ratings */}
+          {/* End .product-ratings */}
           {/* </div> */}
           {/* End .product-container */}
           <div className="price-box">
