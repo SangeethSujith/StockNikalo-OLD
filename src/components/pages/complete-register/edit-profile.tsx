@@ -122,18 +122,18 @@ const EditProfileComponent: React.FC<any> = (
     let data = { "userId": localStorage.getItem("userId") }
     userStore.editprofile(data, (res: any) => {
       if (res.status) {
-        const { email, name, company_name,
+        const { email, name, company_name, last_name,
           mobile_number, telephone, company_address,
-          company_address2, company_business_segment, company_state,
+          company_address2, company_business_segment, company_state,company_country,
           company_district, company_gst, company_domain, company_type,
           company_short_desc, company_pincode, company_incorporation,
           ifsc_code, bank_account_number, bank
         } = res.data[0]
         console.log(name);
         let firstname = name;
-        let lastname = "";
+        let lastname = last_name;
         const fullName = name?.split(" ");
-        if (fullName?.length > 1) {
+        if (fullName?.length > 1 && last_name.length !== 0) {
           firstname = fullName[0];
           lastname = fullName[fullName.length - 1];
         }
@@ -149,7 +149,7 @@ const EditProfileComponent: React.FC<any> = (
         let formTwoData = {
           address_1: company_address,
           address_2: company_address2,
-          // country:""
+          country:company_country,
           state: company_state,
           district: company_district,
           pincode: company_pincode,
@@ -198,7 +198,6 @@ const EditProfileComponent: React.FC<any> = (
   }
 
   const formfinalsubmit = () => {
-    alert("haii");
     form3
       .validateFields()
       .then((values) => {
@@ -263,7 +262,6 @@ const EditProfileComponent: React.FC<any> = (
       .validateFields()
       .then((values) => {
         if (status == 3) {
-          alert("haii helo");
           formfinalsubmit()
         } else {
           document.getElementById("v-pills-messages-tab2")?.click();
@@ -850,7 +848,7 @@ const EditProfileComponent: React.FC<any> = (
                                   </Form.Item>
                                 </div>
 
-                                <div className="col-md-6 select-custom">
+                                {/* <div className="col-md-6 select-custom">
                                   <label>
                                     Area of expertise
                                     <abbr className="required" title="required">
@@ -885,7 +883,7 @@ const EditProfileComponent: React.FC<any> = (
                                       )}
                                     </select>
                                   </Form.Item>
-                                </div>
+                                </div> */}
 
                                 <div className="col-md-6 form-group">
                                   <label>
