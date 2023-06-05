@@ -1,17 +1,26 @@
 import React, { Component, useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
+import { State } from "country-state-city";
 import GoToTop from "../../gototop";
+import swal from "sweetalert";
 import useScript from "../../hooks/useScript";
 import productStore from "../../store/product-store";
 import settingsStore from "../../store/settings-store";
 import HomeBestSelling from "./home-bestSelling";
+import { Form, Input, message } from "antd";
+import userStore from "../../store/user-store";
+import { type } from "os";
 
 const Home: React.FC<any> = () => {
   const navigate = useNavigate();
+  const [enquiryForm] = Form.useForm();
+  const { TextArea } = Input;
   const [products, setProducts] = useState([]);
   const [auction, setAuction] = useState([]);
   const [NewBannerDetails, setNewBannerDetails] = useState<any>([]);
+  const [states, setStates] = useState([]);
+  const [selectedState, setSelectedState] = useState("");
   const [NewArrivals, setNewArrivals] = useState([]);
   const [BestSelling, setBestSelling] = useState([]);
   const [auctionData, setAuctionData] = useState<any>([]);
@@ -23,6 +32,7 @@ const Home: React.FC<any> = () => {
     getProductsData();
     getNewArrivals();
     getHomeBanner();
+    getStates();
   }, []);
 
   useEffect(() => {
@@ -54,8 +64,23 @@ const Home: React.FC<any> = () => {
   const getHomeBanner = () => {
     settingsStore.getSettings((values: any) => {
       setNewBannerDetails(values.data);
-      console.log("=>", NewBannerDetails);
     });
+  };
+
+  const getStates = async () => {
+    try {
+      const result = await State.getStatesOfCountry("IN");
+      let allStates: any = [];
+      allStates = result?.map(({ isoCode, name }) => ({
+        isoCode,
+        name,
+      }));
+      const [{ isoCode: firstState = "" } = {}] = allStates;
+      setStates(allStates);
+      setSelectedState(firstState);
+    } catch (error) {
+      setStates([]);
+    }
   };
 
   const onActionsTabClick = (auctionData: any) => {
@@ -66,16 +91,28 @@ const Home: React.FC<any> = () => {
     }
   };
 
-  const bestSellingTab = (index: number) => {
-    console.log(index);
-    setBestSellingSelectTab(BestSelling[index]);
-    console.log(BestSellingSelectTab);
-  };
-  console.log("=>", NewBannerDetails);
-  useScript("/assets/js/main.min.js", "");
-  {
-    console.log("auction DAta isss", auctionData);
+  const handleAddenquiry = () =>{
+    enquiryForm.validateFields().then((values)=>{
+      userStore.addEnquiry(values,(res:any)=>{
+        if(res){
+          swal({
+            //title: "Are you sure?",
+            text: "Enquiry sumbitted successfully",
+            icon: "success",
+            dangerMode: true,
+          }).then(() => {
+            enquiryForm.resetFields();
+          });
+        }
+      })
+    })
   }
+
+  const bestSellingTab = (index: number) => {
+    setBestSellingSelectTab(BestSelling[index]);
+  };
+  useScript("/assets/js/main.min.js", "");
+
   return (
     <>
       <main className="main home">
@@ -702,58 +739,74 @@ const Home: React.FC<any> = () => {
                   <div className="card-header">
                     <h5>Contact Form</h5>
                   </div>
-                  <div className="card-body p-3">
-                    <div className="row">
-                      <div className="col-md-6">
-                        <input
-                          type="text"
-                          className="form-control "
-                          placeholder="Name"
-                        />
+                  <Form id="enquiryForm" form={enquiryForm}>
+                    <div className="card-body p-3">
+                      <div className="row">
+                        <div className="col-md-6">
+                          <Form.Item name="name" rules={[{required:true,message:"Please enter name"}]}>
+                            <Input className="form-control "
+                              placeholder="Name" />
+                          </Form.Item>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Item name="email" rules={[{type:"email",message:"Please enter a valid email."},{required:true,message:"please enter email."}]}>
+                            <Input className="form-control "
+                              placeholder="Email" />
+                          </Form.Item>
+                        </div>
                       </div>
-                      <div className="col-md-6">
-                        <input
-                          type="text"
-                          className="form-control "
-                          placeholder="Email/Phone"
-                        />
+                      <div className="row">
+                        <div className="col-md-6 ">
+                          <Form.Item name="phone" rules={[{required:true,message:"Please enter phone number."}]}>
+                            <Input maxLength={12} className="form-control" placeholder="Phone" />
+                          </Form.Item>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Item
+                            name="state"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please select your state",
+                              },
+                            ]}
+                          >
+                            <select
+                              className="form-select form-control"
+                              value={selectedState}
+                              onChange={(event) =>
+                                setSelectedState(event.target.value)
+                              }
+                            >
+                              {states.length > 0 ? (
+                                states.map(({ isoCode, name }) => (
+                                  <option value={isoCode} key={isoCode}>
+                                    {name}
+                                  </option>
+                                ))
+                              ) : (
+                                <option value="0" key="">
+                                  No state found
+                                </option>
+                              )}
+                            </select>
+                          </Form.Item>
+                        </div>
                       </div>
+                      <div className="form-group">
+                        <Form.Item name="message" required rules={[{required:true,message:"Please enter message."}]}>
+                          <TextArea
+                          className="form-control"
+                          rows={1}
+                          defaultValue={""}
+                           />
+                        </Form.Item>
+                      </div>
+                      <button className="btn btn-primary text-white text-capitalize w-100" onClick={handleAddenquiry}>
+                        Submit
+                      </button>
                     </div>
-                    <div className="row">
-                      <div className="col-md-6 ">
-                        <select
-                          className="form-select form-control "
-                          aria-label="Default select example"
-                        >
-                          <option selected>Enquiry Type</option>
-                          <option value={1}>One</option>
-                          <option value={2}>Two</option>
-                          <option value={3}>Three</option>
-                        </select>
-                      </div>
-                      <div className="col-md-6">
-                        <select
-                          className="form-select form-control "
-                          aria-label="Default select example"
-                        >
-                          <option selected>Select State</option>
-                          <option value={1}>One</option>
-                          <option value={2}>Two</option>
-                          <option value={3}>Three</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <textarea
-                        className="form-control"
-                        rows={1}
-                        defaultValue={""}
-                      />
-                    </div>
-                    <button className="btn btn-primary text-white text-capitalize w-100">
-                      + Add Wanted Equipment
-                    </button>
-                  </div>
+                  </Form>
                 </div>
               </div>
             </div>
