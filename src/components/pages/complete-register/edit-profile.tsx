@@ -278,7 +278,6 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
         .validateFields()
         .then((values) => {
           if (status == 3) {
-            alert("hello");
             formtwosubmit(status);
           } else {
             document.getElementById("v-pills-profile-tab1")?.click();

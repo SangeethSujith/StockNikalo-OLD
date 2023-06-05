@@ -89,6 +89,17 @@ class UserService {
         });
     });
   };
+
+
+  addEnquiry = (url:string,data:any) =>{
+    return new Promise((resolve,reject)=>{
+      api.post(url,data).then((response:any)=>{
+        response && resolve(response);
+      }).catch((err:any)=>{
+        reject(err);
+      })
+    })
+  }
 }
 
 export default new UserService();

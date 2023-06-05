@@ -211,6 +211,15 @@ class userStore {
   //     }
   //   });
   // };
+  
+  addEnquiry = async(data:any,callback:any)=>{
+    let url = Constant.addEnquiry;
+    userService.addEnquiry(url,data).then((res:any)=>{
+      res && callback(res?.data);
+    }).catch((err)=>{
+
+    })
+  }
 
   constructor() {
     makeObservable(this, {

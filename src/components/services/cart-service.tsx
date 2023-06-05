@@ -41,6 +41,35 @@ class cartService{
         })
       })
   }   
+  addWishlist = (data:any) =>{
+    return new Promise((resolve,reject)=>{
+        api.post(Constant.addwishlist,data).then((response)=>{
+          response && resolve(response);
+        }).catch((err)=>{
+          reject(err);
+        })
+      })
+  }   
+  getWishlist = (id:any) =>{
+    return new Promise((resolve,reject)=>{
+        api.get(Constant.getWishlist + id).then((response)=>{
+          response && resolve(response);
+        }).catch((err)=>{
+          reject(err);
+        })
+      })
+  } 
+
+  removeWishlistItem = (id:any)=>{
+    return new Promise((resolve,reject)=>{
+      api.get(Constant.removeWishlistItem + id).then((response)=>{
+        response && resolve(response);
+      }).catch((err)=>{
+        reject(err);
+      })
+    })
+  }
+
 
 }
 

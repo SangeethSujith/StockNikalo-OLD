@@ -40,7 +40,11 @@ const Constant = {
   updateCart : "api/updatecart",
   removeCartitem : "api/deletecart/",
   clearAllCartitems: "api/clearcart/",
-  auction : "api/auctions"
+  auction : "api/auctions",
+  addEnquiry:"api/add-enquiry",
+  addwishlist:"api/add-wishlist",
+  getWishlist:"api/get-wishlist/",
+  removeWishlistItem:"api/delete-wishlist/"
 };
 
 export default Constant;

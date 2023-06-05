@@ -1,14 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
+import cartService from "../../services/cart-service";
 
 const GridProductList: React.FC<any> = (props: any) => {
   const navigate = useNavigate();
   const { item, handleClick } = props;
+  const [wishList,setWishList] = useState<any>([]);
+  useEffect(()=>{
+   getWishList();
+  },[])
+  
+  const getWishList =()=>{
+    cartService.getWishlist(localStorage.getItem('userId')).then((response:any)=>{
+      if(response?.data){
+        setWishList(response?.data?.data);
+      }
+    })
+  }
+
+  const handleWishListClick = (id:number|string)=>{
+    if(wishListCheck(id)){
+      let wishlistId = wishList.find((item:any)=>item.productId == id).id;
+     cartService.removeWishlistItem(wishlistId).then((response:any)=>{
+      if(response?.data){
+        getWishList();
+      }
+     });
+    } else{
+      let wishlistdata = {
+        userId:localStorage.getItem('userId'),
+        productId:id
+      }
+      cartService.addWishlist(wishlistdata).then((response:any)=>{
+        if(response?.data){
+          getWishList();
+        }
+      })
+    }
+  }
+
+  const wishListCheck = (id:any)=>{
+    if(wishList?.length > 0){
+     return wishList?.some((value:any) => value.hasOwnProperty('productId') && value['productId'] == id);
+    }
+  }
+
   return (
     <div className="col-6 col-sm-4">
       <div className="product-default">
-        <div className="wishlist-toggle">
+        <div className={`wishlist-toggle ${wishListCheck(item?.productId) ? 'active' : ''}`} onClick={()=>handleWishListClick(item?.productId)}>
           <i className="fas fa-heart"></i>
         </div>
         <figure>
