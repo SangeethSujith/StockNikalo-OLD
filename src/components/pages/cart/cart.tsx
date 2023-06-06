@@ -83,8 +83,6 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
   };
 
   const handleChange = () => {
-    console.log(CartQty, "CartQty");
-    console.log(typeof CartQty, "CartQty");
     let qty: any = document.getElementById("cartqty");
     qty = qty.value;
     console.log(qty, "qty");
@@ -130,7 +128,6 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
   const addtoCart = () => {
     let qty: any = document.getElementById("cartqty");
     qty = qty.value;
-    console.log("cart data isss", CartData, qty);
     const data = {
       userId: parseInt(localStorage.getItem("userId")!),
       cartType: 1,
@@ -142,7 +139,6 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
         },
       ],
     };
-    console.log("product price isss", data);
     productStore.addtocart(data, (res: any) => {
       if (res.status) {
         //setisaddtosucc(false);
@@ -156,7 +152,6 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
   }
 
   const handleProceedtocheckOut = () => {
-    console.log("hanlde proceed to check out");
     navigate(RoutePath.checkout);
     //addtoCart();
 

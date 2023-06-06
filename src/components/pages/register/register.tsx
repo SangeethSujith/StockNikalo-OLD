@@ -16,7 +16,7 @@ const RegistrationComponent: React.FC<any> = (props: RegistrationProps) => {
       .then((values) => {
         // handleModelVisible(false);
         const data = {
-          name: values.username,
+          name: values.email,
           email: values.email,
           password: values.password,
           c_password: values.confirmpassword,
@@ -62,7 +62,7 @@ const RegistrationComponent: React.FC<any> = (props: RegistrationProps) => {
                     key="signupForm"
                     preserve={false}
                   >
-                    <div>
+                    {/* <div>
                       <label htmlFor="login-email">
                         Username
                         <span className="required">*</span>
@@ -82,7 +82,7 @@ const RegistrationComponent: React.FC<any> = (props: RegistrationProps) => {
                           className="form-input form-wide"
                         />
                       </Form.Item>
-                    </div>
+                    </div> */}
                     <div>
                       <label htmlFor="login-email" className="mt-1">
                         Email address
@@ -164,6 +164,7 @@ const RegistrationComponent: React.FC<any> = (props: RegistrationProps) => {
                       form="signupForm"
                       key="submit"
                       htmlType="submit"
+                      style={{marginBottom:"15px"}}
                       //onClick={saveSession}
                       onClick={() => {
                         SignupSession();

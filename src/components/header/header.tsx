@@ -234,7 +234,7 @@ const Header: React.FC<any> = () => {
                   <a href="# ">Relsol Group</a>
                 </li>
                 <li>
-                  <a href="# " onClick={()=>navigate(RoutePath.rfqs)}>RFQs</a>
+                  <a href="# " onClick={()=>navigate(RoutePath.quoteprice)}>RFQs</a>
                 </li>
                 <li>
                   <a href="# " onClick={()=>navigate(RoutePath.auctionpage)}>Auctions</a>

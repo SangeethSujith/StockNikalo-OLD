@@ -14,15 +14,16 @@ const CompleteRegistrationComponent: React.FC<any> = (
   const { useForm } = Form;
   const [form1] = useForm();
   const [status, setStatus] = useState(true);
+  const { Option } = Select;
   const [form2] = useForm();
   const [form3] = useForm();
   const navigate = useNavigate();
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedState, setSelectedState] = useState("");
-  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState<any>("");
+  const [selectedState, setSelectedState] = useState<any>("");
+  const [selectedCity, setSelectedCity] = useState<any>("");
   const [comapnyType, setComapnyType] = useState([]);
   const [businesSegment, setBusinesSegment] = useState([]);
   const [incorporationType, setIncorporationType] = useState([]);
@@ -162,6 +163,8 @@ const CompleteRegistrationComponent: React.FC<any> = (
         .then((values) => {
           const data = {
             userId: localStorage.getItem("userId"),
+            name:form1.getFieldValue("firstname"),
+            last_name:form1.getFieldValue("lastname"),
             telephone: form1.getFieldValue("telephone"),
             mobile_number: form1.getFieldValue("mobile_number"),
             company_name: form1.getFieldValue("company_name"),
@@ -170,7 +173,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
             company_state: form2.getFieldValue("state"),
             company_pincode: form2.getFieldValue("pincode"),
             company_name2: form1.getFieldValue("company_name"),
-            company_address2: form2.getFieldValue("address_1"),
+            company_address2: form2.getFieldValue("address_2"),
             company_district2: form2.getFieldValue("district"),
             company_state2: form2.getFieldValue("state"),
             company_pincode2: form2.getFieldValue("pincode"),
@@ -393,28 +396,6 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                     />
                                   </Form.Item>
                                 </div>
-                                {/* <div className="form-group col-md-6">
-                                  <label>Login Password</label>
-                                  <Form.Item name="login_password">
-                                    <Input
-                                      maxLength={70}
-                                      placeholder="Enter Login Password"
-                                      className="form-control"
-                                      type="password"
-                                    />
-                                  </Form.Item>
-                                </div> */}
-                                {/* <div className="form-group col-md-6">
-                                  <label>Confirm Password</label>
-                                  <Form.Item name="confirm_password">
-                                    <Input
-                                      maxLength={70}
-                                      placeholder="Enter Confirm Password"
-                                      className="form-control"
-                                      type="password"
-                                    />
-                                  </Form.Item>
-                                </div> */}
                                 <div className="form-group col-md-6">
                                   <label>
                                     Telephone (landline)
@@ -565,19 +546,19 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                       },
                                     ]}
                                   >
-                                    <select
-                                      className="form-control"
+                                    <Select
+                                     // className="form-control"
                                       value={selectedCountry}
-                                      onChange={(event) =>
-                                        setSelectedCountry(event.target.value)
+                                      onChange={(value) =>
+                                        setSelectedCountry(value)
                                       }
                                     >
                                       {countries.map(({ isoCode, name }) => (
-                                        <option value={isoCode} key={isoCode}>
+                                        <Option value={isoCode} key={isoCode}>
                                           {name}
-                                        </option>
+                                        </Option>
                                       ))}
-                                    </select>
+                                    </Select>
                                   </Form.Item>
                                 </div>
 
@@ -597,25 +578,25 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                       },
                                     ]}
                                   >
-                                    <select
-                                      className="form-control"
+                                    <Select
+                                     // className="form-control"
                                       value={selectedState}
-                                      onChange={(event) =>
-                                        setSelectedState(event.target.value)
+                                      onChange={(value) =>
+                                        setSelectedState(value)
                                       }
                                     >
                                       {states.length > 0 ? (
                                         states.map(({ isoCode, name }) => (
-                                          <option value={isoCode} key={isoCode}>
+                                          <Option value={isoCode} key={isoCode}>
                                             {name}
-                                          </option>
+                                          </Option>
                                         ))
                                       ) : (
                                         <option value="0" key="">
                                           No state found
                                         </option>
                                       )}
-                                    </select>
+                                    </Select>
                                   </Form.Item>
                                 </div>
 
@@ -635,25 +616,25 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                       },
                                     ]}
                                   >
-                                    <select
-                                      className="form-control"
+                                    <Select
+                                     // className="form-control"
                                       value={selectedCity}
-                                      onChange={(event) =>
-                                        setSelectedCity(event.target.value)
+                                      onChange={(value) =>{
+                                        setSelectedCity(value)}
                                       }
                                     >
                                       {cities.length > 0 ? (
                                         cities.map(({ name }) => (
-                                          <option value={name} key={name}>
+                                          <Option value={name} key={name}>
                                             {name}
-                                          </option>
+                                          </Option>
                                         ))
                                       ) : (
-                                        <option value="0" key="">
+                                        <Option value="0" key="">
                                           No state found
-                                        </option>
+                                        </Option>
                                       )}
-                                    </select>
+                                    </Select>
                                   </Form.Item>
                                 </div>
                                 <div className="col-md-6 form-group">
@@ -719,24 +700,26 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                       },
                                     ]}
                                   >
-                                    <select className="form-control">
+                                    <Select 
+                                    // className="form-control"
+                                    >
                                       {incorporationType.length > 0 ? (
                                         incorporationType.map((item: any) => {
                                           return (
-                                            <option
+                                            <Option
                                               value={item.incorporation_types}
                                               key=""
                                             >
                                               {item.incorporation_types}
-                                            </option>
+                                            </Option>
                                           );
                                         })
                                       ) : (
-                                        <option value="0" key="">
+                                        <Option value="0" key="">
                                           No Incorporation Type found
-                                        </option>
+                                        </Option>
                                       )}
-                                    </select>
+                                    </Select>
                                   </Form.Item>
                                 </div>
                                 <div className="col-md-6 form-group">
@@ -762,7 +745,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                   </Form.Item>
                                 </div>
 
-                                <div className="col-md-6 select-custom">
+                                {/* <div className="col-md-6 select-custom">
                                   <label>
                                     Area of expertise
                                     <abbr className="required" title="required">
@@ -778,26 +761,26 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                       },
                                     ]}
                                   >
-                                    <select className="form-control">
+                                    <Select className="form-control">
                                       {comapnyType.length > 0 ? (
                                         comapnyType.map((item: any) => {
                                           return (
-                                            <option
+                                            <Option
                                               value={item.typeof_companies}
                                               key=""
                                             >
                                               {item.typeof_companies}
-                                            </option>
+                                            </Option>
                                           );
                                         })
                                       ) : (
-                                        <option value="0" key="">
+                                        <Option value="0" key="">
                                           No Area of expertise found
-                                        </option>
+                                        </Option>
                                       )}
-                                    </select>
+                                    </Select>
                                   </Form.Item>
-                                </div>
+                                </div> */}
 
                                 <div className="col-md-6 form-group">
                                   <label>
@@ -839,24 +822,26 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                       },
                                     ]}
                                   >
-                                    <select className="form-control">
+                                    <Select 
+                                    //className="form-control"
+                                    >
                                       {businesSegment.length > 0 ? (
                                         businesSegment.map((item: any) => {
                                           return (
-                                            <option
+                                            <Option
                                               value={item.business_segments}
                                               key=""
                                             >
                                               {item.business_segments}
-                                            </option>
+                                            </Option>
                                           );
                                         })
                                       ) : (
-                                        <option value="0" key="">
+                                        <Option value="0" key="">
                                           No Business Segment found
-                                        </option>
+                                        </Option>
                                       )}
-                                    </select>
+                                    </Select>
                                   </Form.Item>
                                 </div>
                               </div>

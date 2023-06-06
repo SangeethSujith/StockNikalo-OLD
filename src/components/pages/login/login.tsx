@@ -146,6 +146,7 @@ const LoginComponent: React.FC<any> = (props: LoginProps) => {
                       form="LoginForm"
                       key="submit"
                       htmlType="submit"
+                      style={{marginBottom:"15px"}}
                       //onClick={saveSession}
                       onClick={() => {
                         LoginSession();

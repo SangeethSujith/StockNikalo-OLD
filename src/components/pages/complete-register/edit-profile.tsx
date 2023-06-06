@@ -12,6 +12,7 @@ type EditProfileProps = {};
 const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
   const { useForm } = Form;
   const [form1] = useForm();
+  const { Option } = Select;
   const [status, setStatus] = useState(true);
   const [form2] = useForm();
   const [form3] = useForm();
@@ -131,7 +132,7 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
         let firstname = name;
         let lastname = last_name;
         const fullName = name?.split(" ");
-        if (fullName?.length > 1 && last_name.length !== 0) {
+        if (fullName?.length > 1 && last_name.length == 0) {
           firstname = fullName[0];
           lastname = fullName[fullName.length - 1];
         }
@@ -646,19 +647,19 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
                                       },
                                     ]}
                                   >
-                                    <select
-                                      className="form-control"
+                                    <Select
+                                      //className="form-control"
                                       value={selectedCountry}
-                                      onChange={(event) =>
-                                        setSelectedCountry(event.target.value)
+                                      onChange={(value:any) =>
+                                        setSelectedCountry(value)
                                       }
                                     >
                                       {countries.map(({ isoCode, name }) => (
-                                        <option value={isoCode} key={isoCode}>
+                                        <Option value={isoCode} key={isoCode}>
                                           {name}
-                                        </option>
+                                        </Option>
                                       ))}
-                                    </select>
+                                    </Select>
                                   </Form.Item>
                                 </div>
 
@@ -678,25 +679,26 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
                                       },
                                     ]}
                                   >
-                                    <select
-                                      className="form-control"
+                                    <Select
+                                      //className="form-control"
                                       value={selectedState}
-                                      onChange={(event) =>
-                                        setSelectedState(event.target.value)
+                                      onChange={(value:any) =>{
+                                        console.log("event isss",value);
+                                        setSelectedState(value)}
                                       }
                                     >
                                       {states.length > 0 ? (
                                         states.map(({ isoCode, name }) => (
-                                          <option value={isoCode} key={isoCode}>
+                                          <Option value={isoCode} key={isoCode}>
                                             {name}
-                                          </option>
+                                          </Option>
                                         ))
                                       ) : (
-                                        <option value="0" key="">
+                                        <Option value="0" key="">
                                           No state found
-                                        </option>
+                                        </Option>
                                       )}
-                                    </select>
+                                    </Select>
                                   </Form.Item>
                                 </div>
 
@@ -716,25 +718,25 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
                                       },
                                     ]}
                                   >
-                                    <select
-                                      className="form-control"
+                                    <Select
+                                      //className="form-control"
                                       value={selectedCity}
-                                      onChange={(event) =>
-                                        setSelectedCity(event.target.value)
+                                      onChange={(value:any) =>
+                                        setSelectedCity(value)
                                       }
                                     >
                                       {cities.length > 0 ? (
                                         cities.map(({ name }) => (
-                                          <option value={name} key={name}>
+                                          <Option value={name} key={name}>
                                             {name}
-                                          </option>
+                                          </Option>
                                         ))
                                       ) : (
-                                        <option value="0" key="">
+                                        <Option value="0" key="">
                                           No state found
-                                        </option>
+                                        </Option>
                                       )}
-                                    </select>
+                                    </Select>
                                   </Form.Item>
                                 </div>
                                 <div className="col-md-6 form-group">
@@ -800,24 +802,26 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
                                       },
                                     ]}
                                   >
-                                    <select className="form-control">
+                                    <Select 
+                                    //className="form-control"
+                                    >
                                       {incorporationType.length > 0 ? (
                                         incorporationType.map((item: any) => {
                                           return (
-                                            <option
+                                            <Option
                                               value={item.incorporation_types}
                                               key=""
                                             >
                                               {item.incorporation_types}
-                                            </option>
+                                            </Option>
                                           );
                                         })
                                       ) : (
-                                        <option value="0" key="">
+                                        <Option value="0" key="">
                                           No Incorporation Type found
-                                        </option>
+                                        </Option>
                                       )}
-                                    </select>
+                                    </Select>
                                   </Form.Item>
                                 </div>
                                 <div className="col-md-6 form-group">
@@ -920,24 +924,26 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
                                       },
                                     ]}
                                   >
-                                    <select className="form-control">
+                                    <Select 
+                                    //className="form-control"
+                                    >
                                       {businesSegment.length > 0 ? (
                                         businesSegment.map((item: any) => {
                                           return (
-                                            <option
+                                            <Option
                                               value={item.business_segments}
                                               key=""
                                             >
                                               {item.business_segments}
-                                            </option>
+                                            </Option>
                                           );
                                         })
                                       ) : (
-                                        <option value="0" key="">
+                                        <Option value="0" key="">
                                           No Business Segment found
-                                        </option>
+                                        </Option>
                                       )}
-                                    </select>
+                                    </Select>
                                   </Form.Item>
                                 </div>
                               </div>
