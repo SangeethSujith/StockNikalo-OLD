@@ -8,6 +8,7 @@ import RoutePath from "../../global/route-paths";
 import "./style.css";
 import { Country, State, City } from "country-state-city";
 import { Console } from "console";
+import { observer } from "mobx-react-lite";
 type EditProfileProps = {};
 const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
   const { useForm } = Form;
@@ -235,7 +236,7 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
             form1.resetFields();
             form2.resetFields();
             form3.resetFields();
-
+            authStore.setRegistrationCompleted(true);
             swal({
               //title: "Are you sure?",
               text: "User profile updated successfully",
@@ -631,7 +632,7 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
                                     />
                                   </Form.Item>
                                 </div>
-                                <div className="col-md-6 select-custom">
+                                <div className="col-md-6">
                                   <label>
                                     Country{" "}
                                     <abbr className="required" title="required">
@@ -663,7 +664,7 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
                                   </Form.Item>
                                 </div>
 
-                                <div className="col-md-6 select-custom">
+                                <div className="col-md-6">
                                   <label>
                                     State{" "}
                                     <abbr className="required" title="required">
@@ -702,7 +703,7 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
                                   </Form.Item>
                                 </div>
 
-                                <div className="col-md-6 select-custom">
+                                <div className="col-md-6">
                                   <label>
                                     District{" "}
                                     <abbr className="required" title="required">
@@ -718,8 +719,7 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
                                       },
                                     ]}
                                   >
-                                    <Select
-                                      //className="form-control"
+                                    {/* <Select
                                       value={selectedCity}
                                       onChange={(value:any) =>
                                         setSelectedCity(value)
@@ -736,7 +736,12 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
                                           No state found
                                         </Option>
                                       )}
-                                    </Select>
+                                    </Select> */}
+                                    <Input
+                                      maxLength={70}
+                                      placeholder="Distict"
+                                      className="form-control"
+                                    />
                                   </Form.Item>
                                 </div>
                                 <div className="col-md-6 form-group">
@@ -785,7 +790,7 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
                                     />
                                   </Form.Item>
                                 </div>
-                                <div className="col-md-6 select-custom">
+                                <div className="col-md-6">
                                   <label>
                                     Incorporation Type
                                     <abbr className="required" title="required">
@@ -907,7 +912,7 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
                                     />
                                   </Form.Item>
                                 </div>
-                                <div className="col-md-6 select-custom">
+                                <div className="col-md-6">
                                   <label>
                                     Business Segment
                                     <abbr className="required" title="required">
@@ -1108,4 +1113,4 @@ const EditProfileComponent: React.FC<any> = (props: EditProfileProps) => {
   );
 };
 
-export default EditProfileComponent;
+export default observer(EditProfileComponent);

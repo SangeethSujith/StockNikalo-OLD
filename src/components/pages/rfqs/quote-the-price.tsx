@@ -6,6 +6,7 @@ import RoutePath from "../../global/route-paths";
 import productStore from "../../store/product-store";
 import swal from "sweetalert";
 import "./custom.css";
+import { observer } from "mobx-react-lite";
 type RfqQuotePriceProps = {};
 
 const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
@@ -63,20 +64,34 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
       const rfqData = {
         rfqData: arr,
       };
-      productStore.submitRfqsQuote(rfqData, (res: any) => {
-        if (res.status) {
-          swal({
-            //title: "Are you sure?",
-            text: "RFQ sumbmitted successfully",
-            icon: "success",
-            dangerMode: true,
-          }).then((success) => {
-            if (success) {
-              navigate(RoutePath.home);
-            }
-          });
-        }
-      });
+      console.log("current user isss",authStore?.isRegistrationCompleted);
+      if(authStore?.isRegistrationCompleted){
+        productStore.submitRfqsQuote(rfqData, (res: any) => {
+          if (res.status) {
+            swal({
+              //title: "Are you sure?",
+              text: "RFQ sumbmitted successfully",
+              icon: "success",
+              dangerMode: true,
+            }).then((success) => {
+              if (success) {
+                navigate(RoutePath.home);
+              }
+            });
+          }
+        });
+      } else{
+        swal({
+          //title: "",
+          text: "Please complete your registration to proceed this action",
+          icon: "warning",
+          dangerMode: true,
+        }).then((success) => {
+          if (success) {
+            navigate(RoutePath.home);
+          }
+        });
+      }
     }
   };
   const handleRfqdetails = (id: string | number) => {
@@ -99,7 +114,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
     <>
       <main className="main">
         <div className="container">
-          <nav aria-label="breadcrumb" className="breadcrumb-nav">
+          {/* <nav aria-label="breadcrumb" className="breadcrumb-nav">
             <ol className="breadcrumb">
               <li className="breadcrumb-item">
                 <a href="#">
@@ -113,7 +128,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                 Accessories
               </li>
             </ol>
-          </nav>
+          </nav> */}
           <div className="row">
             <div className="col-12">
               <div className="widget top-widet d-none">
@@ -576,7 +591,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                   </h3>
                   <div className="collapse" id="widget-body-2">
                     <div className="widget-body">
-                      <ul className="cat-list">
+                      {/* <ul className="cat-list">
                         <li>
                           {" "}
                           <a
@@ -721,6 +736,11 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                           <a href="#">Music</a>
                           <span className="products-count">(2)</span>
                         </li>
+                      </ul> */}
+                      <ul className="cat-list">
+                    {RfqsData?.map((item: any, index: number) => {
+                      return(<li>{item.category}</li>)
+                    })}
                       </ul>
                     </div>
                     {/* End .widget-body */}
@@ -745,4 +765,4 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   );
 };
 
-export default RfqQuotePriceComponent;
+export default observer(RfqQuotePriceComponent);

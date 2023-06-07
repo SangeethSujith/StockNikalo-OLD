@@ -37,6 +37,7 @@ class AuthStore {
   currentuserToken: string | null = localStorage.getItem("userToken")!;
   isUserLoggedIn: boolean = true;
   currentUser: userDetails | null = null;
+  isRegistrationCompleted : boolean = true;
 
   login = async (email: string, password: string, callback: any) => {
     let url = Constant.login;
@@ -56,6 +57,7 @@ class AuthStore {
             isRegistrationCompletedEqualToZero:
               res.data?.data?.isRegistrationCompletedEqualToZero,
           };
+          this.isRegistrationCompleted = res.data?.data?.isRegistrationCompleted == 0 ? false : true;
           localStorage.setItem("userId", res.data?.data?.userId);
           localStorage.setItem("userToken", res.data?.data?.token);
           localStorage.setItem("userEmail", email);
@@ -80,6 +82,10 @@ class AuthStore {
         callback(err);
       });
   };
+
+  setRegistrationCompleted = (value:boolean)=>{
+    this.isRegistrationCompleted = value;
+  }
 
   signOut(data: any, callback?: any) {
     const url = Constant.logout;
@@ -117,9 +123,11 @@ class AuthStore {
     makeObservable(this, {
       currentUser: observable,
       isUserLoggedIn: observable,
+      isRegistrationCompleted:observable,
       // error: observable,
       login: action,
       signOut: action,
+      setRegistrationCompleted:action,
       // updateCurrentUserRole: action
     });
   }

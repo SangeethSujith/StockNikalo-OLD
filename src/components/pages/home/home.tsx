@@ -134,7 +134,7 @@ const Home: React.FC<any> = () => {
                         {" "}
                         <img
                           className="slide-bg"
-                          src={`https://qriocty.com/public/images/${NewBannerDetails[0]?.image}`}
+                          src={NewBannerDetails[0]?.image}
                           style={{ backgroundColor: "#555" }}
                           alt="slider image"
                           width={835}
@@ -184,7 +184,7 @@ const Home: React.FC<any> = () => {
                         {" "}
                         <img
                           className="slide-bg"
-                          src={`https://qriocty.com/public/images/${NewBannerDetails[1]?.image}`}
+                          src={NewBannerDetails[1]?.image}
                           style={{ backgroundColor: "#555" }}
                           alt="slider image"
                           width={835}

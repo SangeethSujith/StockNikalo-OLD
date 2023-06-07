@@ -7,6 +7,8 @@ import swal from "sweetalert";
 import useScript from "../../hooks/useScript";
 import AuctionSerive from "../../services/auction-service";
 import { message } from "antd";
+import authStore from "../../store/auth-store";
+import { observer } from "mobx-react-lite";
 type AuctionProps = {};
 
 const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
@@ -65,15 +67,22 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
       bidPrice : price.value ,
       bidDate : date
     }
-    console.log("data iaaa",data)
-
+    console.log("data iaaa",authStore.isRegistrationCompleted)
+   if(authStore.isRegistrationCompleted){
     AuctionSerive.submitAuction(data).then((res:any)=>{
       console.log("auction response",res);
       if(res.data){
         message.success("successfull")
       }
     }).catch((error)=>{console.log("eror iss",error)});
-
+   }else{
+    swal({
+      //title: "Are you sure?",
+      text: "Please complete your registration to proceed this action",
+      icon: "warning",
+      dangerMode: true,
+    })
+   }
   }
 
   useScript("/assets/js/main.min.js","")
@@ -330,4 +339,4 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
   );
 };
 
-export default AuctionDetailComponent;
+export default observer(AuctionDetailComponent);

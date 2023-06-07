@@ -7,6 +7,7 @@ import authStore from "../../store/auth-store";
 import RoutePath from "../../global/route-paths";
 import "./style.css";
 import { Country, State, City } from "country-state-city";
+import { observer } from "mobx-react-lite";
 type CompleteRegistrationProps = {};
 const CompleteRegistrationComponent: React.FC<any> = (
   props: CompleteRegistrationProps
@@ -196,7 +197,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
               form1.resetFields();
               form2.resetFields();
               form3.resetFields();
-
+              authStore.setRegistrationCompleted(true);
               swal({
                 //title: "Are you sure?",
                 text: "User profile updated successfully",
@@ -530,7 +531,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                     />
                                   </Form.Item>
                                 </div>
-                                <div className="col-md-6 select-custom">
+                                <div className="col-md-6">
                                   <label>
                                     Country{" "}
                                     <abbr className="required" title="required">
@@ -562,7 +563,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                   </Form.Item>
                                 </div>
 
-                                <div className="col-md-6 select-custom">
+                                <div className="col-md-6">
                                   <label>
                                     State{" "}
                                     <abbr className="required" title="required">
@@ -600,7 +601,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                   </Form.Item>
                                 </div>
 
-                                <div className="col-md-6 select-custom">
+                                <div className="col-md-6">
                                   <label>
                                     District{" "}
                                     <abbr className="required" title="required">
@@ -616,8 +617,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                       },
                                     ]}
                                   >
-                                    <Select
-                                     // className="form-control"
+                                    {/* <Select
                                       value={selectedCity}
                                       onChange={(value) =>{
                                         setSelectedCity(value)}
@@ -634,7 +634,12 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                           No state found
                                         </Option>
                                       )}
-                                    </Select>
+                                    </Select> */}
+                                    <Input
+                                      maxLength={70}
+                                      placeholder="Distict"
+                                      className="form-control"
+                                    />
                                   </Form.Item>
                                 </div>
                                 <div className="col-md-6 form-group">
@@ -805,7 +810,7 @@ const CompleteRegistrationComponent: React.FC<any> = (
                                     />
                                   </Form.Item>
                                 </div>
-                                <div className="col-md-6 select-custom">
+                                <div className="col-md-6">
                                   <label>
                                     Business Segment
                                     <abbr className="required" title="required">
@@ -994,4 +999,4 @@ const CompleteRegistrationComponent: React.FC<any> = (
   );
 };
 
-export default CompleteRegistrationComponent;
+export default observer(CompleteRegistrationComponent);

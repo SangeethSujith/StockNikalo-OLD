@@ -9,6 +9,8 @@ import productStore from "../../store/product-store";
 import { Button, message } from "antd";
 import cartService from "../../services/cart-service";
 import CartItemFlatlist from "./cartItem-flatlist";
+import authStore from "../../store/auth-store";
+import { observer } from "mobx-react-lite";
 type CartProps = {};
 
 const CartComponent: React.FC<any> = (props: CartProps) => {
@@ -152,7 +154,16 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
   }
 
   const handleProceedtocheckOut = () => {
-    navigate(RoutePath.checkout);
+    if(authStore.isRegistrationCompleted){
+      navigate(RoutePath.checkout);
+    } else{
+      swal({
+        //title: "Are you sure?",
+        text: "Please complete your registration to proceed this action",
+        icon: "warning",
+        dangerMode: true,
+      })
+    }
     //addtoCart();
 
   };
@@ -332,4 +343,4 @@ const CartComponent: React.FC<any> = (props: CartProps) => {
   );
 };
 
-export default CartComponent;
+export default observer(CartComponent);
