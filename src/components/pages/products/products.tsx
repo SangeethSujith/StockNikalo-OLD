@@ -47,6 +47,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
   const priceFilterRef = useRef<HTMLSpanElement>(null);
   useEffect(() => {
     const search = location.state?.data;
+    console.log("search data isss",search);
     const searchQuery: SearchQueryProps = location.state?.searchQuery;
     setisSpinner(true);
     if (search != undefined) {
@@ -710,14 +711,19 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                               <li>
                                 Seller location :{" "}
                                 <strong>
-                                  <a href="#" className="product-category">
-                                    Pune
-                                  </a>
+                                   <a href="#" className="product-category">
+                                    {itemData[0]?.seller_state}
+                                   </a>
                                 </strong>
                                 ,
                                 <strong>
+                                   <a href="#" className="product-category">
+                                    {itemData[0]?.seller_district}
+                                   </a>
+                                </strong>,
+                                <strong>
                                   <a href="#" className="product-category">
-                                    782390
+                                    {itemData[0]?.seller_pincode}
                                   </a>
                                 </strong>
                               </li>

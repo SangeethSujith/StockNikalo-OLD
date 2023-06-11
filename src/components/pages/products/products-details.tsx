@@ -287,12 +287,17 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                         Seller location : {" "}
                         <strong>
                           <a href="#" className="product-category">
-                            Pune
+                            {ProductsData[0]?.['seller_state']}
                           </a>
                         </strong>,
                         <strong>
                           <a href="#" className="product-category">
-                            782390
+                            {ProductsData[0]?.['seller_district']}
+                          </a>
+                        </strong>,
+                        <strong>
+                          <a href="#" className="product-category">
+                           {ProductsData[0]?.['seller_pincode']}
                           </a>
                         </strong>
                       </li>

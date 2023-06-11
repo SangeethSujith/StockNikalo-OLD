@@ -21,6 +21,7 @@ class productStore {
     productService
       .getProducts(url)
       .then((res: any) => {
+        console.log("datss isss",res)
         res && callback(res?.data);
       })
       .catch((err) => {});

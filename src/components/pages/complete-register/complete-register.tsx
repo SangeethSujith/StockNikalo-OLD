@@ -164,12 +164,14 @@ const CompleteRegistrationComponent: React.FC<any> = (
         .then((values) => {
           const data = {
             userId: localStorage.getItem("userId"),
+            first_name: form1.getFieldValue("firstname"),
             name:form1.getFieldValue("firstname"),
             last_name:form1.getFieldValue("lastname"),
             telephone: form1.getFieldValue("telephone"),
             mobile_number: form1.getFieldValue("mobile_number"),
             company_name: form1.getFieldValue("company_name"),
             company_address: form2.getFieldValue("address_1"),
+            country:form2.getFieldValue("country"),
             company_district: form2.getFieldValue("district"),
             company_state: form2.getFieldValue("state"),
             company_pincode: form2.getFieldValue("pincode"),
