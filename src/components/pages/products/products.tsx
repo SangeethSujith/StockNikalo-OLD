@@ -47,7 +47,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
   const priceFilterRef = useRef<HTMLSpanElement>(null);
   useEffect(() => {
     const search = location.state?.data;
-    console.log("search data isss",search);
+    console.log("search data isss", search);
     const searchQuery: SearchQueryProps = location.state?.searchQuery;
     setisSpinner(true);
     if (search != undefined) {
@@ -193,7 +193,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
         //   }
         // } else {
         if (res?.status) {
-          console.log("cart response",res)
+          console.log("cart response", res);
           if (res?.data?.length > 0) {
             let itemExit: any = res?.data?.find(
               (product: any) => product?.productId == pid
@@ -281,7 +281,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
               </ol>
             </nav>
             <div className="row">
-              <div className="col-lg-9">
+              <div className="col-lg-10">
                 <div
                   className="category-banner banner text-uppercase"
                   style={{
@@ -446,7 +446,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                   ) : productview == "grid" ? (
                     Array.isArray(SearchResult) &&
                     SearchResult.length > 0 &&
-                    SearchResult?.filter((item, index) => index < 6).map(
+                    SearchResult?.filter((item, index) => index < 10).map(
                       (item: any) => (
                         <GridProductList
                           item={item}
@@ -470,7 +470,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                             <div className="pcol product-action">Actions</div>
                           </div>
                         </div>
-                        {SearchResult?.filter((item, index) => index < 6).map(
+                        {SearchResult?.filter((item, index) => index < 10).map(
                           (item: any) => (
                             <RowProductList
                               item={item}
@@ -711,16 +711,17 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                               <li>
                                 Seller location :{" "}
                                 <strong>
-                                   <a href="#" className="product-category">
+                                  <a href="#" className="product-category">
                                     {itemData[0]?.seller_state}
-                                   </a>
+                                  </a>
                                 </strong>
                                 ,
                                 <strong>
-                                   <a href="#" className="product-category">
+                                  <a href="#" className="product-category">
                                     {itemData[0]?.seller_district}
-                                   </a>
-                                </strong>,
+                                  </a>
+                                </strong>
+                                ,
                                 <strong>
                                   <a href="#" className="product-category">
                                     {itemData[0]?.seller_pincode}
@@ -882,7 +883,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
               </div>
               {/* End .col-lg-9 */}
               <div className="sidebar-overlay" />
-              <aside className="sidebar-shop col-lg-3 order-lg-first mobile-sidebar">
+              <aside className="sidebar-shop col-lg-2 order-lg-first mobile-sidebar">
                 <div className="sidebar-wrapper">
                   <div className="widget">
                     <h3 className="widget-title">
