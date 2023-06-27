@@ -91,10 +91,10 @@ const Home: React.FC<any> = () => {
     }
   };
 
-  const handleAddenquiry = () =>{
-    enquiryForm.validateFields().then((values)=>{
-      userStore.addEnquiry(values,(res:any)=>{
-        if(res){
+  const handleAddenquiry = () => {
+    enquiryForm.validateFields().then((values) => {
+      userStore.addEnquiry(values, (res: any) => {
+        if (res) {
           swal({
             //title: "Are you sure?",
             text: "Enquiry sumbitted successfully",
@@ -104,9 +104,9 @@ const Home: React.FC<any> = () => {
             enquiryForm.resetFields();
           });
         }
-      })
-    })
-  }
+      });
+    });
+  };
 
   const bestSellingTab = (index: number) => {
     setBestSellingSelectTab(BestSelling[index]);
@@ -152,11 +152,17 @@ const Home: React.FC<any> = () => {
                               {NewBannerDetails && NewBannerDetails[0]?.banner}
                             </h4>
                           )}
-                          <h2 className="m-b-1">
+                          <h2
+                            className="m-b-1 "
+                            style={{
+                              color: "white",
+                              textShadow: "1px 1px 2px rgba(0, 0, 0, 0.9)",
+                            }}
+                          >
                             {NewBannerDetails &&
                               NewBannerDetails[0]?.description}
                           </h2>
-                          <h1 className="text-uppercase m-b-3">
+                          <h1 className="text-uppercase m-b-3 text-white">
                             {NewBannerDetails && NewBannerDetails[0]?.slug}
                           </h1>
                           {/* <h5 className="text-uppercase d-inline-block mb-1 pb-1 ls-n-20 align-text-bottom">
@@ -743,22 +749,55 @@ const Home: React.FC<any> = () => {
                     <div className="card-body p-3">
                       <div className="row">
                         <div className="col-md-6">
-                          <Form.Item name="name" rules={[{required:true,message:"Please enter name"}]}>
-                            <Input className="form-control "
-                              placeholder="Name" />
+                          <Form.Item
+                            name="name"
+                            rules={[
+                              { required: true, message: "Please enter name" },
+                            ]}
+                          >
+                            <Input
+                              className="form-control "
+                              placeholder="Name"
+                            />
                           </Form.Item>
                         </div>
                         <div className="col-md-6">
-                          <Form.Item name="email" rules={[{type:"email",message:"Please enter a valid email."},{required:true,message:"please enter email."}]}>
-                            <Input className="form-control "
-                              placeholder="Email" />
+                          <Form.Item
+                            name="email"
+                            rules={[
+                              {
+                                type: "email",
+                                message: "Please enter a valid email.",
+                              },
+                              {
+                                required: true,
+                                message: "please enter email.",
+                              },
+                            ]}
+                          >
+                            <Input
+                              className="form-control "
+                              placeholder="Email"
+                            />
                           </Form.Item>
                         </div>
                       </div>
                       <div className="row">
                         <div className="col-md-6 ">
-                          <Form.Item name="phone" rules={[{required:true,message:"Please enter phone number."}]}>
-                            <Input maxLength={12} className="form-control" placeholder="Phone" />
+                          <Form.Item
+                            name="phone"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please enter phone number.",
+                              },
+                            ]}
+                          >
+                            <Input
+                              maxLength={12}
+                              className="form-control"
+                              placeholder="Phone"
+                            />
                           </Form.Item>
                         </div>
                         <div className="col-md-6">
@@ -794,15 +833,27 @@ const Home: React.FC<any> = () => {
                         </div>
                       </div>
                       <div className="form-group">
-                        <Form.Item name="message" required rules={[{required:true,message:"Please enter message."}]}>
+                        <Form.Item
+                          name="message"
+                          required
+                          rules={[
+                            {
+                              required: true,
+                              message: "Please enter message.",
+                            },
+                          ]}
+                        >
                           <TextArea
-                          className="form-control"
-                          rows={1}
-                          defaultValue={""}
-                           />
+                            className="form-control"
+                            rows={1}
+                            defaultValue={""}
+                          />
                         </Form.Item>
                       </div>
-                      <button className="btn btn-primary text-white text-capitalize w-100" onClick={handleAddenquiry}>
+                      <button
+                        className="btn btn-primary text-white text-capitalize w-100"
+                        onClick={handleAddenquiry}
+                      >
                         Submit
                       </button>
                     </div>
