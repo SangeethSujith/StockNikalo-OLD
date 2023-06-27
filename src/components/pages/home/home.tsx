@@ -235,12 +235,15 @@ const Home: React.FC<any> = () => {
               {/* End .col-lg-9 */}
               <div className="col-lg-3 top-banners">
                 <div className="row">
-                  <div className="col-md-4 col-lg-12">
-                    <div className="banner banner1 banner-md-vw-large banner-sm-vw-large mb-2">
-                      <div className="banner-layer banner-layer-middle text-left">
+                  <div className=" col-md-4 col-lg-12">
+                    <div
+                      onClick={() => navigate(RoutePath.quoteprice)}
+                      style={{ cursor: "pointer" }}
+                      className=" banner banner1 banner-md-vw-large banner-sm-vw-large mb-2"
+                    >
+                      <div className=" banner-layer banner-layer-middle text-left">
                         {" "}
                         <a
-                          onClick={() => navigate(RoutePath.quoteprice)}
                           style={{ cursor: "pointer" }}
                           className="text-dark text-uppercase ls-10 py-1"
                         >
@@ -258,11 +261,14 @@ const Home: React.FC<any> = () => {
                     {/* End .banner */}
                   </div>
                   <div className="col-md-4 col-lg-12">
-                    <div className="banner banner2 banner-md-vw-large banner-sm-vw-large mb-2">
+                    <div
+                      onClick={() => navigate(RoutePath.auctionpage)}
+                      style={{ cursor: "pointer" }}
+                      className="banner banner2 banner-md-vw-large banner-sm-vw-large mb-2"
+                    >
                       <div className="banner-layer banner-layer-middle text-left">
                         {" "}
                         <a
-                          onClick={() => navigate(RoutePath.auctionpage)}
                           className="text-dark text-uppercase ls-10 py-1"
                           style={{ cursor: "pointer" }}
                         >
@@ -280,11 +286,14 @@ const Home: React.FC<any> = () => {
                     {/* End .banner */}
                   </div>
                   <div className="col-md-4 col-lg-12">
-                    <div className="banner banner3 banner-md-vw-large banner-sm-vw-large mb-2">
+                    <div
+                      onClick={() => navigate(RoutePath.shop)}
+                      className="banner banner3 banner-md-vw-large banner-sm-vw-large mb-2"
+                      style={{ cursor: "pointer" }}
+                    >
                       <div className="banner-layer banner-layer-middle">
                         {" "}
                         <a
-                          onClick={() => navigate(RoutePath.shop)}
                           style={{ cursor: "pointer" }}
                           className="text-dark text-uppercase ls-10 pb-1"
                         >
