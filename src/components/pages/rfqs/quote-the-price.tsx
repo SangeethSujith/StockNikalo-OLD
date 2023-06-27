@@ -21,12 +21,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
 
   useEffect(() => {
     const rfqid = location.state?.id;
-    // if (rfqid != undefined) {
     getQuotedRfq();
-    // } else {
-    //navigate(RoutePath.rfqs);
-    //getRfqsDetailsbyID();
-    // }
   }, []);
 
   const getRfqsDetailsbyID = () => {
@@ -71,21 +66,14 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
         productStore.submitRfqsQuote(rfqData, (res: any) => {
           if (res.status) {
             swal({
-              //title: "Are you sure?",
               text: "RFQ sumbmitted successfully",
               icon: "success",
               dangerMode: true,
             });
-            // .then((success) => {
-            //   if (success) {
-            //     navigate(RoutePath.rfqs);
-            //   }
-            // });
           }
         });
       } else {
         swal({
-          //title: "",
           text: "Please complete your registration to proceed this action",
           icon: "warning",
           dangerMode: true,
@@ -97,9 +85,9 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
       }
     }
   };
-  const updateRfqQuote=()=>{
-    alert("updated")
-  }
+  const updateRfqQuote = () => {
+    alert("updated");
+  };
   const handleRfqdetails = (id: string | number) => {
     console.log("tesing idd", id);
     if (id) {
@@ -119,36 +107,9 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
     <>
       <main className="main">
         <div className="container">
-          {/* <nav aria-label="breadcrumb" className="breadcrumb-nav">
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item">
-                <a href="#">
-                  <i className="icon-home" />
-                </a>
-              </li>
-              <li className="breadcrumb-item">
-                <a href="#">Air Handling</a>
-              </li>
-              <li className="breadcrumb-item active" aria-current="page">
-                Accessories
-              </li>
-            </ol>
-          </nav> */}
           <div className="row">
             <div className="col-12">
               <div className="widget top-widet d-none">
-                {/* <h3 className="widget-title">
-                  {" "}
-                  <a
-                    data-toggle="collapse"
-                    href="#widget-body-2"
-                    role="button"
-                    aria-expanded="true"
-                    aria-controls="widget-body-2"
-                  >
-                    Categories
-                  </a>{" "}
-                </h3> */}
                 <div className="collapse show" id="widget-body-2">
                   <div className="widget-body">
                     <ul className="cat-list">
@@ -322,21 +283,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                   background:
                     'no-repeat 60%/cover url("/assets/images/slider/slide-1.jpg")',
                 }}
-              >
-                {/* <div class="row">
-                        <div class="pb-5 pb-md-0 col-sm-5 col-lg-5 offset-1">
-                          <h3 class="mb-2 ls-10">Electronic<br>
-                            Deals</h3>
-                          <a href="#" class="btn btn-dark btn-black ls-10">Get Yours!</a>
-                        </div>
-                        <div class="col-sm-4 offset-sm-0 offset-1">
-                          <div class="coupon-sale-content">
-                            <h4 class="m-b-2 coupon-sale-text bg-white ls-10 text-transform-none">Exclusive COUPON </h4>
-                            <h5 class="mb-2 coupon-sale-text d-block ls-10 p-0"><i class="ls-0">UP TO</i><b class="text-dark">$100</b> OFF</h5>
-                          </div>
-                        </div>
-                      </div> */}
-              </div>
+              ></div>
               <div className="wishlist-table-container">
                 <Form
                   id="checkout-form"
@@ -352,14 +299,11 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                         <th className="">Brand</th>
                         <th>Sku</th>
                         <th className="l">Quantity</th>
-                        {/* <th className="">Size</th> */}
-                        {/* <th className="">Target Price </th> */}
                         <th className="">Rate </th>
                       </tr>
                     </thead>
                     <tbody className="">
                       {RfqsData?.map((item: any, index: number) => {
-                        // console.log("testing",item?.submited == 1);
                         return (
                           <tr
                             style={{
@@ -390,11 +334,6 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                             <td>
                               <span className="stock-status">{item.sku}</span>
                             </td>
-                            {/* <td>
-                            <span className="stock-status">
-                              {item.target_price}
-                            </span>
-                          </td> */}
                             <td>
                               <Form.Item name={"qnty-" + index}>
                                 <Input
@@ -439,14 +378,6 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                               </Form.Item>
                             </td>
                             <td className="text-right d-flex justify-content-end">
-                              {/* <a
-                              
-                              onClick={() => submitRfqQuote()}
-                              className={"btn btn-sm btn-primary"}
-                              
-                            >
-                              Submit
-                            </a> */}
                               {item?.submited == 0 ? (
                                 <Button
                                   type="text"
@@ -465,14 +396,6 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                 </Button>
                               )}
 
-                              {/* <Button
-                                type="text"
-                                style={{ background: "#08c" }}
-                                disabled={item?.submited == 1 ? true : false}
-                                onClick={(e) => submitRfqQuote()}
-                              >
-                                Submit
-                              </Button> */}
                               <a
                                 className="btn btn-sm btn-primary mr-2 btn-quickview"
                                 title="Quick View"
@@ -634,152 +557,6 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                   </h3>
                   <div className="collapse" id="widget-body-2">
                     <div className="widget-body">
-                      {/* <ul className="cat-list">
-                        <li>
-                          {" "}
-                          <a
-                            href="#widget-category-1"
-                            data-toggle="collapse"
-                            role="button"
-                            aria-expanded="true"
-                            aria-controls="widget-category-1"
-                          >
-                            Accessories
-                            <span className="products-count">(3)</span>{" "}
-                            <span className="toggle" />{" "}
-                          </a>
-                          <div className="collapse show" id="widget-category-1">
-                            <ul className="cat-sublist">
-                              <li>
-                                Caps
-                                <span className="products-count">
-                                  <label className="switch">
-                                    <input className="d-none" type="checkbox" />
-                                    <span className="slider round" />
-                                  </label>
-                                </span>
-                              </li>
-                              <li>
-                                Watches
-                                <span className="products-count">
-                                  <label className="switch">
-                                    <input className="d-none" type="checkbox" />
-                                    <span className="slider round" />
-                                  </label>
-                                </span>
-                              </li>
-                            </ul>
-                          </div>
-                        </li>
-                        <li>
-                          {" "}
-                          <a
-                            href="#widget-category-2"
-                            className="collapsed"
-                            data-toggle="collapse"
-                            role="button"
-                            aria-expanded="false"
-                            aria-controls="widget-category-2"
-                          >
-                            {" "}
-                            Dress<span className="products-count">
-                              (4)
-                            </span>{" "}
-                            <span className="toggle" />
-                          </a>
-                          <div className="collapse" id="widget-category-2">
-                            <ul className="cat-sublist">
-                              <li>
-                                Clothing
-                                <span className="products-count">
-                                  <label className="switch">
-                                    <input className="d-none" type="checkbox" />
-                                    <span className="slider round" />
-                                  </label>
-                                </span>
-                              </li>
-                            </ul>
-                          </div>
-                        </li>
-                        <li>
-                          {" "}
-                          <a
-                            href="#widget-category-3"
-                            className="collapsed"
-                            data-toggle="collapse"
-                            role="button"
-                            aria-expanded="false"
-                            aria-controls="widget-category-3"
-                          >
-                            {" "}
-                            Electronics
-                            <span className="products-count">(2)</span>{" "}
-                            <span className="toggle" />
-                          </a>
-                          <div className="collapse" id="widget-category-3">
-                            <ul className="cat-sublist">
-                              <li>
-                                <span className="pull-left">Headphone</span>
-                                <label className="switch pull-right">
-                                  <input className="d-none" type="checkbox" />
-                                  <span className="slider round" />
-                                </label>
-                              </li>
-                              <li>
-                                Watch
-                                <span className="products-count">
-                                  <label className="switch">
-                                    <input className="d-none" type="checkbox" />
-                                    <span className="slider round" />
-                                  </label>
-                                </span>
-                              </li>
-                            </ul>
-                          </div>
-                        </li>
-                        <li>
-                          {" "}
-                          <a
-                            href="#widget-category-4"
-                            className="collapsed"
-                            data-toggle="collapse"
-                            role="button"
-                            aria-expanded="false"
-                            aria-controls="widget-category-4"
-                          >
-                            {" "}
-                            Fashion
-                            <span className="products-count">(6)</span>{" "}
-                            <span className="toggle" />
-                          </a>
-                          <div className="collapse" id="widget-category-4">
-                            <ul className="cat-sublist">
-                              <li>
-                                Shoes
-                                <span className="products-count">
-                                  <label className="switch">
-                                    <input className="d-none" type="checkbox" />
-                                    <span className="slider round" />
-                                  </label>
-                                </span>
-                              </li>
-                              <li>
-                                Bag
-                                <span className="products-count">
-                                  <label className="switch">
-                                    <input className="d-none" type="checkbox" />
-                                    <span className="slider round" />
-                                  </label>
-                                </span>
-                              </li>
-                            </ul>
-                          </div>
-                        </li>
-                        <li>
-                          <a href="#">Music</a>
-                          <span className="products-count">(2)</span>
-                        </li>
-                      </ul> */}
                       <ul className="cat-list">
                         {RfqsData?.map((item: any, index: number) => {
                           return <li>{item.category}</li>;
