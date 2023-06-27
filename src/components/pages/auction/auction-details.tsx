@@ -45,7 +45,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
     productStore.getAuctionDetails(product, (res: any) => {
       if (res?.status) {
         setProductsData(res?.data);
-        console.log("response",res.data);
+        console.log("response", res.data);
         setProductName(res?.data[0]?.productName);
       } else {
         navigate(RoutePath.home);
@@ -58,35 +58,39 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
   };
 
   const handleSubmit = () => {
-    let price:any = document.getElementById('bid-price');
-    console.log("bid price",price.value);
+    let price: any = document.getElementById("bid-price");
+    console.log("bid price", price.value);
     const date = new Date();
-    let data :any = {
-      userId : localStorage.getItem('userId'),
-      auctionId : ProductsData[0]?.id,
-      bidPrice : price.value ,
-      bidDate : date
+    let data: any = {
+      userId: localStorage.getItem("userId"),
+      auctionId: ProductsData[0]?.id,
+      bidPrice: price.value,
+      bidDate: date,
+    };
+    console.log("data iaaa", authStore.isRegistrationCompleted);
+    if (authStore.isRegistrationCompleted) {
+      AuctionSerive.submitAuction(data)
+        .then((res: any) => {
+          console.log("auction response", res);
+          if (res.data) {
+            message.success("successfull");
+          }
+        })
+        .catch((error) => {
+          console.log("eror iss", error);
+        });
+    } else {
+      swal({
+        //title: "Are you sure?",
+        text: "Please complete your registration to proceed this action",
+        icon: "warning",
+        dangerMode: true,
+      });
     }
-    console.log("data iaaa",authStore.isRegistrationCompleted)
-   if(authStore.isRegistrationCompleted){
-    AuctionSerive.submitAuction(data).then((res:any)=>{
-      console.log("auction response",res);
-      if(res.data){
-        message.success("successfull")
-      }
-    }).catch((error)=>{console.log("eror iss",error)});
-   }else{
-    swal({
-      //title: "Are you sure?",
-      text: "Please complete your registration to proceed this action",
-      icon: "warning",
-      dangerMode: true,
-    })
-   }
-  }
+  };
 
-  useScript("/assets/js/main.min.js","")
-  
+  useScript("/assets/js/main.min.js", "");
+
   useEffect(() => {
     // const script = document.createElement("script");
     // script.src = "/assets/js/main.min.js";
@@ -276,10 +280,12 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                     <div className="col">
                       <ul className="single-info-list">
                         <li>manufacturer</li>
-                        <li>model_no</li>
+                        <li>model no</li>
                         <li>capacity</li>
                         <li>weight</li>
-                        <li>make_year</li>
+                        <li>make year</li>
+                        <li>seller state</li>
+                        <li>seller pincode</li>
                       </ul>
                     </div>
                     <div className="col">
@@ -289,13 +295,14 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                         <li>{ProductsData[0]?.["capacity"]}</li>
                         <li>{ProductsData[0]?.["weight"]}</li>
                         <li>{ProductsData[0]?.["make_year"]}</li>
+                        <li>{ProductsData[0]?.["sellecr_state"]}</li>
+                        <li>{ProductsData[0]?.["seller_pincode"]}</li>
                       </ul>
                     </div>
                   </div>
                   <div className="row price">
                     <div className="col cart">
                       <h3 className="rupee">
-                        {" "}
                         Asking Price INR {ProductsData[0]?.["price"]}
                       </h3>
                     </div>
@@ -316,7 +323,11 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                       </form>
                     </div>
                     <div className="col">
-                      <button type="button" className="btn btn-primary submit" onClick={handleSubmit}>
+                      <button
+                        type="button"
+                        className="btn btn-primary submit"
+                        onClick={handleSubmit}
+                      >
                         submit
                       </button>
                     </div>
