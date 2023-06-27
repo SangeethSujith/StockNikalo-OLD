@@ -18,6 +18,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   const [QuotedRfqsData, setQuotedRfqsData] = useState([]);
   const [rfqDetailsPopup, setRfqDetailsPopup] = useState(true);
   const [popupData, setPopdata] = useState<any>([]);
+  const [rateQty, setRateQty] = useState([]);
 
   useEffect(() => {
     const rfqid = location.state?.id;
@@ -290,6 +291,9 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                   form={form}
                   key="checkout-form"
                   preserve={false}
+                  // initialValues={{
+                  //   "qty-1": 10,
+                  // }}
                 >
                   <table className="table table-wishlist mb-0 mt-5 border">
                     <thead>
@@ -339,17 +343,19 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                 <Input
                                   className="form-control"
                                   type="Number"
+                                  defaultValue={item.quantity_raised}
                                   placeholder={
-                                    QuotedRfqsData.some(function (
-                                      element: any
-                                    ) {
-                                      return (
-                                        element.rfq_perticular_id ===
-                                        item.perticularId
-                                      );
-                                    })
-                                      ? "submitted"
-                                      : "1"
+                                    item.quantity_raised
+                                    // QuotedRfqsData.some(function (
+                                    //   element: any
+                                    // ) {
+                                    //   return (
+                                    //     element.rfq_perticular_id ===
+                                    //     item.perticularId
+                                    //   );
+                                    // })
+                                    //   ? "submitted"
+                                    //   : "1"
                                   }
                                   style={{ width: "60px" }}
                                   required
@@ -371,6 +377,8 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                             <td>
                               <Form.Item name={"price-" + index}>
                                 <Input
+                                  placeholder={item.amount_raised}
+                                  defaultValue={item.amount_raised}
                                   className="form-control"
                                   style={{ width: "80px" }}
                                   required
