@@ -18,7 +18,6 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   const [QuotedRfqsData, setQuotedRfqsData] = useState([]);
   const [rfqDetailsPopup, setRfqDetailsPopup] = useState(true);
   const [popupData, setPopdata] = useState<any>([]);
-  const [rateQty, setRateQty] = useState([]);
 
   useEffect(() => {
     const rfqid = location.state?.id;
