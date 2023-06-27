@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+
 import productStore from "../../store/product-store";
 import RoutePath from "../../global/route-paths";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
@@ -6,7 +8,7 @@ import userStore from "../../store/user-store";
 import swal from "sweetalert";
 import useScript from "../../hooks/useScript";
 import AuctionSerive from "../../services/auction-service";
-import { message } from "antd";
+import { Button, Tooltip, message } from "antd";
 import authStore from "../../store/auth-store";
 import { observer } from "mobx-react-lite";
 type AuctionProps = {};
@@ -17,6 +19,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
   const [ProductsData, setProductsData] = useState<any>([]);
   const [isaddtosucc, setisaddtosucc] = useState(true);
   const [ProductName, setProductName] = useState("Product");
+  const [bidPrice, setBidPrice] = useState(15000);
   const urlParams = useParams();
   const { id } = useParams();
   const product = String(id);
@@ -315,13 +318,29 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                     <div className="col offer">
                       <form className="offer">
                         <input
+                          disabled
                           className="w-100"
                           id="bid-price"
-                          type="text"
+                          type="number"
+                          value={bidPrice}
                           placeholder="INR ₹ Your Offer"
                         />
                       </form>
                     </div>
+                    <Tooltip title="reduce bid price">
+                      <Button
+                        // type="danger"
+                        // shape="circle"
+                        icon={<MinusOutlined />}
+                      />
+                    </Tooltip>
+                    <Tooltip title="increase bid price">
+                      <Button
+                        // type="danger"
+                        // shape="circle"
+                        icon={<PlusOutlined />}
+                      />
+                    </Tooltip>
                     <div className="col">
                       <button
                         type="button"
