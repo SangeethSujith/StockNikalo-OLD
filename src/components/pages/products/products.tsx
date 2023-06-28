@@ -885,10 +885,12 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                         </a>
                       </li>
                     </ul> */}
-                    <div draggable="false">
+                    {/* <div draggable="false">
                       <ReactPaginate
-                        previousLabel={"< previous"}
-                        nextLabel={"next >"}
+
+                        previousLabel={"< Previous"}
+                        nextLabel={"Next >"}
+                        disabledLinkClassName={"pagination-disabled-text"}
                         breakLabel={"..."}
                         breakClassName={"break-me"}
                         pageCount={Math.ceil(
@@ -899,6 +901,31 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                         onPageChange={handlePageChange}
                         containerClassName={"pagination"}
                         activeClassName={"activePage"}
+                      />
+                    </div> */}
+                    <div className="pagination-container" draggable="false">
+                      {" "}
+                      <ReactPaginate
+                        nextLabel="NEXT >"
+                        // onPageChange={handlePageClick}
+                        pageRangeDisplayed={3}
+                        marginPagesDisplayed={2}
+                        pageCount={Math.ceil(
+                          SearchResult.length / itemsPerPage
+                        )}
+                        previousLabel="< PREVIOUS"
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        breakLabel="..."
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                        containerClassName="pagination"
+                        activeClassName="active"
+                        renderOnZeroPageCount={null}
                       />
                     </div>
                   </nav>
