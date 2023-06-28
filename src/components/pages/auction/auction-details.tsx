@@ -330,6 +330,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                     </div>
                     <Tooltip title="Reduce Bid P rice">
                       <Button
+                        disabled={bidPrice <= initialBidPrice}
                         onClick={() =>
                           setBidPrice((prevBidPrice) =>
                             prevBidPrice > initialBidPrice
