@@ -11,6 +11,7 @@ import Loader from "../../common/loader";
 import GridProductList from "./grid-productList";
 import RowProductList from "./row-productList";
 import settingsStore from "../../store/settings-store";
+import ReactPaginate from "react-paginate";
 type ProductsProps = {};
 
 type SearchQueryProps = {
@@ -44,6 +45,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
     searchtext: "",
     categorey: "",
   });
+  const [currentPage, setCurrentPage] = useState(0);
   const priceFilterRef = useRef<HTMLSpanElement>(null);
   useEffect(() => {
     const search = location.state?.data;
@@ -258,6 +260,18 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
       console.log("=>", NewBannerDetails);
     });
   };
+
+  const handlePageChange = (selectedPage: any) => {
+    setCurrentPage(selectedPage.selected);
+  };
+
+  const itemsPerPage = 10; // Number of items to show per page
+  // ...
+
+  // Calculate the indexes of the data array for the current page
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentData = SearchResult.slice(startIndex, endIndex);
 
   return (
     <>
@@ -845,7 +859,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                       {/* End .select-custom */}
                     </div>
                     {/* End .toolbox-item */}
-                    <ul className="pagination toolbox-item">
+                    {/* <ul className="pagination toolbox-item">
                       <li className="page-item disabled">
                         {" "}
                         <a className="page-link page-link-btn" href="#">
@@ -877,7 +891,19 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                           <i className="icon-angle-right" />
                         </a>
                       </li>
-                    </ul>
+                    </ul> */}
+                    <ReactPaginate
+                      previousLabel={"Previous"}
+                      nextLabel={"Next"}
+                      breakLabel={"..."}
+                      breakClassName={"break-me"}
+                      pageCount={Math.ceil(SearchResult.length / itemsPerPage)}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={handlePageChange}
+                      containerClassName={"pagination"}
+                      activeClassName={"active"}
+                    />
                   </nav>
                 )}
               </div>
