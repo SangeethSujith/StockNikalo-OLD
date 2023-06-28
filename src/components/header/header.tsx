@@ -55,7 +55,7 @@ const Header: React.FC<any> = () => {
 
   const handleCategorySelect = (e: any) => {
     setCurrentCategory(e.target.value);
-     onSearch(e.target.value);
+    onSearch(e.target.value);
   };
 
   const onSearch = (id: any) => {
@@ -83,16 +83,16 @@ const Header: React.FC<any> = () => {
       });
     }
   };
- const handleClick = ()=>{
- const element = document.getElementById('footerSection');
-   if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
-  // if(footerRef){
-  //   console.log("inside");
-  //   footerRef.current?.scrollIntoView({ behavior: 'smooth' });
-  // }
- }
+  const handleClick = () => {
+    const element = document.getElementById("footerSection");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+    // if(footerRef){
+    //   console.log("inside");
+    //   footerRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // }
+  };
   return (
     <>
       <header className="header home">
@@ -120,8 +120,10 @@ const Header: React.FC<any> = () => {
                   <div className="select-custom">
                     <select id="cat" name="cat" onChange={handleCategorySelect}>
                       <option value="">All Category</option>
-                      {proCategory?.map((item: any) => (
-                        <option value={item.id}>{item.categoryname}</option>
+                      {proCategory?.map((item: any, index: number) => (
+                        <option key={index} value={item.id}>
+                          {item.categoryname}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -187,7 +189,12 @@ const Header: React.FC<any> = () => {
                           </a>
                         </li>
                         <li>
-                          <a className="dropdown-item" onClick={() => navigate(RoutePath.edit_profile)}>My Profile</a>
+                          <a
+                            className="dropdown-item"
+                            onClick={() => navigate(RoutePath.edit_profile)}
+                          >
+                            My Profile
+                          </a>
                         </li>
                         <li>
                           <a className="dropdown-item" href="#">
@@ -228,24 +235,30 @@ const Header: React.FC<any> = () => {
             <nav className="main-nav w-100">
               <ul className="menu">
                 <li>
-                  <a href="# " onClick={()=>navigate(RoutePath.home)}>Home</a>
+                  <a href="# " onClick={() => navigate(RoutePath.home)}>
+                    Home
+                  </a>
                 </li>
                 <li>
                   <a href="# ">Relsol Group</a>
                 </li>
                 <li>
-                  <a href="# " onClick={()=>navigate(RoutePath.quoteprice)}>RFQs</a>
+                  <a href="# " onClick={() => navigate(RoutePath.quoteprice)}>
+                    RFQs
+                  </a>
                 </li>
                 <li>
-                  <a href="# " onClick={()=>navigate(RoutePath.auctionpage)}>Auctions</a>
+                  <a href="# " onClick={() => navigate(RoutePath.auctionpage)}>
+                    Auctions
+                  </a>
                 </li>
                 <li>
                   <a href="# ">Contacts</a>
                 </li>
                 <li>
-                <Link to="#" onClick={ handleClick}>
-              About
-            </Link>
+                  <Link to="#" onClick={handleClick}>
+                    About
+                  </Link>
                   {/* <a href="# "onClick={handleClick}>About</a> */}
                 </li>
               </ul>
@@ -263,10 +276,13 @@ const Header: React.FC<any> = () => {
                       Shop by Category <i className="fas fa-angle-down"></i>
                     </button>
                     <div className="dropdown-menu">
-                      {proCategory?.map((item: any) => (
-                        <a className="dropdown-item" 
-                       // href="value={item.id}" 
-                        onClick={() => onSearch(item.id)}>
+                      {proCategory?.map((item: any, index: number) => (
+                        <a
+                          key={index }
+                          className="dropdown-item"
+                          // href="value={item.id}"
+                          onClick={() => onSearch(item.id)}
+                        >
                           {item.categoryname}
                         </a>
                       ))}

@@ -73,18 +73,23 @@ const Minicart: React.FC<any> = () => {
     }
   };
 
-  const handleItemremove = (item:any) =>{
-    console.log("item iss",item,item.id);
-    if(item){
-      cartService.removeCartItem(item?.id).then((response)=>{
-        if(response){
-          userStore.getUserCart(()=>{console.log("haiiiii got response")});
-        }
-      }).catch((error)=>{
-        console.log("error occured",error);
-      })
+  const handleItemremove = (item: any) => {
+    console.log("item iss", item, item.id);
+    if (item) {
+      cartService
+        .removeCartItem(item?.id)
+        .then((response) => {
+          if (response) {
+            userStore.getUserCart(() => {
+              console.log("haiiiii got response");
+            });
+          }
+        })
+        .catch((error) => {
+          console.log("error occured", error);
+        });
     }
-  }
+  };
 
   return (
     <>
@@ -115,8 +120,8 @@ const Minicart: React.FC<any> = () => {
             {userStore?.cartItem.length > 0 ? (
               <>
                 <div className="dropdown-cart-products">
-                  {userStore?.cartItem.map((item: any) => (
-                    <div className="product">
+                  {userStore?.cartItem.map((item: any, index: number) => (
+                    <div key={index} className="product">
                       <div className="product-details">
                         <h4 className="product-title">
                           <a href="# ">{item.productName}</a>
@@ -144,7 +149,7 @@ const Minicart: React.FC<any> = () => {
                           href="# "
                           className="btn-remove"
                           title="Remove Product"
-                          onClick={()=>handleItemremove(item)}
+                          onClick={() => handleItemremove(item)}
                         >
                           <span>×</span>
                         </a>

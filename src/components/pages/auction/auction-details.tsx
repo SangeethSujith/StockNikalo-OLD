@@ -49,7 +49,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
     productStore.getAuctionDetails(product, (res: any) => {
       if (res?.status) {
         setProductsData(res?.data);
-        console.log("response", res.data);
+        // console.log("response", res.data);
         setProductName(res?.data[0]?.productName);
       } else {
         navigate(RoutePath.home);
