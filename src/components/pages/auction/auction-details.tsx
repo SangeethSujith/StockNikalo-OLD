@@ -19,7 +19,8 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
   const [ProductsData, setProductsData] = useState<any>([]);
   const [isaddtosucc, setisaddtosucc] = useState(true);
   const [ProductName, setProductName] = useState("Product");
-  const [bidPrice, setBidPrice] = useState(15000);
+  const initialBidPrice = 15000;
+  const [bidPrice, setBidPrice] = useState(initialBidPrice);
   const urlParams = useParams();
   const { id } = useParams();
   const product = String(id);
@@ -327,15 +328,25 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                         />
                       </form>
                     </div>
-                    <Tooltip title="reduce bid price">
+                    <Tooltip title="Reduce Bid P rice">
                       <Button
+                        onClick={() =>
+                          setBidPrice((prevBidPrice) =>
+                            prevBidPrice > initialBidPrice
+                              ? prevBidPrice - 1000
+                              : prevBidPrice
+                          )
+                        }
                         // type="danger"
                         // shape="circle"
                         icon={<MinusOutlined />}
                       />
                     </Tooltip>
-                    <Tooltip title="increase bid price">
+                    <Tooltip title="Increase Bid Price">
                       <Button
+                        onClick={() =>
+                          setBidPrice((prevBidPrice) => prevBidPrice + 1000)
+                        }
                         // type="danger"
                         // shape="circle"
                         icon={<PlusOutlined />}
