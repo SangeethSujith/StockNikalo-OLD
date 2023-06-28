@@ -265,7 +265,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
     setCurrentPage(selectedPage.selected);
   };
 
-  const itemsPerPage = 10; // Number of items to show per page
+  const itemsPerPage = 2; // Number of items to show per page
   // ...
 
   // Calculate the indexes of the data array for the current page
@@ -460,14 +460,9 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                   ) : productview == "grid" ? (
                     Array.isArray(SearchResult) &&
                     SearchResult.length > 0 &&
-                    SearchResult?.filter((item, index) => index < 10).map(
-                      (item: any) => (
-                        <GridProductList
-                          item={item}
-                          handleClick={handleClick}
-                        />
-                      )
-                    )
+                    currentData.map((item: any) => (
+                      <GridProductList item={item} handleClick={handleClick} />
+                    ))
                   ) : (
                     Array.isArray(SearchResult) &&
                     SearchResult.length > 0 && (
@@ -484,14 +479,12 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                             <div className="pcol product-action">Actions</div>
                           </div>
                         </div>
-                        {SearchResult?.filter((item, index) => index < 10).map(
-                          (item: any) => (
-                            <RowProductList
-                              item={item}
-                              handleClick={handleClick}
-                            />
-                          )
-                        )}
+                        {currentData.map((item: any) => (
+                          <RowProductList
+                            item={item}
+                            handleClick={handleClick}
+                          />
+                        ))}
                       </div>
                     )
                   )}
@@ -892,18 +885,22 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                         </a>
                       </li>
                     </ul> */}
-                    <ReactPaginate
-                      previousLabel={"Previous"}
-                      nextLabel={"Next"}
-                      breakLabel={"..."}
-                      breakClassName={"break-me"}
-                      pageCount={Math.ceil(SearchResult.length / itemsPerPage)}
-                      marginPagesDisplayed={2}
-                      pageRangeDisplayed={5}
-                      onPageChange={handlePageChange}
-                      containerClassName={"pagination"}
-                      activeClassName={"active"}
-                    />
+                    <div draggable="false">
+                      <ReactPaginate
+                        previousLabel={"< previous"}
+                        nextLabel={"next >"}
+                        breakLabel={"..."}
+                        breakClassName={"break-me"}
+                        pageCount={Math.ceil(
+                          SearchResult.length / itemsPerPage
+                        )}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={handlePageChange}
+                        containerClassName={"pagination"}
+                        activeClassName={"activePage"}
+                      />
+                    </div>
                   </nav>
                 )}
               </div>

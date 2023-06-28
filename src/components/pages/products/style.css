@@ -1,0 +1,14 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  user-select: none;
+}
+
+.activePage {
+  padding: 8px;
+  background-color: lightblue;
+  border: none;
+  border-radius: 20%;
+}
