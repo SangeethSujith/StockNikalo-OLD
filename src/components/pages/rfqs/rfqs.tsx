@@ -23,12 +23,10 @@ const RfqsComponent: React.FC<any> = (props: RfqsProps) => {
 
   const getRfqsDetails = () => {
     productStore.getRfqsDetails((res: any) => {
-
       if (res.status) {
         setRfqs(res.data);
-      }
-      else {
-         navigate(RoutePath.home);
+      } else {
+        navigate(RoutePath.home);
       }
     });
   };
@@ -86,39 +84,43 @@ const RfqsComponent: React.FC<any> = (props: RfqsProps) => {
                   </thead>
                   <tbody className="">
                     {rfqs?.map((item: any, index: number) => {
-                    return (
-                      <tr className="sk-product-row">
-                        <td>
-                          <span className="rfq-serial">#{index + 1}</span>
-                        </td>
-                        <td className="">{item?.name}</td>
-                        <td>
-                          <span className="rfq-date">
-                            {item?.created_at && new Date(item?.created_at)
-                              .toISOString()
-                              .slice(0, 10)}
-                          </span>
-                        </td>
-                        <td>
-                          <span className="rfq-qty">{item?.product_count}</span>
-                        </td>
-                        <td>
-                          <span className="rfq-btn">
-                            {" "}
-                            <button
-                              onClick={() =>
-                                navigate(RoutePath.quoteprice, {
-                                  state: { id: item.id },
-                                })
-                              }
-                              className="btn btn-success btn-add-cart product-type-simple btn-shop"
-                            >
-                              View
-                            </button>
-                          </span>
-                        </td>
-                      </tr>
-                    )})}
+                      return (
+                        <tr className="sk-product-row">
+                          <td>
+                            <span className="rfq-serial">#{index + 1}</span>
+                          </td>
+                          <td className="">{item?.name}</td>
+                          <td>
+                            <span className="rfq-date">
+                              {item?.created_at &&
+                                new Date(item?.created_at)
+                                  .toISOString()
+                                  .slice(0, 10)}
+                            </span>
+                          </td>
+                          <td>
+                            <span className="rfq-qty">
+                              {item?.product_count}
+                            </span>
+                          </td>
+                          <td>
+                            <span className="rfq-btn">
+                              {" "}
+                              <button
+                                onClick={() =>
+                                  navigate(RoutePath.quoteprice, {
+                                    state: { id: item.id },
+                                  })
+                                }
+                                className="btn btn-success btn-add-cart product-type-simple btn-shop"
+                              >
+                                View
+                              </button>
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

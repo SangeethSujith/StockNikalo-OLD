@@ -907,7 +907,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                       {" "}
                       <ReactPaginate
                         nextLabel="NEXT >"
-                        // onPageChange={handlePageClick}
+                        onPageChange={handlePageChange}
                         pageRangeDisplayed={3}
                         marginPagesDisplayed={2}
                         pageCount={Math.ceil(

@@ -7,6 +7,7 @@ import productStore from "../../store/product-store";
 import swal from "sweetalert";
 import "./custom.css";
 import { observer } from "mobx-react-lite";
+import ReactPaginate from "react-paginate";
 type RfqQuotePriceProps = {};
 
 const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
@@ -18,7 +19,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   const [QuotedRfqsData, setQuotedRfqsData] = useState([]);
   const [rfqDetailsPopup, setRfqDetailsPopup] = useState(true);
   const [popupData, setPopdata] = useState<any>([]);
-
+  const [currentPage, setCurrentPage] = useState(0);
   useEffect(() => {
     const rfqid = location.state?.id;
     getQuotedRfq();
@@ -102,6 +103,18 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   const handleClose = () => {
     setRfqDetailsPopup(true);
   };
+
+  const handlePageChange = (selectedPage: any) => {
+    setCurrentPage(selectedPage.selected);
+  };
+
+  const itemsPerPage = 4; // Number of items to show per page
+  // ...
+
+  // Calculate the indexes of the data array for the current page
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentData = RfqsData.slice(startIndex, endIndex);
 
   return (
     <>
@@ -306,118 +319,134 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                       </tr>
                     </thead>
                     <tbody className="">
-                      {RfqsData?.map((item: any, index: number) => {
-                        return (
-                          <tr
-                            style={{
-                              background: QuotedRfqsData.some(function (
-                                element: any
-                              ) {
-                                return (
-                                  element.rfq_perticular_id ===
-                                  item.perticularId
-                                );
-                              })
-                                ? "#e9ecef"
-                                : "",
-                            }}
-                            className="sk-product-row quote-product-row"
-                          >
-                            <td>
-                              <span className="stock-status">
-                                {item?.item_code}
-                              </span>
-                            </td>
-                            <td className="">{item?.product_name}</td>
-                            <td>
-                              <span className="stock-status">
-                                {item?.brand}
-                              </span>
-                            </td>
-                            <td>
-                              <span className="stock-status">{item.sku}</span>
-                            </td>
-                            <td>
-                              <Form.Item name={"qnty-" + index}>
-                                <Input
-                                  className="form-control"
-                                  type="Number"
-                                  defaultValue={item.quantity_raised}
-                                  placeholder={
-                                    item.quantity_raised
-                                    // QuotedRfqsData.some(function (
-                                    //   element: any
-                                    // ) {
-                                    //   return (
-                                    //     element.rfq_perticular_id ===
-                                    //     item.perticularId
-                                    //   );
-                                    // })
-                                    //   ? "submitted"
-                                    //   : "1"
-                                  }
-                                  style={{ width: "60px" }}
-                                  required
-                                  disabled={
-                                    QuotedRfqsData.some(function (
-                                      element: any
-                                    ) {
-                                      return (
-                                        element.rfq_perticular_id ===
-                                        item.perticularId
-                                      );
-                                    })
-                                      ? true
-                                      : false
-                                  }
-                                />
-                              </Form.Item>
-                            </td>
-                            <td>
-                              <Form.Item name={"price-" + index}>
-                                <Input
-                                  placeholder={item.amount_raised}
-                                  defaultValue={item.amount_raised}
-                                  className="form-control"
-                                  style={{ width: "80px" }}
-                                  required
-                                />
-                              </Form.Item>
-                            </td>
-                            <td className="text-right d-flex justify-content-end">
-                              {item?.submited == 0 ? (
-                                <Button
-                                  type="text"
-                                  style={{ background: "#08c" }}
-                                  onClick={(e) => submitRfqQuote()}
-                                >
-                                  Submit
-                                </Button>
-                              ) : (
-                                <Button
-                                  type="text"
-                                  style={{ background: "#F2BE22" }}
-                                  onClick={(e) => updateRfqQuote()}
-                                >
-                                  Update
-                                </Button>
-                              )}
-
-                              <a
-                                className="btn btn-sm btn-primary mr-2 btn-quickview"
-                                title="Quick View"
+                      {currentData.map((item: any, index: number) => (
+                        <tr
+                          style={{
+                            background: QuotedRfqsData.some(function (
+                              element: any
+                            ) {
+                              return (
+                                element.rfq_perticular_id === item.perticularId
+                              );
+                            })
+                              ? "#e9ecef"
+                              : "",
+                          }}
+                          className="sk-product-row quote-product-row"
+                        >
+                          <td>
+                            <span className="stock-status">
+                              {item?.item_code}
+                            </span>
+                          </td>
+                          <td className="">{item?.product_name}</td>
+                          <td>
+                            <span className="stock-status">{item?.brand}</span>
+                          </td>
+                          <td>
+                            <span className="stock-status">{item.sku}</span>
+                          </td>
+                          <td>
+                            <Form.Item name={"qnty-" + index}>
+                              <Input
+                                className="form-control"
+                                type="Number"
+                                defaultValue={item.quantity_raised}
+                                placeholder={
+                                  item.quantity_raised
+                                  // QuotedRfqsData.some(function (
+                                  //   element: any
+                                  // ) {
+                                  //   return (
+                                  //     element.rfq_perticular_id ===
+                                  //     item.perticularId
+                                  //   );
+                                  // })
+                                  //   ? "submitted"
+                                  //   : "1"
+                                }
+                                style={{ width: "60px" }}
+                                required
+                                disabled={
+                                  QuotedRfqsData.some(function (element: any) {
+                                    return (
+                                      element.rfq_perticular_id ===
+                                      item.perticularId
+                                    );
+                                  })
+                                    ? true
+                                    : false
+                                }
+                              />
+                            </Form.Item>
+                          </td>
+                          <td>
+                            <Form.Item name={"price-" + index}>
+                              <Input
+                                placeholder={item.amount_raised}
+                                defaultValue={item.amount_raised}
+                                className="form-control"
+                                style={{ width: "80px" }}
+                                required
+                              />
+                            </Form.Item>
+                          </td>
+                          <td className="text-right d-flex justify-content-end">
+                            {item?.submited == 0 ? (
+                              <Button
+                                type="text"
+                                style={{ background: "#08c" }}
+                                onClick={(e) => submitRfqQuote()}
                               >
-                                <i
-                                  className="fas fa-eye"
-                                  onClick={(e) => handleRfqdetails(item?.rfqid)}
-                                ></i>
-                              </a>
-                            </td>
-                          </tr>
-                        );
-                      })}
+                                Submit
+                              </Button>
+                            ) : (
+                              <Button
+                                type="text"
+                                style={{ background: "#F2BE22" }}
+                                onClick={(e) => updateRfqQuote()}
+                              >
+                                Update
+                              </Button>
+                            )}
+
+                            <a
+                              className="btn btn-sm btn-primary mr-2 btn-quickview"
+                              title="Quick View"
+                            >
+                              <i
+                                className="fas fa-eye"
+                                onClick={(e) => handleRfqdetails(item?.rfqid)}
+                              ></i>
+                            </a>
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
+                  <div className="pagination-container" draggable="false">
+                    {" "}
+                    <ReactPaginate
+                      nextLabel="NEXT >"
+                      onPageChange={handlePageChange}
+                      pageRangeDisplayed={3}
+                      marginPagesDisplayed={2}
+                      pageCount={Math.ceil(RfqsData.length / itemsPerPage)}
+                      previousLabel="< PREVIOUS"
+                      pageClassName="page-item"
+                      pageLinkClassName="page-link"
+                      previousClassName="page-item"
+                      previousLinkClassName="page-link"
+                      nextClassName="page-item"
+                      nextLinkClassName="page-link"
+                      breakLabel="..."
+                      breakClassName="page-item"
+                      breakLinkClassName="page-link"
+                      containerClassName="pagination"
+                      activeClassName="active"
+                      renderOnZeroPageCount={null}
+                    />
+                  </div>
                 </Form>
               </div>
             </div>
