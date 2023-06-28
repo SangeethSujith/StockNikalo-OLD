@@ -5,6 +5,7 @@ import userStore from "../../store/user-store";
 import RoutePath from "../../global/route-paths";
 // import "./style.css";
 import swal from "sweetalert";
+import ReactPaginate from "react-paginate";
 type ProductsProps = {};
 
 const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
@@ -17,6 +18,7 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
   const [pid, setPid] = useState("");
   const [price, setPrice] = useState("");
   const [proCategory, setproCategory] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
   useEffect(() => {
     const search = location.state?.data;
     if (search != undefined && search.length > 0) {
@@ -143,6 +145,18 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
       setproCategory(values.data);
     });
   };
+
+  const handlePageChange = (selectedPage: any) => {
+    setCurrentPage(selectedPage.selected);
+  };
+
+  const itemsPerPage = 1; // Number of items to show per page
+  // ...
+
+  // Calculate the indexes of the data array for the current page
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentData = SearchResult.slice(startIndex, endIndex);
 
   return (
     <>
@@ -271,7 +285,7 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
               <div className="row">
                 {Array.isArray(SearchResult) &&
                   SearchResult.length > 0 &&
-                  SearchResult?.map((item: any) => (
+                  currentData.map((item: any) => (
                     <div className="col-6 col-sm-4">
                       <div className="product-default">
                         <figure>
@@ -734,39 +748,29 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                   {/* End .select-custom */}
                 </div>
                 {/* End .toolbox-item */}
-                <ul className="pagination toolbox-item">
-                  <li className="page-item disabled">
-                    {" "}
-                    <a className="page-link page-link-btn" href="#">
-                      <i className="icon-angle-left" />
-                    </a>{" "}
-                  </li>
-                  <li className="page-item active">
-                    {" "}
-                    <a className="page-link" href="#">
-                      1 <span className="sr-only">(current)</span>
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      2
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      3
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <span className="page-link">...</span>
-                  </li>
-                  <li className="page-item">
-                    {" "}
-                    <a className="page-link page-link-btn" href="#">
-                      <i className="icon-angle-right" />
-                    </a>
-                  </li>
-                </ul>
+                <div className="pagination-container" draggable="false">
+                  {" "}
+                  <ReactPaginate
+                    nextLabel="NEXT >"
+                    onPageChange={handlePageChange}
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={2}
+                    pageCount={Math.ceil(SearchResult.length / itemsPerPage)}
+                    previousLabel="< PREVIOUS"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                    renderOnZeroPageCount={null}
+                  />
+                </div>
               </nav>
             </div>
             {/* End .col-lg-9 */}
