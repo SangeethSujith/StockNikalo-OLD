@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
 import cartService from "../../services/cart-service";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const GridProductList: React.FC<any> = (props: any) => {
   const navigate = useNavigate();
@@ -63,29 +64,17 @@ const GridProductList: React.FC<any> = (props: any) => {
           <i className="fas fa-heart"></i>
         </div>
         <figure>
-          {" "}
           <a onClick={() => navigate(`${RoutePath.product}/${item.productId}`)}>
-            {" "}
-            <img
+            <LazyLoadImage
+              alt="product-img"
+              width={280}
+              height={280}
               src={
                 item?.images
                   ? item?.images[0]?.image
                   : "/assets/images/products/product-1.jpg"
               }
-              width={280}
-              height={280}
-              alt="product"
-            />{" "}
-            <img
-              src={
-                item?.images
-                  ? item?.images[0]?.image
-                  : "/assets/images/products/product-1.jpg"
-              }
-              width={280}
-              height={280}
-              alt="product"
-            />{" "}
+            />
           </a>
           {/* <div className="label-group">
             <div className="product-label label-hot">HOT</div>

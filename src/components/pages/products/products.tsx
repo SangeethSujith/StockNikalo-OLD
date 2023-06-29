@@ -33,7 +33,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
   const [SearchResult, setSearchResult] = useState([]);
   const [itemPopup, setitemPopup] = useState(true);
   const [isaddtosucc, setisaddtosucc] = useState(true);
-  const [itemData, setitemData] = useState(Array);
+  const [itemData, setitemData] = useState<any>(Array);
   const [pid, setPid] = useState("");
   const [price, setPrice] = useState("");
   const [proCategory, setproCategory] = useState([]);
@@ -272,7 +272,6 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentData = SearchResult.slice(startIndex, endIndex);
-
   return (
     <>
       <>
