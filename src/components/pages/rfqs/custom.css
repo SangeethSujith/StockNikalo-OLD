@@ -1,9 +1,18 @@
-.table-rfq td{
-vertical-align: middle;
+.table-rfq td {
+  vertical-align: middle;
 }
-.action .checkbox{
-    width: 15px;
+.action .checkbox {
+  width: 15px;
 }
-.table-wishlist .action{
-    text-align: center;
+.table-wishlist .action {
+  text-align: center;
+}
+
+.category-button {
+  user-select: none;
+  cursor: pointer;
+}
+
+.category-button:hover{
+    color: #0A6EBD;
 }

@@ -115,7 +115,16 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentData = RfqsData.slice(startIndex, endIndex);
+  console.log("RfqsData", RfqsData);
 
+  // Reduce the jsonData to create an array of unique categories
+  const uniqueCategories = RfqsData.reduce((unique: string[], item: any) => {
+    if (!unique.includes(item.category)) {
+      unique.push(item.category);
+    }
+    return unique;
+  }, []);
+  console.log("uniqueCategories", uniqueCategories);
   return (
     <>
       <main className="main">
@@ -352,8 +361,8 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                 className="form-control"
                                 type="Number"
                                 defaultValue={item.quantity_raised}
-                                placeholder={
-                                  item.quantity_raised
+                                // placeholder={
+                                  // item.quantity_raised
                                   // QuotedRfqsData.some(function (
                                   //   element: any
                                   // ) {
@@ -364,7 +373,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                   // })
                                   //   ? "submitted"
                                   //   : "1"
-                                }
+                                // }
                                 style={{ width: "60px" }}
                                 required
                                 disabled={
@@ -594,8 +603,8 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                   <div className="collapse" id="widget-body-2">
                     <div className="widget-body">
                       <ul className="cat-list">
-                        {RfqsData?.map((item: any, index: number) => {
-                          return <li>{item.category}</li>;
+                        {uniqueCategories?.map((item: any, index: number) => {
+                          return <li className="category-button">{item}</li>;
                         })}
                       </ul>
                     </div>
