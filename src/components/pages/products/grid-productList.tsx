@@ -65,13 +65,14 @@ const GridProductList: React.FC<any> = (props: any) => {
           <i className="fas fa-heart"></i>
         </div>
         <figure>
-          <a onClick={() => navigate(`${RoutePath.product}/${item.productId}`)}>
+          <a className="product-image-link" onClick={() => navigate(`${RoutePath.product}/${item.productId}`)}>
             <LazyLoadImage
+            className="product-image-style"
               effect="blur"
               alt="product-img"
-              width={280}
-              height={280}
-              src={
+              // width={}
+                // height={}
+                src={
                 item?.images
                   ? item?.images[0]?.image
                   : "/assets/images/products/product-1.jpg"

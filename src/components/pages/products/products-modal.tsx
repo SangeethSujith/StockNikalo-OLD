@@ -12,6 +12,9 @@ import GridProductList from "./grid-productList";
 import RowProductList from "./row-productList";
 import settingsStore from "../../store/settings-store";
 import ReactPaginate from "react-paginate";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+
 type ProductsProps = {};
 
 type SearchQueryProps = {
@@ -612,7 +615,13 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                                           aria-controls="product-desc-content"
                                           aria-selected="true"
                                         >
-                                          <img src={item.image} alt="" />
+                                          <LazyLoadImage
+                                            src={item.image}
+                                            effect="blur"
+                                            alt="product-img"
+                                            width={80}
+                                            height={80}
+                                          />
                                         </a>
                                       </li>
                                     </div>
