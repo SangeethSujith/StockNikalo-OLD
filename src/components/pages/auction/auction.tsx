@@ -6,6 +6,10 @@ import RoutePath from "../../global/route-paths";
 // import "./style.css";
 import swal from "sweetalert";
 import ReactPaginate from "react-paginate";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+import "./auction.css"
+
 type ProductsProps = {};
 
 const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
@@ -196,7 +200,6 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                 data-sticky-options="{'mobile': true}"
               >
                 <div className="toolbox-left">
-                  {" "}
                   <a href="#" className="sidebar-toggle">
                     <svg
                       data-name="Layer 3"
@@ -227,7 +230,7 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                         className="cls-2"
                       ></path>
                     </svg>
-                    <span>Filter</span>{" "}
+                    <span>Filter</span>
                   </a>
                   <div className="toolbox-item toolbox-sort">
                     <label>Sort By:</label>
@@ -264,19 +267,16 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                   </div>
                   {/* End .toolbox-item */}
                   <div className="toolbox-item layout-modes">
-                    {" "}
                     <a
                       href="#"
                       className="layout-btn btn-grid active"
                       title="Grid"
                     >
-                      {" "}
-                      <i className="icon-mode-grid" />{" "}
-                    </a>{" "}
+                      <i className="icon-mode-grid" />
+                    </a>
                     <a href="#" className="layout-btn btn-list" title="List">
-                      {" "}
-                      <i className="icon-mode-list" />{" "}
-                    </a>{" "}
+                      <i className="icon-mode-list" />
+                    </a>
                   </div>
                   {/* End .layout-modes */}
                 </div>
@@ -287,45 +287,39 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                   SearchResult.length > 0 &&
                   currentData.map((item: any) => (
                     <div className="col-6 col-sm-4">
-                      <div className="product-default">
+                      <div className="product-default product-style" >
                         <figure>
-                          {" "}
                           <a
+                          className="product-image-link"
                             onClick={() =>
                               navigate(`${RoutePath.auction}/${item.id}`)
                             }
                           >
-                            {" "}
-                            <img
+                            <LazyLoadImage
+                            className="product-image-style"
+                              effect="blur"
+                              alt="product"
+                              width={280}
+                              height={280}
                               src="/assets/images/products/product-1.jpg"
-                              width={280}
-                              height={280}
+                            />
+                            {/* <img
+                              src="/assets/images/products/product-1.jpg"
+                         
                               alt="product"
-                            />{" "}
-                            <img
-                              src="/assets/images/products/product-2.jpg"
-                              width={280}
-                              height={280}
-                              alt="product"
-                            />{" "}
+                            /> */}
                           </a>
-                          {/* <div className="label-group">
-                            <div className="product-label label-hot">HOT</div>
-                            <div className="product-label label-sale">-20%</div>
-                          </div> */}
                         </figure>
                         <div className="product-head">
                           <div className="category-wrap">
                             <div className="product-list">
-                              {" "}
                               <a href="#" className="product-category">
                                 category
-                              </a>{" "}
+                              </a>
                             </div>
                           </div>
                           <p className="product-header">
-                            {" "}
-                            <a href="#">{item.title}</a>{" "}
+                            <a href="#">{item.title}</a>
                           </p>
                           <section className="location">
                             <div>
@@ -382,7 +376,6 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                                 aria-controls="product-desc-content"
                                 aria-selected="true"
                               >
-                                {" "}
                                 View More Info
                               </a>
                             </li>
@@ -413,8 +406,7 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                                 aria-controls="product-tags-content"
                                 aria-selected="false"
                               >
-                                {" "}
-                                Add to Cart{" "}
+                                Add to Cart
                               </a>
                             </li>
                           </div>
@@ -429,7 +421,6 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                                 aria-controls="product-reviews-content"
                                 aria-selected="false"
                               >
-                                {" "}
                                 Print
                               </a>
                             </li>
@@ -635,7 +626,7 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                           SKU: <strong>654613612</strong>
                         </li>
                         <li>
-                          CATEGORY:{" "}
+                          CATEGORY:
                           <strong>
                             <a href="#" className="product-category">
                               SHOES
@@ -643,7 +634,7 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                           </strong>
                         </li>
                         <li>
-                          TAGs:{" "}
+                          TAGs:
                           <strong>
                             <a href="#" className="product-category">
                               CLOTHES
@@ -749,7 +740,6 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                 </div>
                 {/* End .toolbox-item */}
                 <div className="pagination-container" draggable="false">
-                  {" "}
                   <ReactPaginate
                     nextLabel="NEXT >"
                     onPageChange={handlePageChange}
@@ -779,7 +769,6 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
               <div className="sidebar-wrapper">
                 <div className="widget">
                   <h3 className="widget-title">
-                    {" "}
                     <a
                       data-toggle="collapse"
                       href="#widget-body-2"
@@ -788,13 +777,12 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                       aria-controls="widget-body-2"
                     >
                       Categories
-                    </a>{" "}
+                    </a>
                   </h3>
                   <div className="collapse show" id="widget-body-2">
                     <div className="widget-body">
                       <ul className="cat-list">
                         <li>
-                          {" "}
                           <a
                             href="#widget-category-1"
                             data-toggle="collapse"
@@ -802,10 +790,9 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                             aria-expanded="true"
                             aria-controls="widget-category-1"
                           >
-                            {" "}
                             Accessories
-                            <span className="products-count">(3)</span>{" "}
-                            <span className="toggle" />{" "}
+                            <span className="products-count">(3)</span>
+                            <span className="toggle" />
                           </a>
                           <div className="collapse show" id="widget-category-1">
                             <ul className="cat-sublist">
@@ -831,7 +818,6 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                           </div>
                         </li>
                         <li>
-                          {" "}
                           <a
                             href="#widget-category-2"
                             className="collapsed"
@@ -840,11 +826,8 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                             aria-expanded="false"
                             aria-controls="widget-category-2"
                           >
-                            {" "}
-                            Dress<span className="products-count">
-                              (4)
-                            </span>{" "}
-                            <span className="toggle" />{" "}
+                            Dress<span className="products-count">(4)</span>
+                            <span className="toggle" />
                           </a>
                           <div className="collapse" id="widget-category-2">
                             <ul className="cat-sublist">
@@ -861,7 +844,6 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                           </div>
                         </li>
                         <li>
-                          {" "}
                           <a
                             href="#widget-category-3"
                             className="collapsed"
@@ -870,10 +852,9 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                             aria-expanded="false"
                             aria-controls="widget-category-3"
                           >
-                            {" "}
                             Electronics
-                            <span className="products-count">(2)</span>{" "}
-                            <span className="toggle" />{" "}
+                            <span className="products-count">(2)</span>
+                            <span className="toggle" />
                           </a>
                           <div className="collapse" id="widget-category-3">
                             <ul className="cat-sublist">
@@ -897,7 +878,6 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                           </div>
                         </li>
                         <li>
-                          {" "}
                           <a
                             href="#widget-category-4"
                             className="collapsed"
@@ -906,11 +886,8 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                             aria-expanded="false"
                             aria-controls="widget-category-4"
                           >
-                            {" "}
-                            Fashion<span className="products-count">
-                              (6)
-                            </span>{" "}
-                            <span className="toggle" />{" "}
+                            Fashion<span className="products-count">(6)</span>
+                            <span className="toggle" />
                           </a>
                           <div className="collapse" id="widget-category-4">
                             <ul className="cat-sublist">
