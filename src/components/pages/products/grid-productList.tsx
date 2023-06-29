@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
 import cartService from "../../services/cart-service";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const GridProductList: React.FC<any> = (props: any) => {
   const navigate = useNavigate();
@@ -66,6 +67,7 @@ const GridProductList: React.FC<any> = (props: any) => {
         <figure>
           <a onClick={() => navigate(`${RoutePath.product}/${item.productId}`)}>
             <LazyLoadImage
+              effect="blur"
               alt="product-img"
               width={280}
               height={280}

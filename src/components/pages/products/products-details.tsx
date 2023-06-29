@@ -37,10 +37,10 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
       ],
     };
     productStore.addtocart(data, (res: any) => {
-      console.log("testing",res);
+      console.log("testing", res);
       if (res.status) {
         setisaddtosucc(false);
-        userStore.getUserCart((res: any) => { });
+        userStore.getUserCart((res: any) => {});
       }
     });
   };
@@ -62,11 +62,11 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
   const getRelatedProductDetails = () => {
     productStore.getRelatedProductDetails("1", (res: any) => {
       if (res?.status) {
-        console.log(res?.data)
-        setRelatedProductsData(["kkk"])
-        console.log("related", RelatedProductsData)
-        setRelatedProductsData(res?.data)
-        console.log("related", RelatedProductsData)
+        console.log(res?.data);
+        setRelatedProductsData(["kkk"]);
+        console.log("related", RelatedProductsData);
+        setRelatedProductsData(res?.data);
+        console.log("related", RelatedProductsData);
       }
     });
   };
@@ -78,30 +78,32 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
 
   const getUserCart = (e: any) => {
     userStore.getUserCart((res: any) => {
-      console.log("inside add to cart")
+      console.log("inside add to cart");
       if (res.status) {
         if (res?.data?.length > 0) {
-        let itemExit:any = res?.data?.find((item:any)=>item?.productId == product);
-      if(itemExit){
-        //udate cart item
-        swal({
-          title: "Item exist",
-          text: "This item is already in your cart!",
-          icon: "warning",
-        }).then(function () {
-          // form.submit(); // <--- submit form programmatically
-        });
-      } else {
-        addtoCart();
-        swal({
-          title: "Added to cart",
-          text: "Product added to cart successfully!",
-          icon: "success",
-        }).then(function () {
-          // form.submit(); // <--- submit form programmatically
-        });
-      }
-      }else{
+          let itemExit: any = res?.data?.find(
+            (item: any) => item?.productId == product
+          );
+          if (itemExit) {
+            //udate cart item
+            swal({
+              title: "Item exist",
+              text: "This item is already in your cart!",
+              icon: "warning",
+            }).then(function () {
+              // form.submit(); // <--- submit form programmatically
+            });
+          } else {
+            addtoCart();
+            swal({
+              title: "Added to cart",
+              text: "Product added to cart successfully!",
+              icon: "success",
+            }).then(function () {
+              // form.submit(); // <--- submit form programmatically
+            });
+          }
+        } else {
           addtoCart();
           swal({
             title: "Added to cart",
@@ -123,7 +125,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
     getRelatedProductDetails();
   }, [product]);
 
-  useScript("/assets/js/main.min.js", "")
+  useScript("/assets/js/main.min.js", "");
   return (
     <>
       <main className="main">
@@ -142,15 +144,13 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
           </nav>
           <div className="product-single-container product-single-info">
             <div className="cart-message" hidden={isaddtosucc}>
-              {" "}
-              <strong className="single-cart-notice">{ProductName}</strong>{" "}
-              <span>has been added to your cart.</span>{" "}
+              <strong className="single-cart-notice">{ProductName}</strong>
+              <span>has been added to your cart.</span>
             </div>
             <div className="row">
               <div className="col-lg-5 col-md-6 product-single-gallery">
                 <div className="product-item">
                   <div className="inner">
-                    {" "}
                     {/* {ProductsImg?.map((item: any) => (
                           <img
                             src={
@@ -172,11 +172,9 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                       imageArr={ProductsImg}
                       defaultimage={"/assets/images/products/product-1.jpg"}
                     />
-                    {" "}
                     <span className="prod-full-screen">
-                      {" "}
-                      <i className="icon-plus" />{" "}
-                    </span>{" "}
+                      <i className="icon-plus" />
+                    </span>
                   </div>
                 </div>
 
@@ -195,72 +193,66 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                     </h1>
                     <div className="product-nav">
                       <div className="product-prev">
-                        {" "}
                         <a href="#">
-                          {" "}
-                          <span className="product-link" />{" "}
+                          <span className="product-link" />
                           <span className="product-popup">
-                            {" "}
                             <span className="box-content">
-                              {" "}
                               <img
                                 alt="product"
                                 width={150}
                                 height={150}
                                 src="/assets/images/products/product-1.jpg"
                                 style={{ paddingTop: 0 }}
-                              />{" "}
-                              <span>Circled Ultimate 3D Speaker</span>{" "}
-                            </span>{" "}
-                          </span>{" "}
-                        </a>{" "}
+                              />
+                              <span>Circled Ultimate 3D Speaker</span>
+                            </span>
+                          </span>
+                        </a>
                       </div>
                       <div className="product-next">
-                        {" "}
                         <a href="#">
-                          {" "}
-                          <span className="product-link" />{" "}
+                          <span className="product-link" />
                           <span className="product-popup">
-                            {" "}
                             <span className="box-content">
-                              {" "}
                               <img
                                 alt="product"
                                 width={150}
                                 height={150}
                                 src="/assets/images/products/product-2.jpg"
                                 style={{ paddingTop: 0 }}
-                              />{" "}
-                              <span>Blue Backpack for the Young</span>{" "}
-                            </span>{" "}
-                          </span>{" "}
-                        </a>{" "}
+                              />
+                              <span>Blue Backpack for the Young</span>
+                            </span>
+                          </span>
+                        </a>
                       </div>
                     </div>
                     {/* <div className="ratings-container">
                       <div className="product-ratings">
-                        {" "}
+                        
                         <span className="ratings" style={{ width: "60%" }} /> */}
                     {/* End .ratings */}
-                    {/* <span className="tooltiptext tooltip-top" />{" "} */}
+                    {/* <span className="tooltiptext tooltip-top" /> */}
                     {/* </div> */}
                     {/* End .product-ratings */}
                     {/* <a href="#" className="rating-link"> */}
                     {/* ( 6 Reviews ) */}
-                    {/* </a>{" "} */}
+                    {/* </a> */}
                     {/* </div> */}
                     {/* End .ratings-container */}
                     <hr className="short-divider" />
                     <div className="price-box">
-                      {" "}
-                      {ProductsData[0]?.["mrp"] <= ProductsData[0]?.["salePrice"] ? "" :
+                      {ProductsData[0]?.["mrp"] <=
+                      ProductsData[0]?.["salePrice"] ? (
+                        ""
+                      ) : (
                         <span className="old-price">
                           ₹{ProductsData[0]?.["mrp"]}
-                        </span>}
-                      {" "}
+                        </span>
+                      )}
                       <span className="new-price">
                         ₹{ProductsData[0]?.["salePrice"]}
-                      </span>{" "}
+                      </span>
                     </div>
                     {/* End .price-box */}
                     <div className="product-desc">
@@ -270,86 +262,88 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                     <ul className="single-info-list">
                       {/**/}
                       <li>
-                        {" "}
-                        SKU: <strong>{ProductsData[0]?.["sku"]}</strong>{" "}
+                        SKU: <strong>{ProductsData[0]?.["sku"]}</strong>
                       </li>
                       <li>
-                        {" "}
-                        CATEGORY:{" "}
+                        CATEGORY:
                         <strong>
-                          {" "}
                           <a href="#" className="product-category">
                             {ProductsData[0]?.["category"]}
-                          </a>{" "}
-                        </strong>{" "}
+                          </a>
+                        </strong>
                       </li>
                       <li>
-                        Seller location : {" "}
+                        Seller location :
                         <strong>
                           <a href="#" className="product-category">
-                            {ProductsData[0]?.['seller_state']}
+                            {ProductsData[0]?.["seller_state"]}
                           </a>
-                        </strong>,
+                        </strong>
+                        ,
                         <strong>
                           <a href="#" className="product-category">
-                            {ProductsData[0]?.['seller_district']}
+                            {ProductsData[0]?.["seller_district"]}
                           </a>
-                        </strong>,
+                        </strong>
+                        ,
                         <strong>
                           <a href="#" className="product-category">
-                           {ProductsData[0]?.['seller_pincode']}
+                            {ProductsData[0]?.["seller_pincode"]}
                           </a>
                         </strong>
                       </li>
                     </ul>
-                    {ProductsData[0]?.created_by != localStorage.getItem('userId') && (<div className="product-action">
-                      {/* <div className="price-box product-filtered-price">
-                        {" "}
+                    {ProductsData[0]?.created_by !=
+                      localStorage.getItem("userId") && (
+                      <div className="product-action">
+                        {/* <div className="price-box product-filtered-price">
+                        
                         <del className="old-price">
-                          {" "}
+                          
                           <span>₹{ProductsData[0]?.["mrp"]}</span>
-                        </del>{" "}
+                        </del>
                         <span className="product-price">
-                          {" "}
+                          
                           ₹{ProductsData[0]?.["salePrice"]}
-                        </span>{" "}
+                        </span>
                       </div> */}
-                      <div className="product-single-qty">
-                        <input
-                          className="horizontal-quantity form-control"
-                          type="text"
-                          id="cartqty"
-                          value={CartQty}
-                          onChange={(val: any) => setCartQty(val)}
-                        />
+                        <div className="product-single-qty">
+                          <input
+                            className="horizontal-quantity form-control"
+                            type="text"
+                            id="cartqty"
+                            value={CartQty}
+                            onChange={(val: any) => setCartQty(val)}
+                          />
+                        </div>
+                        {/* End .product-single-qty */}
+                        <a
+                          href="# "
+                          onClick={(e) => {
+                            if (localStorage.getItem("userId") == "null") {
+                              navigate(RoutePath.login);
+                            } else if (
+                              localStorage.getItem("userCmpReg") == "0"
+                            ) {
+                              navigate(RoutePath.complete_profile);
+                            } else {
+                              getUserCart(e);
+                            }
+                          }}
+                          className="btn btn-dark disabled add-cart icon-shopping-cart mr-2"
+                          title="Add to Cart"
+                        >
+                          Add to Cart
+                        </a>
+                        <a
+                          onClick={() => navigate(RoutePath.cart)}
+                          className="btn btn-gray view-cart"
+                          hidden={isaddtosucc}
+                        >
+                          View cart
+                        </a>
                       </div>
-                      {/* End .product-single-qty */}
-                      <a
-                        href="# "
-                        onClick={(e) => {
-                          if (localStorage.getItem("userId") == "null") {
-                            navigate(RoutePath.login);
-                          } else if (
-                            localStorage.getItem("userCmpReg") == "0"
-                          ) {
-                            navigate(RoutePath.complete_profile);
-                          } else {
-                            getUserCart(e);
-                          }
-                        }}
-                        className="btn btn-dark disabled add-cart icon-shopping-cart mr-2"
-                        title="Add to Cart"
-                      >
-                        Add to Cart
-                      </a>{" "}
-                      <a
-                        onClick={() => navigate(RoutePath.cart)}
-                        className="btn btn-gray view-cart"
-                        hidden={isaddtosucc}
-                      >
-                        View cart
-                      </a>{" "}
-                    </div>)}
+                    )}
                     {/* End .product-action */}
                     <hr className="divider mb-0 mt-0" />
                     {/* <a
@@ -359,7 +353,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                     >
                       <i className="icon-wishlist-2" />
                       <span>Add to Wishlist</span>
-                    </a>{" "} */}
+                    </a> */}
                   </div>
                   {/* End .product-single-details */}
                 </div>
@@ -370,7 +364,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
               {/* <div className="widget widget-info col-md-9 col-xl-6 pb-4 pb-md-0">
                 <ul className="promote">
                   <li>
-                    {" "}
+                    
                     <i className="icon-shipped" />
                     <h4>
                       FREE
@@ -379,7 +373,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                     </h4>
                   </li>
                   <li>
-                    {" "}
+                    
                     <i className="icon-us-dollar" />
                     <h4>
                       100% MONEY
@@ -388,7 +382,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                     </h4>
                   </li>
                   <li>
-                    {" "}
+                    
                     <i className="icon-online-support" />
                     <h4>
                       ONLINE
@@ -402,37 +396,36 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
               <div className="product-single-share col-md-4 col-xl-6 align-items-start justify-content-md-end mt-0">
                 <label className="sr-only">Share:</label>
                 <div className="social-icons mt-0 pb-5 pb-md-0">
-                  {" "}
                   <a
                     href="#"
                     className="social-icon social-facebook icon-facebook"
                     target="_blank"
                     title="Facebook"
-                  />{" "}
+                  />
                   <a
                     href="#"
                     className="social-icon social-twitter icon-twitter"
                     target="_blank"
                     title="Twitter"
-                  />{" "}
+                  />
                   <a
                     href="#"
                     className="social-icon social-linkedin fab fa-linkedin-in"
                     target="_blank"
                     title="Linkedin"
-                  />{" "}
+                  />
                   <a
                     href="#"
                     className="social-icon social-gplus fab fa-google-plus-g"
                     target="_blank"
                     title="Google +"
-                  />{" "}
+                  />
                   <a
                     href="#"
                     className="social-icon social-mail icon-mail-alt"
                     target="_blank"
                     title="Mail"
-                  />{" "}
+                  />
                 </div>
                 {/* End .social-icons */}
               </div>
@@ -447,7 +440,6 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
           <div className="container">
             <ul className="nav nav-tabs" role="tablist">
               <li className="nav-item">
-                {" "}
                 <a
                   className="nav-link active"
                   id="product-tab-desc"
@@ -458,10 +450,9 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                   aria-selected="true"
                 >
                   Description
-                </a>{" "}
+                </a>
               </li>
               <li className="nav-item">
-                {" "}
                 <a
                   className="nav-link"
                   id="product-tab-reviews"
@@ -472,10 +463,9 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                   aria-selected="false"
                 >
                   Reviews (1)
-                </a>{" "}
+                </a>
               </li>
               <li className="nav-item">
-                {" "}
                 <a
                   className="nav-link"
                   id="product-tab-tags"
@@ -486,7 +476,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                   aria-selected="false"
                 >
                   Custom Tab
-                </a>{" "}
+                </a>
               </li>
             </ul>
             <div className="tab-content">
@@ -516,33 +506,30 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                   <div className="comment-list">
                     <div className="comments">
                       <figure className="img-thumbnail">
-                        {" "}
                         <img
                           src="/assets/images/blog/author.jpg"
                           alt="author"
                           width={80}
                           height={80}
-                        />{" "}
+                        />
                       </figure>
                       <div className="comment-block">
                         <div className="comment-header">
                           <div className="comment-arrow" />
                           <div className="ratings-container float-sm-right">
                             <div className="product-ratings">
-                              {" "}
                               <span
                                 className="ratings"
                                 style={{ width: "60%" }}
                               />
                               {/* End .ratings */}
-                              <span className="tooltiptext tooltip-top" />{" "}
+                              <span className="tooltiptext tooltip-top" />
                             </div>
                             {/* End .product-ratings */}
                           </div>
                           <span className="comment-by">
-                            {" "}
-                            <strong>Joe Doe</strong> – April 12, 2018{" "}
-                          </span>{" "}
+                            <strong>Joe Doe</strong> – April 12, 2018
+                          </span>
                         </div>
                         <div className="comment-content">
                           <p>Excellent.</p>
@@ -559,22 +546,21 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                           Your rating <span className="required">*</span>
                         </label>
                         <span className="rating-stars">
-                          {" "}
                           <a className="star-1" href="#">
                             1
-                          </a>{" "}
+                          </a>
                           <a className="star-2" href="#">
                             2
-                          </a>{" "}
+                          </a>
                           <a className="star-3" href="#">
                             3
-                          </a>{" "}
+                          </a>
                           <a className="star-4" href="#">
                             4
-                          </a>{" "}
+                          </a>
                           <a className="star-5" href="#">
                             5
-                          </a>{" "}
+                          </a>
                         </span>
                         <select
                           name="rating"
@@ -661,8 +647,7 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
                 role="tabpanel"
                 aria-labelledby="product-tab-tags"
               >
-                {" "}
-                Custom Tab Content{" "}
+                Custom Tab Content
               </div>
               {/* End .tab-pane */}
             </div>
@@ -681,12 +666,9 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
             >
               Related Products
             </h2>
-            {
-
-              RelatedProductsData.length > 0 && < ProductImage productList={RelatedProductsData.slice(0, 5)} />
-            }
-
-
+            {RelatedProductsData.length > 0 && (
+              <ProductImage productList={RelatedProductsData.slice(0, 5)} />
+            )}
           </div>
         </section>
         <GoToTop />
@@ -698,5 +680,3 @@ const ProductsDetailComponent: React.FC<any> = (props: ProductsProps) => {
 };
 
 export default ProductsDetailComponent;
-
-

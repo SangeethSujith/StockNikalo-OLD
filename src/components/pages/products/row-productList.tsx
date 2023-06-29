@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import RoutePath from "../../global/route-paths";
-
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 const RowProductList: React.FC<any> = (props: any) => {
   const navigate = useNavigate();
   const { item, handleClick } = props;
@@ -15,8 +16,9 @@ const RowProductList: React.FC<any> = (props: any) => {
             <a
               onClick={() => navigate(`${RoutePath.product}/${item.productId}`)}
             >
-              {" "}
-              <img
+              <LazyLoadImage
+                effect="blur"
+                alt="product-img"
                 className="img-fluid"
                 src={
                   item?.images
@@ -25,19 +27,7 @@ const RowProductList: React.FC<any> = (props: any) => {
                 }
                 width={100}
                 height={100}
-                alt="product"
-              />{" "}
-              <img
-                className="ing-fluid"
-                src={
-                  item?.images
-                    ? item?.images[0]?.image
-                    : "/assets/images/products/product-1.jpg"
-                }
-                width={100}
-                height={100}
-                alt="product"
-              />{" "}
+              />
             </a>
             {/* <div className="label-group">
                     <div className="product-label label-hot">HOT</div>
