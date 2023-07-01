@@ -166,7 +166,7 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
     <>
       <main className="main">
         <div className="container">
-          <nav aria-label="breadcrumb" className="breadcrumb-nav">
+          {/* <nav aria-label="breadcrumb" className="breadcrumb-nav">
             <ol className="breadcrumb">
               <li className="breadcrumb-item">
                 <a href="#">
@@ -180,7 +180,7 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
                 Accessories
               </li>
             </ol>
-          </nav>
+          </nav> */}
           <div className="row">
             <div className="col-lg-9">
               <div className="d-flex">

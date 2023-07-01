@@ -281,8 +281,8 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
         {/* End .header */}
         <main className="main">
           <div className="container">
-            <nav aria-label="breadcrumb" className="breadcrumb-nav">
-              <ol className="breadcrumb">
+            {/* <nav aria-label="breadcrumb" className="breadcrumb-nav"> */}
+              {/* <ol className="breadcrumb">
                 <li className="breadcrumb-item">
                   <a href="#">
                     <i className="icon-home" />
@@ -295,7 +295,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                   Accessories
                 </li>
               </ol>
-            </nav>
+            </nav> */}
             <div className="row">
               <div className="col-lg-10">
                 <div
