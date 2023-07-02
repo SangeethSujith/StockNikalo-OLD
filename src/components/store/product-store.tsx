@@ -21,7 +21,7 @@ class productStore {
     productService
       .getProducts(url)
       .then((res: any) => {
-        console.log("datss isss",res)
+        console.log("datss isss", res);
         res && callback(res?.data);
       })
       .catch((err) => {});
@@ -79,7 +79,7 @@ class productStore {
 
   getQuotedRfq = async (callback: any) => {
     // let url = Constant.quotedrfq + "/" + this.currentuserId;
-    let url = Constant.getrfq;
+    let url = Constant.getrfq + localStorage.getItem("userId");
     productService
       .getQuotedRfq(url)
       .then((res: any) => {
@@ -118,7 +118,7 @@ class productStore {
       .catch((err) => {});
   };
 
-  getBestSellingProduct = async ( callback: any) => {
+  getBestSellingProduct = async (callback: any) => {
     let url = Constant.bestSelling;
     productService
       .getBestSellingProducts(url)
@@ -148,12 +148,15 @@ class productStore {
       .catch((err) => {});
   };
 
-  updateCart = async(data:any,callback :any)=>{
-    let url =Constant.updateCart;
-    cartService.updateUserCart(url,data).then((res:any)=>{
-      res && callback(res.data);
-    }).catch((err)=>{});
-  }
+  updateCart = async (data: any, callback: any) => {
+    let url = Constant.updateCart;
+    cartService
+      .updateUserCart(url, data)
+      .then((res: any) => {
+        res && callback(res.data);
+      })
+      .catch((err) => {});
+  };
 
   submitRfqsQuote = async (data: any, callback: any) => {
     let url = Constant.submitrfq;
@@ -171,13 +174,16 @@ class productStore {
       });
   };
 
-  getCommission = async(id :any,callback:any)=>{
+  getCommission = async (id: any, callback: any) => {
     let url = Constant.getcommission + id;
-    productService.getCommission(url).then((res:any)=>{
-      res&&callback(res?.data);
-    }).catch((error)=>{
-      console.log("error");
-    })
-  }
+    productService
+      .getCommission(url)
+      .then((res: any) => {
+        res && callback(res?.data);
+      })
+      .catch((error) => {
+        console.log("error");
+      });
+  };
 }
 export default new productStore();

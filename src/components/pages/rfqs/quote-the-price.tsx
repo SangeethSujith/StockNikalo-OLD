@@ -528,15 +528,16 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                 </Form.Item>
                               </td>
                               <td className="text-right d-flex justify-content-end">
-                                {item?.submited == 0 ? (
-                                  <Button
-                                    type="text"
-                                    style={{ background: "#08c" }}
-                                    onClick={(e) => submitRfqQuote()}
-                                  >
-                                    Submit
-                                  </Button>
-                                ) : (
+                                {
+                                  item.quantity == "" ? (
+                                    <Button
+                                      type="text"
+                                      style={{ background: "#08c" }}
+                                      onClick={(e) => submitRfqQuote()}
+                                    >
+                                      Submit
+                                    </Button>
+                                  ) :
                                   <Button
                                     type="text"
                                     style={{ background: "#F2BE22" }}
@@ -544,7 +545,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                   >
                                     Update
                                   </Button>
-                                )}
+                                }
 
                                 <a
                                   className="btn btn-sm btn-primary mr-2 btn-quickview"

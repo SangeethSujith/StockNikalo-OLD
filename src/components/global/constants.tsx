@@ -21,7 +21,8 @@ const Constant = {
   get_user_cart: "api/get-user-cart",
   create_order: "api/create-order",
   user_address: "api/get-user-address",
-  getrfq: "api/getrfq",
+  getrfq: "api/my-rfqs/",
+  // getrfq: "api/getrfq",
   getrfquser: "api/get_rfq/",
   submitrfq: "api/submitrfq",
   logout: "api/logout",
@@ -36,15 +37,15 @@ const Constant = {
   cartincrement: "api/cartincrement",
   cartdecrement: "api/cartdecrement",
   deletecart: "api/deletecart",
-  getcommission : "api/get-commission/",
-  updateCart : "api/updatecart",
-  removeCartitem : "api/deletecart/",
+  getcommission: "api/get-commission/",
+  updateCart: "api/updatecart",
+  removeCartitem: "api/deletecart/",
   clearAllCartitems: "api/clearcart/",
-  auction : "api/auctions",
-  addEnquiry:"api/add-enquiry",
-  addwishlist:"api/add-wishlist",
-  getWishlist:"api/get-wishlist/",
-  removeWishlistItem:"api/delete-wishlist/"
+  auction: "api/auctions",
+  addEnquiry: "api/add-enquiry",
+  addwishlist: "api/add-wishlist",
+  getWishlist: "api/get-wishlist/",
+  removeWishlistItem: "api/delete-wishlist/",
 };
 
 export default Constant;
