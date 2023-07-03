@@ -24,6 +24,7 @@ const Constant = {
   getrfq: "api/my-rfqs/",
   // getrfq: "api/getrfq",
   getrfquser: "api/get_rfq/",
+  updaterfquser:"api/update-rfq",
   submitrfq: "api/submitrfq",
   logout: "api/logout",
   quotedrfq: "api/quoted-rfq",

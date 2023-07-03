@@ -175,7 +175,7 @@ class productStore {
   };
 
   updateRfqsQuote = async (data: any, callback: any) => {
-    let url = Constant.updaterfq;
+    let url = Constant.updaterfquser;
     productService
       .addtocart(url, data)
       .then((res: any) => {
