@@ -8,7 +8,7 @@ import swal from "sweetalert";
 import ReactPaginate from "react-paginate";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import "./auction.css"
+import "./auction.css";
 
 type ProductsProps = {};
 
@@ -285,66 +285,77 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
               <div className="row">
                 {Array.isArray(SearchResult) &&
                   SearchResult.length > 0 &&
-                  currentData.map((item: any) => (
-                    <div className="col-6 col-sm-4">
-                      <div className="product-default product-style" >
-                        <figure>
-                          <a
-                          className="product-image-link"
-                            onClick={() =>
-                              navigate(`${RoutePath.auction}/${item.id}`)
-                            }
-                          >
-                            <LazyLoadImage
-                            className="product-image-style"
-                              effect="blur"
-                              alt="product"
-                              width={280}
-                              height={280}
-                              src="/assets/images/products/product-1.jpg"
-                            />
-                            {/* <img
-                              src="/assets/images/products/product-1.jpg"
-                         
-                              alt="product"
-                            /> */}
-                          </a>
-                        </figure>
-                        <div className="product-head">
-                          <div className="category-wrap">
-                            <div className="product-list">
-                              <a href="#" className="product-category">
-                                category
-                              </a>
-                            </div>
-                          </div>
-                          <p className="product-header">
-                            <a href="#">{item.title}</a>
-                          </p>
-                          <section className="location">
-                            <div>
-                              <p>Location</p>
-                            </div>
-                            <div>
-                              <p>India</p>
-                            </div>
-                          </section>
-                          {/* End .product-container */}
-                          {/* End .price-box */}
-                          <div className="product-move">
+                  currentData.map((item: any) => {
+                    return (
+                      <div className="col-6 col-sm-4">
+                        <div className="product-default product-style">
+                          <figure>
                             <a
+                              className="product-image-link"
                               onClick={() =>
                                 navigate(`${RoutePath.auction}/${item.id}`)
                               }
                             >
-                              <span className="view">View Details</span>
+                              <LazyLoadImage
+                                className="product-image-style"
+                                effect="blur"
+                                alt="product"
+                                width={280}
+                                height={280}
+                                src={
+                                  item.images.length == 0
+                                    ? "/assets/images/products/product-1.jpg"
+                                    : item.images[0].image
+                                }
+                              />
+                              {/* <img
+                              src="/assets/images/products/product-1.jpg"
+                         
+                              alt="product"
+                            /> */}
                             </a>
+                          </figure>
+                          <div className="product-head">
+                            <p className="product-header">
+                              <a
+                                style={{ fontWeight: "bold", color: "black" }}
+                                href="#"
+                              >
+                                {item.title}
+                              </a>
+                            </p>
+                            <div className="category-wrap">
+                              <div className="product-list">
+                                <a href="#" className="product-category">
+                                  {item.category}
+                                </a>
+                              </div>
+                            </div>
+                            <section className="location">
+                              <div>
+                                <p>{item.sellecr_district}</p>
+                              </div>
+                              <div>
+                                <p>{item.seller_pincode}</p>
+                              </div>
+                            </section>
+                            {/* End .product-container */}
+                            {/* End .price-box */}
+                            <div className="product-move">
+                              <a
+                                onClick={() =>
+                                  navigate(`${RoutePath.auction}/${item.id}`)
+                                }
+                              >
+                                <span className="view">View Details</span>
+                              </a>
+                            </div>
                           </div>
+                          {/* End .product-details */}
                         </div>
-                        {/* End .product-details */}
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 {/* End .col-sm-4 */}
               </div>
               {/* End .row */}
