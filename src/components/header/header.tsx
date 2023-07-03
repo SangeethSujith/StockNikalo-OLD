@@ -95,7 +95,7 @@ const Header: React.FC<any> = () => {
   };
   return (
     <>
-      <header className="header home">
+      <header style={{paddingBottom:"20px"}} className="header home">
         <div className="header-middle text-dark sticky-header">
           <div className="container">
             <div className="header-left col-lg-2 w-auto pl-0">
@@ -263,7 +263,7 @@ const Header: React.FC<any> = () => {
                 </li>
               </ul>
             </nav>
-            <nav className="main-nav w-100 bg-light">
+            {/* <nav className="main-nav w-100 bg-light">
               <ul className="menu">
                 <li>
                   <div className="dropdown">
@@ -290,7 +290,7 @@ const Header: React.FC<any> = () => {
                   </div>
                 </li>
               </ul>
-            </nav>
+            </nav> */}
           </div>
         </div>
       </header>
