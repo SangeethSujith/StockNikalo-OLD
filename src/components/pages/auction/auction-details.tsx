@@ -106,7 +106,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
       <main className="main">
         <div className="container">
           <div className="container">
-            <nav aria-label="breadcrumb" className="breadcrumb-nav">
+            {/* <nav aria-label="breadcrumb" className="breadcrumb-nav">
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
                   <a href="demo4.html">
@@ -117,7 +117,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                   <a href="#">Products</a>
                 </li>
               </ol>
-            </nav>
+            </nav> */}
             <div className="product-single-container product-single-default">
               <div className="cart-message d-none">
                 <strong className="single-cart-notice">
@@ -128,10 +128,10 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
               <div className="row">
                 <div className="col-lg-5 col-md-6 product-single-gallery">
                   <div className="product-slider-container">
-                    <div className="label-group">
+                    {/* <div className="label-group">
                       <div className="product-label label-hot">HOT</div>
                       <div className="product-label label-sale">-16%</div>
-                    </div>
+                    </div> */}
                     <div className="product-single-carousel owl-carousel owl-theme show-nav-hover">
                       <div className="product-item">
                         <img
