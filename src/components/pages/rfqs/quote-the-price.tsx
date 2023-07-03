@@ -98,35 +98,36 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
 
   const updateRfqQuote = (): void => {
     const submittedData: any[] = [];
-    
+
     RfqsData?.forEach((item: any, index: number) => {
       const price: any = form.getFieldValue(`price-${index}`);
-      
+
       if (price !== undefined) {
         const data: any = {
-          quotedId:item.quotedId,
+          quotedId: item.quotedId,
           amount_raised: price,
-          quantity_raised: form.getFieldValue(`qnty-${index}`) || item?.quantity,
+          quantity_raised:
+            form.getFieldValue(`qnty-${index}`) || item?.quantity,
           user_id: localStorage.getItem("userId"),
         };
-        
+
         console.log("final data is", data);
         submittedData.push(data);
       }
     });
-  
+
     if (submittedData.length > 0) {
       const rfqData: any = {
         rfqData: submittedData,
       };
-      
+
       console.log("current user is", authStore?.isRegistrationCompleted);
-      
+
       // if (authStore?.isRegistrationCompleted) {
-      //   productStore.submitRfqsQuote(rfqData, (res: any) => {
+      //   productStore.updateRfqsQuote(rfqData, (res: any) => {
       //     if (res.status) {
       //       swal({
-      //         text: "RFQ submitted successfully",
+      //         text: "RFQ updated successfully",
       //         icon: "success",
       //         dangerMode: true,
       //       });
@@ -145,7 +146,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
       // }
     }
   };
-  
+
   const handleRfqdetails = (id: string | number) => {
     console.log("tesing idd", id);
     if (id) {

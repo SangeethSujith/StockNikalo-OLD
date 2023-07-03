@@ -174,6 +174,22 @@ class productStore {
       });
   };
 
+  updateRfqsQuote = async (data: any, callback: any) => {
+    let url = Constant.updaterfq;
+    productService
+      .addtocart(url, data)
+      .then((res: any) => {
+        res && callback(res?.data);
+      })
+      .catch((err) => {
+        swal({
+          text: "Oops! Some error occurred",
+          icon: "error",
+          dangerMode: true,
+        });
+      });
+  };
+
   getCommission = async (id: any, callback: any) => {
     let url = Constant.getcommission + id;
     productService
