@@ -19,7 +19,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   const { useForm } = Form;
   const [form] = useForm();
   const [RfqsData, setRfqsData] = useState([]);
-  const [QuotedRfqsData, setQuotedRfqsData] = useState([]);
+  const [QuotedRfqsData, setQuotedRfqsData] = useState<any>([]);
   const [rfqDetailsPopup, setRfqDetailsPopup] = useState(true);
   const [popupData, setPopdata] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -396,7 +396,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                         ? currentData.map((item: any, index: number) => (
                             <tr
                               style={{
-                                background: QuotedRfqsData.some(function (
+                                background: [QuotedRfqsData]?.some(function (
                                   element: any
                                 ) {
                                   return (
@@ -445,7 +445,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                     style={{ width: "60px" }}
                                     required
                                     disabled={
-                                      QuotedRfqsData.some(function (
+                                      [QuotedRfqsData]?.some(function (
                                         element: any
                                       ) {
                                         return (
@@ -555,7 +555,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                     style={{ width: "60px" }}
                                     required
                                     disabled={
-                                      QuotedRfqsData.some(function (
+                                      [QuotedRfqsData]?.some(function (
                                         element: any
                                       ) {
                                         return (

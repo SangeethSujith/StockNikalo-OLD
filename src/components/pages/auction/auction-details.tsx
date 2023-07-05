@@ -24,6 +24,14 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
   const urlParams = useParams();
   const { id } = useParams();
   const product = String(id);
+  
+  useEffect(() => {
+    // const script = document.createElement("script");
+    // script.src = "/assets/js/main.min.js";
+    // document.body.append(script);
+    getProductDetails();
+  }, [product]);
+
   const addtoCart = () => {
     let qty: any = document.getElementById("cartqty");
     qty = qty.value;
@@ -95,12 +103,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
 
   useScript("/assets/js/main.min.js", "");
 
-  useEffect(() => {
-    // const script = document.createElement("script");
-    // script.src = "/assets/js/main.min.js";
-    // document.body.append(script);
-    getProductDetails();
-  }, [product]);
+  
   return (
     <>
       <main className="main">
