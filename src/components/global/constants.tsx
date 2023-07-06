@@ -24,7 +24,7 @@ const Constant = {
   getrfq: "api/my-rfqs/",
   // getrfq: "api/getrfq",
   getrfquser: "api/get_rfq/",
-  updaterfquser:"api/update-rfq",
+  updaterfquser:"api/update_rfq/",
   submitrfq: "api/submitrfq",
   logout: "api/logout",
   quotedrfq: "api/quoted-rfq",
@@ -47,6 +47,7 @@ const Constant = {
   addwishlist: "api/add-wishlist",
   getWishlist: "api/get-wishlist/",
   removeWishlistItem: "api/delete-wishlist/",
+  updateAction :"api/update-auction/"
 };
 
 export default Constant;

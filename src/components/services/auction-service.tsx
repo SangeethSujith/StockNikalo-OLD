@@ -14,8 +14,18 @@ class AuctionSerive{
              reject(error);
            })
         })
-
     }
+
+  updateAuction = (data:any,auctionId:number|string)=>{
+    const url = Constant.updateAction + auctionId;
+    return new Promise(function (resolve, reject) {
+      api.post(url,data).then((resposne)=>{
+       resposne && resolve(resposne);
+      }).catch((error)=>{
+        reject(error);
+      })
+   })
+  }
 
 }
 

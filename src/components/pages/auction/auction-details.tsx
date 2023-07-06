@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
-
 import productStore from "../../store/product-store";
 import RoutePath from "../../global/route-paths";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import userStore from "../../store/user-store";
+import { useNavigate, useParams } from "react-router-dom";
 import swal from "sweetalert";
 import useScript from "../../hooks/useScript";
 import AuctionSerive from "../../services/auction-service";
@@ -15,49 +13,22 @@ type AuctionProps = {};
 
 const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
   const navigate = useNavigate();
-  const [CartQty, setCartQty] = useState();
   const [ProductsData, setProductsData] = useState<any>([]);
-  const [isaddtosucc, setisaddtosucc] = useState(true);
   const [ProductName, setProductName] = useState("Product");
   const initialBidPrice = 15000;
   const [bidPrice, setBidPrice] = useState(initialBidPrice);
-  const urlParams = useParams();
   const { id } = useParams();
   const product = String(id);
   
   useEffect(() => {
-    // const script = document.createElement("script");
-    // script.src = "/assets/js/main.min.js";
-    // document.body.append(script);
-    getProductDetails();
+    getAuctionDetails();
   }, [product]);
 
-  const addtoCart = () => {
-    let qty: any = document.getElementById("cartqty");
-    qty = qty.value;
-    const data = {
-      userId: parseInt(localStorage.getItem("userId")!),
-      cartType: 1,
-      cartItems: [
-        {
-          productId: parseInt(product),
-          qty: parseInt(qty),
-          productPrice: parseInt(ProductsData[0]?.["salePrice"]),
-        },
-      ],
-    };
-    productStore.addtocart(data, (res: any) => {
-      if (res.status) {
-        setisaddtosucc(false);
-      }
-    });
-  };
 
-  const getProductDetails = () => {
+  const getAuctionDetails = () => {
     productStore.getAuctionDetails(product, (res: any) => {
       if (res?.status) {
         setProductsData(res?.data);
-        // console.log("response", res.data);
         setProductName(res?.data[0]?.productName);
       } else {
         navigate(RoutePath.home);
@@ -65,13 +36,28 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
     });
   };
 
-  const removeCart = () => {
-    userStore.removeCart((res: any) => {});
-  };
+  const updateAuction = ()=>{
+    let price: any = document.getElementById("bid-price");
+    let data: any = {
+      userId: localStorage.getItem("userId"),
+      bidPrice: price.value,
+    };
+    if(data){
+      AuctionSerive.updateAuction(data,ProductsData[0]?.id)
+      .then((res: any) => {
+        if (res.data) {
+          message.success("successfull");
+        }
+      })
+      .catch((error) => {
+        console.log("eror iss", error);
+      });
+    }
+  }
+
 
   const handleSubmit = () => {
     let price: any = document.getElementById("bid-price");
-    console.log("bid price", price.value);
     const date = new Date();
     let data: any = {
       userId: localStorage.getItem("userId"),
@@ -79,11 +65,10 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
       bidPrice: price.value,
       bidDate: date,
     };
-    console.log("data iaaa", authStore.isRegistrationCompleted);
+
     if (authStore.isRegistrationCompleted) {
       AuctionSerive.submitAuction(data)
         .then((res: any) => {
-          console.log("auction response", res);
           if (res.data) {
             message.success("successfull");
           }
