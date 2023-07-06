@@ -24,7 +24,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   const [popupData, setPopdata] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("");
-  console.log("selectedCategory : ", selectedCategory);
+
   useEffect(() => {
     const rfqid = location.state?.id;
     getQuotedRfq();
@@ -38,7 +38,6 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   };
   const getQuotedRfq = () => {
     productStore.getQuotedRfq((res: any) => {
-      console.log(res);
       setQuotedRfqsData(res?.data);
       getRfqsDetailsbyID();
     });
@@ -70,11 +69,10 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
         rfqData: submittedData,
       };
 
-      console.log("current user is", authStore?.isRegistrationCompleted);
-
       if (authStore?.isRegistrationCompleted) {
         productStore.submitRfqsQuote(rfqData, (res: any) => {
           if (res.status) {
+            getQuotedRfq();
             swal({
               text: "RFQ submitted successfully",
               icon: "success",
@@ -96,66 +94,44 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
     }
   };
 
-  const updateRfqQuote = (): void => {
-    const submittedData: any[] = [];
-
-    RfqsData?.forEach((item: any, index: number) => {
-      const price: any = form.getFieldValue(`price-${index}`);
-
-      if (price !== undefined) {
-        const data: any = {
-          quotedId: item.quotedId,
-          amount_raised: price,
-          quantity_raised:
-            form.getFieldValue(`qnty-${index}`) || item?.quantity,
-          user_id: localStorage.getItem("userId"),
-        };
-
-        console.log("final data is", data);
-        submittedData.push(data);
-      }
-    });
-
-    if (submittedData.length > 0) {
-      const rfqData: any = {
-        rfqData: submittedData,
-      };
-
-      console.log("current user is", authStore?.isRegistrationCompleted);
-
-      // if (authStore?.isRegistrationCompleted) {
-      //   productStore.updateRfqsQuote(rfqData, (res: any) => {
-      //     if (res.status) {
-      //       swal({
-      //         text: "RFQ updated successfully",
-      //         icon: "success",
-      //         dangerMode: true,
-      //       });
-      //     }
-      //   });
-      // } else {
-      //   swal({
-      //     text: "Please complete your registration to proceed with this action",
-      //     icon: "warning",
-      //     dangerMode: true,
-      //   }).then((success: any) => {
-      //     if (success) {
-      //       navigate(RoutePath.home);
-      //     }
-      //   });
-      // }
-    }
+  const updateRfqQuote = (rfqData:any,index:number): void => {
+    const price: any = form.getFieldValue(`price-${index}`);
+    const quantity :any = form.getFieldValue(`qnty-${index}`) || rfqData?.quantity;
+    const data: any = {
+            amount_raised: price,
+            quantity_raised: quantity,
+            userId: localStorage.getItem("userId"),
+          };
+      if (authStore?.isRegistrationCompleted) {
+        productStore.updateRfqsQuote(data, rfqData?.quotedId, (res: any) => {
+          if (res.status) {
+            swal({
+              text: "RFQ updated successfully",
+              icon: "success",
+              dangerMode: true,
+            });
+          }
+        });
+      } else {
+        swal({
+          text: "Please complete your registration to proceed with this action",
+          icon: "warning",
+          dangerMode: true,
+        }).then((success: any) => {
+          if (success) {
+            navigate(RoutePath.home);
+          }
+        });
+       }
   };
 
   const handleRfqdetails = (id: string | number) => {
-    console.log("tesing idd", id);
     if (id) {
       let popDetails: any = RfqsData.find((data: any) => data?.rfqid == id);
       if (popDetails) {
         setPopdata(popDetails);
         setRfqDetailsPopup(false);
       }
-      console.log("pop details", popDetails);
     }
   };
   const handleClose = () => {
@@ -173,7 +149,6 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentData = RfqsData.slice(startIndex, endIndex);
-  console.log("RfqsData", RfqsData);
 
   // Reduce the jsonData to create an array of unique categories
   const uniqueCategories = RfqsData.reduce((unique: string[], item: any) => {
@@ -182,13 +157,12 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
     }
     return unique;
   }, []);
-  console.log("uniqueCategories", uniqueCategories);
 
   // Filter the data based on the selected category
   const categorizedData: RfqsDataType[] = RfqsData.filter(
     (item: RfqsDataType) => item.category === selectedCategory
   );
-  console.log("Categorized data : ", categorizedData);
+
   return (
     <>
       <main className="main">
@@ -379,7 +353,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                   // initialValues={{
                   //   "qty-1": 10,
                   // }}
-                >
+                  >
                   <table className="table table-wishlist mb-0 mt-5 border">
                     <thead>
                       <tr>
@@ -483,7 +457,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                   <Button
                                     type="text"
                                     style={{ background: "#F2BE22" }}
-                                    onClick={(e) => updateRfqQuote()}
+                                    onClick={(e) => updateRfqQuote(item,index)}
                                   >
                                     Update
                                   </Button>
@@ -506,7 +480,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                         : categorizedData.map((item: any, index: number) => (
                             <tr
                               style={{
-                                background: QuotedRfqsData.some(function (
+                                background: [QuotedRfqsData]?.some(function (
                                   element: any
                                 ) {
                                   return (
@@ -593,7 +567,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                   <Button
                                     type="text"
                                     style={{ background: "#F2BE22" }}
-                                    onClick={(e) => updateRfqQuote()}
+                                    onClick={(e) => updateRfqQuote(item,index)}
                                   >
                                     Update
                                   </Button>

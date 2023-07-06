@@ -11,6 +11,7 @@ import Constant from "../global/constants";
 import productService from "../services/product-service";
 import swal from "sweetalert";
 import cartService from "../services/cart-service";
+import rfqService from "../services/rfq-service";
 
 class productStore {
   currentuserId: number | null = JSON.parse(localStorage.getItem("userId")!);
@@ -160,8 +161,8 @@ class productStore {
 
   submitRfqsQuote = async (data: any, callback: any) => {
     let url = Constant.submitrfq;
-    productService
-      .addtocart(url, data)
+    rfqService
+      .submitRfq(url, data)
       .then((res: any) => {
         res && callback(res?.data);
       })
@@ -174,10 +175,10 @@ class productStore {
       });
   };
 
-  updateRfqsQuote = async (data: any, callback: any) => {
-    let url = Constant.updaterfquser;
-    productService
-      .addtocart(url, data)
+  updateRfqsQuote = async (data: any,quotedId:string, callback: any) => {
+    let url = Constant.updaterfquser+quotedId;
+    rfqService
+      .updateRfq(url, data)
       .then((res: any) => {
         res && callback(res?.data);
       })
