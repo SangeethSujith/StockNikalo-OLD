@@ -129,8 +129,13 @@ class productStore {
       .catch((err) => {});
   };
 
-  getAuctionDetails = async (data: any, callback: any) => {
-    let url = Constant.get_auctions + "/" + data;
+  getAuctionDetails = async (data: any,userId:any, callback: any) => {
+    let url = "";
+    if(userId){
+      url = Constant.get_auctions + "/" + data + "/" + userId;
+    }else{
+      url =  Constant.get_auctions + "/" + data ;
+    }
     productService
       .getProducts(url)
       .then((res: any) => {

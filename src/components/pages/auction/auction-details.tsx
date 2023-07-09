@@ -9,32 +9,63 @@ import AuctionSerive from "../../services/auction-service";
 import { Button, Tooltip, message } from "antd";
 import authStore from "../../store/auth-store";
 import { observer } from "mobx-react-lite";
+import { error } from "console";
 type AuctionProps = {};
 
 const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
   const navigate = useNavigate();
   const [ProductsData, setProductsData] = useState<any>([]);
-  const [ProductName, setProductName] = useState("Product");
-  const initialBidPrice = 15000;
-  const [bidPrice, setBidPrice] = useState(initialBidPrice);
+  const [initialBidPrice,setInitialBidPrice]=useState(0);
+  const [isSubmitted,setIsSubmitted]=useState<boolean>(false);
+  //const initialBidPrice = 15000;
+  const [bidPrice, setBidPrice] = useState(0);
   const { id } = useParams();
   const product = String(id);
   
   useEffect(() => {
     getAuctionDetails();
+    getAuctionByUserId();
   }, [product]);
 
 
   const getAuctionDetails = () => {
-    productStore.getAuctionDetails(product, (res: any) => {
+    const userId = localStorage.getItem("userId");
+    productStore.getAuctionDetails(product,userId, (res: any) => {
       if (res?.status) {
+        console.log("auction data",res.data);
         setProductsData(res?.data);
-        setProductName(res?.data[0]?.productName);
+        setBidPrice(parseInt(res?.data[0]?.["bidPrice"]));
+        setInitialBidPrice(parseInt(res?.data[0]?.["price"]));
+        if(res?.data[0]?.["submited"]!=0){
+          setIsSubmitted(true);
+        }
       } else {
         navigate(RoutePath.home);
       }
     });
   };
+
+  const getAuctionByUserId = () =>{
+    const userId = localStorage.getItem("userId");
+    if(userId){
+      AuctionSerive.getAuctionById(userId).then((res:any)=>{
+       if(res.data){
+        updateBidStatus(res.data);
+       }
+      }).catch((error)=>{
+        console.log("eror iss", error);
+      });
+    }
+  }
+ const updateBidStatus = (data:any)=>{
+  if(data){
+    let auction = data?.find((item:any)=>item.id == product);
+    console.log("auction",auction);
+    if(auction.submited == 1){
+      setIsSubmitted(true);
+    }
+   }
+}
 
   const updateAuction = ()=>{
     let price: any = document.getElementById("bid-price");
@@ -70,6 +101,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
       AuctionSerive.submitAuction(data)
         .then((res: any) => {
           if (res.data) {
+            getAuctionDetails();
             message.success("successfull");
           }
         })
@@ -88,7 +120,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
 
   useScript("/assets/js/main.min.js", "");
 
-  
+  console.log("bid price",initialBidPrice,bidPrice);
   return (
     <>
       <main className="main">
@@ -322,7 +354,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                         onClick={() =>
                           setBidPrice((prevBidPrice) =>
                             prevBidPrice > initialBidPrice
-                              ? prevBidPrice - 1000
+                              ? prevBidPrice - parseInt(ProductsData[0]?.["increment_amount"])
                               : prevBidPrice
                           )
                         }
@@ -334,7 +366,7 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                     <Tooltip title="Increase Bid Price">
                       <Button
                         onClick={() =>
-                          setBidPrice((prevBidPrice) => prevBidPrice + 1000)
+                          setBidPrice((prevBidPrice) => prevBidPrice + parseInt(ProductsData[0]?.["increment_amount"]))
                         }
                         // type="danger"
                         // shape="circle"
@@ -342,13 +374,20 @@ const AuctionDetailComponent: React.FC<any> = (props: AuctionProps) => {
                       />
                     </Tooltip>
                     <div className="col">
-                      <button
+                      {isSubmitted ?   <button
+                        type="button"
+                        className="btn btn-primary submit"
+                        onClick={updateAuction}
+                      >
+                        update
+                      </button>:<button
                         type="button"
                         className="btn btn-primary submit"
                         onClick={handleSubmit}
                       >
                         submit
                       </button>
+                      }
                     </div>
                   </div>
                   <hr className="divider mb-0 mt-0" />

@@ -43,34 +43,42 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
     });
   };
 
-  const submitRfqQuote = (): void => {
-    const submittedData: any[] = [];
+  const submitRfqQuote = (rfqData:any,index:number | string): void => {
+    //const submittedData: any[] = [];
+    const price: any = form.getFieldValue(`price-${index}`);
+    const data: any = {
+      user_id: localStorage.getItem("userId"),
+      rfq_id: rfqData.rfqid,
+      rfq_perticular_id: rfqData.perticularId,
+      quantity_raised:
+        form.getFieldValue(`qnty-${index}`) || rfqData?.quantity,
+      amount_raised: price,
+    };
+    // RfqsData?.forEach((item: any, index: number) => {
+    //   const price: any = form.getFieldValue(`price-${index}`);
 
-    RfqsData?.forEach((item: any, index: number) => {
-      const price: any = form.getFieldValue(`price-${index}`);
+    //   if (price !== undefined) {
+    //     const data: any = {
+    //       user_id: localStorage.getItem("userId"),
+    //       rfq_id: item.rfqid,
+    //       rfq_perticular_id: item.perticularId,
+    //       quantity_raised:
+    //         form.getFieldValue(`qnty-${index}`) || item?.quantity,
+    //       amount_raised: price,
+    //     };
 
-      if (price !== undefined) {
-        const data: any = {
-          user_id: localStorage.getItem("userId"),
-          rfq_id: item.rfqid,
-          rfq_perticular_id: item.perticularId,
-          quantity_raised:
-            form.getFieldValue(`qnty-${index}`) || item?.quantity,
-          amount_raised: price,
-        };
+    //     console.log("final data is", data);
+    //     submittedData.push(data);
+    //   }
+    // });
 
-        console.log("final data is", data);
-        submittedData.push(data);
-      }
-    });
-
-    if (submittedData.length > 0) {
-      const rfqData: any = {
-        rfqData: submittedData,
-      };
+    // if (submittedData.length > 0) {
+    //   const rfqData: any = {
+    //     rfqData: submittedData,
+    //   };
 
       if (authStore?.isRegistrationCompleted) {
-        productStore.submitRfqsQuote(rfqData, (res: any) => {
+        productStore.submitRfqsQuote(data, (res: any) => {
           if (res.status) {
             getQuotedRfq();
             swal({
@@ -91,7 +99,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
           }
         });
       }
-    }
+    
   };
 
   const updateRfqQuote = (rfqData:any,index:number): void => {
@@ -449,7 +457,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                   <Button
                                     type="text"
                                     style={{ background: "#08c" }}
-                                    onClick={(e) => submitRfqQuote()}
+                                    onClick={(e) => submitRfqQuote(item,index)}
                                   >
                                     Submit
                                   </Button>
@@ -559,7 +567,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                   <Button
                                     type="text"
                                     style={{ background: "#08c" }}
-                                    onClick={(e) => submitRfqQuote()}
+                                    onClick={(e) => submitRfqQuote(item,index)}
                                   >
                                     Submit
                                   </Button>

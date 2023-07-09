@@ -47,7 +47,8 @@ const Constant = {
   addwishlist: "api/add-wishlist",
   getWishlist: "api/get-wishlist/",
   removeWishlistItem: "api/delete-wishlist/",
-  updateAction :"api/update-auction/"
+  updateAction :"api/update-auction/",
+  getAuctionById:"api/auction/"
 };
 
 export default Constant;

@@ -27,6 +27,17 @@ class AuctionSerive{
    })
   }
 
+  getAuctionById = (id:string|number)=>{
+    const url = Constant.getAuctionById + id;
+    return new Promise(function (resolve, reject) {
+      api.get(url).then((resposne)=>{
+       resposne && resolve(resposne);
+      }).catch((error)=>{
+        reject(error);
+      })
+   });
+  }
+
 }
 
 export default new AuctionSerive;
