@@ -268,7 +268,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
     setCurrentPage(selectedPage.selected);
   };
 
-  const itemsPerPage = 2; // Number of items to show per page
+  const itemsPerPage = 8; // Number of items to show per page
   // ...
 
   // Calculate the indexes of the data array for the current page
@@ -282,7 +282,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
         <main className="main">
           <div className="container">
             {/* <nav aria-label="breadcrumb" className="breadcrumb-nav"> */}
-              {/* <ol className="breadcrumb">
+            {/* <ol className="breadcrumb">
                 <li className="breadcrumb-item">
                   <a href="#">
                     <i className="icon-home" />
@@ -462,9 +462,18 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                   ) : productview == "grid" ? (
                     Array.isArray(SearchResult) &&
                     SearchResult.length > 0 &&
-                    currentData.map((item: any) => (
-                      <GridProductList item={item} handleClick={handleClick} />
-                    ))
+                    currentData.map(
+                      (item: any, index) => (
+                        console.log(index % 4),
+                        index % 4 == 0 ? <h1>test</h1> : "",
+                        (
+                          <GridProductList
+                            item={item}
+                            handleClick={handleClick}
+                          />
+                        )
+                      )
+                    )
                   ) : (
                     Array.isArray(SearchResult) &&
                     SearchResult.length > 0 && (
