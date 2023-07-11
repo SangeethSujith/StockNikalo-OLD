@@ -275,6 +275,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentData = SearchResult.slice(startIndex, endIndex);
+  let counter = 0;
   return (
     <>
       <>
@@ -462,18 +463,18 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                   ) : productview == "grid" ? (
                     Array.isArray(SearchResult) &&
                     SearchResult.length > 0 &&
-                    currentData.map(
-                      (item: any, index) => (
-                        console.log(index % 4),
-                        index % 4 == 0 ? <h1>test</h1> : "",
-                        (
-                          <GridProductList
-                            item={item}
-                            handleClick={handleClick}
-                          />
-                        )
-                      )
-                    )
+                    currentData.map((item: any,index:number) => {
+                      counter++;
+                      return(
+                      <>
+                      <GridProductList item={item} handleClick={handleClick} />
+                      {(counter % 4 === 0 && index !== currentData.length - 1) && (
+                        <div key={`divider-${index}`}>
+                         <h1>Hello inside div</h1>
+                        </div>
+                      )}
+                      </>
+                    )})
                   ) : (
                     Array.isArray(SearchResult) &&
                     SearchResult.length > 0 && (
