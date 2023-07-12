@@ -4,7 +4,7 @@ import Home from "../../pages/home/home";
 import LoginComponent from "../../pages/login/login";
 import RegistrationComponent from "../../pages/register/register";
 import CartComponent from "../../pages/cart/cart";
-import ProductsComponent from "../../pages/products/products-modal";
+import ProductsComponent from "../../pages/products/index";
 import CompleteRegistrationComponent from "../../pages/complete-register/complete-register";
 import ProductsDetailComponent from "../../pages/products/products-details";
 import CheckoutComponent from "../../pages/checkout/checkout";
