@@ -8,6 +8,7 @@ import swal from "sweetalert";
 import "./custom.css";
 import { observer } from "mobx-react-lite";
 import ReactPaginate from "react-paginate";
+import RfqDetailModal from "./RfqDetailModal";
 type RfqQuotePriceProps = {};
 interface RfqsDataType {
   category: string;
@@ -19,12 +20,15 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   const { useForm } = Form;
   const [form] = useForm();
   const [RfqsData, setRfqsData] = useState([]);
+  const [currentData,setCurrentData] = useState([]);
   const [QuotedRfqsData, setQuotedRfqsData] = useState<any>([]);
   const [rfqDetailsPopup, setRfqDetailsPopup] = useState(true);
   const [popupData, setPopdata] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("");
-
+  const [prices, setPrices] = useState([]);
+  const [quantities,setQuantity] = useState([]);
+  const itemsPerPage = 4; // Number of items to show per page
   useEffect(() => {
     const rfqid = location.state?.id;
     getQuotedRfq();
@@ -32,10 +36,30 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
 
   const getRfqsDetailsbyID = () => {
     productStore.getRfqsDetailsByID((res: any) => {
-      console.log("rfq data iss", res.data);
-      setRfqsData(res.data);
+      if(res.data){
+        setRfqsData(res.data);
+        getRfqdataPerPage(res.data,currentPage);
+      }
     });
   };
+  const getRfqdataPerPage = (data:any,currentPage:number)=>{
+    
+    // Calculate the indexes of the data array for the current page
+    console.log("currentage",currentPage);
+    const startIndex = currentPage * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    console.log("start index",startIndex,endIndex);
+    let updatedPrices:any = [];
+    let updatedQuantity:any = [];
+    const currentRfqData = data?.slice(startIndex, endIndex);
+    currentRfqData?.forEach((item:any)=>{
+      updatedPrices.push(item?.amount_raised);
+      updatedQuantity.push(item.quantity_raised);
+    });
+    setPrices(updatedPrices);
+    setQuantity(updatedQuantity);
+    setCurrentData(currentRfqData);
+  }
   const getQuotedRfq = () => {
     productStore.getQuotedRfq((res: any) => {
       setQuotedRfqsData(res?.data);
@@ -43,39 +67,18 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
     });
   };
 
-  const submitRfqQuote = (rfqData:any,index:number | string): void => {
+  const submitRfqQuote = (rfqData:any,index:number): void => {
     //const submittedData: any[] = [];
-    const price: any = form.getFieldValue(`price-${index}`);
+    const price: any = prices[index];
+    const quantity :any = quantities[index];
     const data: any = {
       user_id: localStorage.getItem("userId"),
       rfq_id: rfqData.rfqid,
       rfq_perticular_id: rfqData.perticularId,
-      quantity_raised:
-        form.getFieldValue(`qnty-${index}`) || rfqData?.quantity,
+      quantity_raised: quantity,
+       // form.getFieldValue(`qnty-${index}`) || rfqData?.quantity,
       amount_raised: price,
     };
-    // RfqsData?.forEach((item: any, index: number) => {
-    //   const price: any = form.getFieldValue(`price-${index}`);
-
-    //   if (price !== undefined) {
-    //     const data: any = {
-    //       user_id: localStorage.getItem("userId"),
-    //       rfq_id: item.rfqid,
-    //       rfq_perticular_id: item.perticularId,
-    //       quantity_raised:
-    //         form.getFieldValue(`qnty-${index}`) || item?.quantity,
-    //       amount_raised: price,
-    //     };
-
-    //     console.log("final data is", data);
-    //     submittedData.push(data);
-    //   }
-    // });
-
-    // if (submittedData.length > 0) {
-    //   const rfqData: any = {
-    //     rfqData: submittedData,
-    //   };
 
       if (authStore?.isRegistrationCompleted) {
         productStore.submitRfqsQuote(data, (res: any) => {
@@ -103,8 +106,9 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   };
 
   const updateRfqQuote = (rfqData:any,index:number): void => {
-    const price: any = form.getFieldValue(`price-${index}`);
-    const quantity :any = form.getFieldValue(`qnty-${index}`) || rfqData?.quantity;
+    const price: any = prices[index];
+    //const quantity :any = form.getFieldValue(`qnty-${index}`) || rfqData?.quantity;
+    const quantity :any = quantities[index];
     const data: any = {
             amount_raised: price,
             quantity_raised: quantity,
@@ -113,6 +117,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
       if (authStore?.isRegistrationCompleted) {
         productStore.updateRfqsQuote(data, rfqData?.quotedId, (res: any) => {
           if (res.status) {
+            getRfqsDetailsbyID();
             swal({
               text: "RFQ updated successfully",
               icon: "success",
@@ -147,16 +152,10 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   };
 
   const handlePageChange = (selectedPage: any) => {
+    console.log("inside page change iss",selectedPage);
     setCurrentPage(selectedPage.selected);
+    getRfqdataPerPage(RfqsData,selectedPage.selected);
   };
-
-  const itemsPerPage = 4; // Number of items to show per page
-  // ...
-
-  // Calculate the indexes of the data array for the current page
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentData = RfqsData.slice(startIndex, endIndex);
 
   // Reduce the jsonData to create an array of unique categories
   const uniqueCategories = RfqsData.reduce((unique: string[], item: any) => {
@@ -170,6 +169,16 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   const categorizedData: RfqsDataType[] = RfqsData.filter(
     (item: RfqsDataType) => item.category === selectedCategory
   );
+  const handlePriceChange = (index:number, value:any) => {
+    const updatedPrices:any = [...prices];
+    updatedPrices[index] = value;
+    setPrices(updatedPrices);
+  };
+  const handleQuantityChange = (index:number, value:any) =>{
+    const updatedQuantity:any = [...quantities];
+    updatedQuantity[index] = value;
+    setQuantity(updatedQuantity);
+  }
 
   return (
     <>
@@ -375,7 +384,8 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                     </thead>
                     <tbody className="">
                       {selectedCategory === ""
-                        ? currentData.map((item: any, index: number) => (
+                        ? currentData.map((item: any, index: number) => {
+                          return(
                             <tr
                               style={{
                                 background: [QuotedRfqsData]?.some(function (
@@ -406,24 +416,11 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                 <span className="stock-status">{item.sku}</span>
                               </td>
                               <td>
-                                <Form.Item name={"qnty-" + index}>
+                                {/* <Form.Item name={"qnty-" + index}> */}
                                   <Input
                                     className="form-control"
                                     type="Number"
-                                    defaultValue={item.quantity_raised}
-                                    // placeholder={
-                                    // item.quantity_raised
-                                    // QuotedRfqsData.some(function (
-                                    //   element: any
-                                    // ) {
-                                    //   return (
-                                    //     element.rfq_perticular_id ===
-                                    //     item.perticularId
-                                    //   );
-                                    // })
-                                    //   ? "submitted"
-                                    //   : "1"
-                                    // }
+                                    //defaultValue={item.quantity_raised}
                                     style={{ width: "60px" }}
                                     required
                                     disabled={
@@ -438,19 +435,22 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                         ? true
                                         : false
                                     }
+                                    value={quantities[index]}
+                                    onChange={(e) => handleQuantityChange(index, e.target.value)}
                                   />
-                                </Form.Item>
+                                {/* </Form.Item> */}
                               </td>
                               <td>
-                                <Form.Item name={"price-" + index}>
+                                {/* <Form.Item name={"price-" + index}> */}
                                   <Input
-                                    placeholder={item.amount_raised}
-                                    defaultValue={item.amount_raised}
+                                    //placeholder={item.amount_raised}
                                     className="form-control"
                                     style={{ width: "80px" }}
+                                    value={prices[index]}
+                                    onChange={(e) => handlePriceChange(index, e.target.value)}
                                     required
                                   />
-                                </Form.Item>
+                                {/* </Form.Item> */}
                               </td>
                               <td className="text-right d-flex justify-content-end">
                                 {item?.submited == 0 ? (
@@ -484,7 +484,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                 </a>
                               </td>
                             </tr>
-                          ))
+                          )})
                         : categorizedData.map((item: any, index: number) => (
                             <tr
                               style={{
@@ -521,19 +521,6 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                     className="form-control"
                                     type="Number"
                                     defaultValue={item.quantity_raised}
-                                    // placeholder={
-                                    // item.quantity_raised
-                                    // QuotedRfqsData.some(function (
-                                    //   element: any
-                                    // ) {
-                                    //   return (
-                                    //     element.rfq_perticular_id ===
-                                    //     item.perticularId
-                                    //   );
-                                    // })
-                                    //   ? "submitted"
-                                    //   : "1"
-                                    // }
                                     style={{ width: "60px" }}
                                     required
                                     disabled={
@@ -587,8 +574,10 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                                 >
                                   <i
                                     className="fas fa-eye"
-                                    onClick={(e) =>
+                                    onClick={(e) =>{
+                                      console.log("hello")
                                       handleRfqdetails(item?.rfqid)
+                                    }
                                     }
                                   ></i>
                                 </a>
@@ -627,129 +616,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
                 </Form>
               </div>
             </div>
-            <div
-              className="product-slide quick-view-popup w-100 Shadows p-4 alert"
-              style={{ boxShadow: "0 0 8px rgba(0, 0, 0, 0.6)" }}
-              hidden={rfqDetailsPopup}
-            >
-              <button onClick={handleClose} type="button" className="close">
-                <span aria-hidden="true">×</span>
-              </button>
-              <div className="quick-view-inner">
-                <div className="row pt-4">
-                  <div className="col-sm-12">
-                    <div className="col-lg-7 col-md-6 product-single-details">
-                      <h4 className="product-title">Details</h4>
-                      <hr className="short-divider" />
-                      <div className="price-box">
-                        <span className="new-price">
-                          {popupData?.product_name}
-                        </span>
-                      </div>
-                      <div>
-                        <p>{popupData?.note}</p>
-                      </div>
-                      <ul className="single-info-list">
-                        <li>
-                          Brand :{" "}
-                          <strong>
-                            <a href="#" className="product-category">
-                              {popupData?.brand}
-                            </a>
-                          </strong>
-                        </li>
-                        <li>
-                          Quantity :{" "}
-                          <strong>
-                            <a href="#" className="product-category">
-                              {popupData?.quantity}
-                            </a>
-                          </strong>
-                        </li>
-                        <li>
-                          CATEGORY:{" "}
-                          <strong>
-                            <a href="#" className="product-category">
-                              {popupData?.category}
-                            </a>
-                          </strong>
-                        </li>
-                        <li>
-                          Buyer Name:{" "}
-                          <strong>
-                            <a href="#" className="product-category">
-                              {popupData?.name}
-                            </a>
-                          </strong>
-                        </li>
-                        <li>
-                          Buyer location :{" "}
-                          <strong>
-                            <a href="#" className="product-category">
-                              {popupData?.buyer_state
-                                ? popupData?.buyer_state
-                                : ""}
-                            </a>
-                          </strong>
-                          ,
-                          <strong>
-                            <a href="#" className="product-category">
-                              {popupData?.buyer_district
-                                ? popupData?.buyer_district
-                                : ""}
-                            </a>
-                          </strong>
-                          ,
-                          <strong>
-                            <a href="#" className="product-category">
-                              {popupData?.buyer_pincode
-                                ? popupData?.buyer_pincode
-                                : ""}
-                            </a>
-                          </strong>
-                        </li>
-                      </ul>
-                      <hr className="divider mb-0 mt-0" />
-                      <div className="product-single-share mb-3">
-                        <label className="sr-only">Share:</label>
-                        <div className="social-icons mr-2">
-                          <a
-                            href="#"
-                            className="social-icon social-facebook icon-facebook"
-                            target="_blank"
-                            title="Facebook"
-                          />
-                          <a
-                            href="#"
-                            className="social-icon social-twitter icon-twitter"
-                            target="_blank"
-                            title="Twitter"
-                          />
-                          <a
-                            href="#"
-                            className="social-icon social-linkedin fab fa-linkedin-in"
-                            target="_blank"
-                            title="Linkedin"
-                          />
-                          <a
-                            href="#"
-                            className="social-icon social-gplus fab fa-google-plus-g"
-                            target="_blank"
-                            title="Google +"
-                          />
-                          <a
-                            href="#"
-                            className="social-icon social-mail icon-mail-alt"
-                            target="_blank"
-                            title="Mail"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <RfqDetailModal showModal={rfqDetailsPopup} handleClose={handleClose} rfqData={popupData}/>
             {/* End .col-lg-9 */}
             <div className="sidebar-overlay" />
             <aside className="sidebar-shop col-lg-12 order-lg-first mobile-sidebar">
