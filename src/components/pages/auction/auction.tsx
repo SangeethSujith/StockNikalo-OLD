@@ -154,7 +154,7 @@ const AuctionComponent: React.FC<any> = (props: ProductsProps) => {
     setCurrentPage(selectedPage.selected);
   };
 
-  const itemsPerPage = 1; // Number of items to show per page
+  const itemsPerPage = 12; // Number of items to show per page
   // ...
 
   // Calculate the indexes of the data array for the current page

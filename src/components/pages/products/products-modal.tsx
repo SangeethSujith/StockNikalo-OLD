@@ -268,7 +268,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
     setCurrentPage(selectedPage.selected);
   };
 
-  const itemsPerPage = 2; // Number of items to show per page
+  const itemsPerPage = 12; // Number of items to show per page
   // ...
 
   // Calculate the indexes of the data array for the current page

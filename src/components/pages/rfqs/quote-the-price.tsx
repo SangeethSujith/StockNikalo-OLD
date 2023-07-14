@@ -28,7 +28,7 @@ const RfqQuotePriceComponent: React.FC<any> = (props: RfqQuotePriceProps) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [prices, setPrices] = useState([]);
   const [quantities,setQuantity] = useState([]);
-  const itemsPerPage = 4; // Number of items to show per page
+  const itemsPerPage = 10; // Number of items to show per page
   useEffect(() => {
     const rfqid = location.state?.id;
     getQuotedRfq();
