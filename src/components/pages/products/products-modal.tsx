@@ -605,7 +605,9 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                                   )
                                   .map((item: any) => (
                                     <div className="col-sm-3">
-                                      <li className="nav-item">
+                                      <li className="nav-item"
+                                      style={{paddingBottom:'12px'}}
+                                      >
                                         <a
                                           className="nav-link"
                                           id="product-tab-desc"
@@ -614,13 +616,16 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                                           role="tab"
                                           aria-controls="product-desc-content"
                                           aria-selected="true"
+                                          style={{ overflow:'hidden',display:'flex',justifyContent:'center',alignItems:'center',padding:0 ,width:100, height:100} }
+
                                         >
                                           <LazyLoadImage
                                             src={item.image}
                                             effect="blur"
                                             alt="product-img"
-                                            width={80}
-                                            height={80}
+                                            // width={80}
+                                            // height={120}
+                                            style={{objectFit:'fill'}}
                                           />
                                         </a>
                                       </li>
@@ -807,7 +812,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                             <div className="product-single-share mb-3">
                               <label className="sr-only">Share:</label>
                               <div className="social-icons mr-2">
-                                <a
+                              <a
                                   href="#"
                                   className="social-icon social-facebook icon-facebook"
                                   target="_blank"
