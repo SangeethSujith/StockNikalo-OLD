@@ -65,7 +65,9 @@ const GridProductList: React.FC<any> = (props: any) => {
           <i className="fas fa-heart"></i>
         </div>
         <figure>
-          <a className="product-image-link" onClick={() => navigate(`${RoutePath.product}/${item.productId}`)}>
+          <a className="product-image-link"
+          // style={{width:'100%',height:180}}
+          onClick={() => navigate(`${RoutePath.product}/${item.productId}`)}>
             <LazyLoadImage
             className="product-image-style"
               effect="blur"
@@ -77,6 +79,7 @@ const GridProductList: React.FC<any> = (props: any) => {
                   ? item?.images[0]?.image
                   : "/assets/images/products/product-1.jpg"
               }
+              style={{objectFit:'fill',objectPosition:'center',width:200,height:400}}
             />
           </a>
           {/* <div className="label-group">
