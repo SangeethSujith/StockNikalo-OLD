@@ -147,10 +147,10 @@ const GridProductList: React.FC<any> = (props: any) => {
             <i className="icon-heart" />
           </a>{" "} */}
 
-            <a href="#" className="btn-icon btn-add-cart">
+            {/* <a href="#" className="btn-icon btn-add-cart">
               <i className="fas fa-shopping-cart"></i>
               <span>Details</span>
-            </a>
+            </a> */}
             <a
               className="btn-quickview"
               onClick={(e) => handleClick(item.productId, item.salePrice)}
