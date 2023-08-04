@@ -313,7 +313,7 @@ const ProductsComponent: React.FC<any> = (props: ProductsProps) => {
                       </h3>
                       <a
                         href={NewBannerDetails && NewBannerDetails[0]?.link}
-                        className="btn btn-dark btn-black ls-10"
+                        className="btn btn-dark ls-10"
                       >
                         Get Yours!
                       </a>
